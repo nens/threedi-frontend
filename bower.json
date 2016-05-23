@@ -1,0 +1,62 @@
+{
+  "name": "threedi-server",
+  "version": "0.12.2",
+  "homepage": "https://github.com/nens/threedi-server",
+  "authors": [
+    "jackha",
+    "jsmits",
+    "reinoutvanrees",
+    "fritzvd",
+    "deltares"
+  ],
+  "description": "3Di is a project to quickly calculate and analyze flooding and other Hydrological phenomena.",
+  "keywords": [
+    "threedi",
+    "3di",
+    "flooding",
+    "cloud",
+    "computing"
+  ],
+  "license": "-",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular-mocks": "1.3.18"
+  },
+  "dependencies": {
+    "Leaflet.awesome-markers": "git://github.com/fritzvd/Leaflet.awesome-markers.git#2.0/develop",
+    "Leaflet.bouncemarker": "git://github.com/maximeh/leaflet.bouncemarker",
+    "Leaflet.draw": "git://github.com/Leaflet/Leaflet.draw.git#0.2.2",
+    "Leaflet.functionaltilelayer": "git://github.com/ismyrnow/Leaflet.functionaltilelayer.git#leaflet-0.8",
+    "angular": "1.3",
+    "angular-resource": "~1.3",
+    "angular-ui-utils": "bower-keypress",
+    "bootstrap": "~3.3.5",
+    "bootstrap-css": "~3.3.4",
+    "components-font-awesome": "~4.2.0",
+    "eonasdan-bootstrap-datetimepicker": "3.0.0",
+    "font-awesome": "3.2.1",
+    "jquery": "~1.10.1",
+    "jquery-ui": "~1.10.3",
+    "jshint": "",
+    "leaflet": "0.6.2",
+    "leaflet-tilelayer-geojson": "*",
+    "moment": "2.6.0",
+    "moment-timezone": "~0.4.0",
+    "nvd3": "~1.7",
+    "socket.io-client": "~0.9.16"
+  },
+  "resolutions": {
+    "moment": "2.6.0",
+    "angular": "1.3.18",
+    "d3": "~3.3.13",
+    "bootstrap": "~3.3.4",
+    "leaflet": "0.6.2"
+  }
+}

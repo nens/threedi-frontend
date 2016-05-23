@@ -1,0 +1,110 @@
+
+<div class="modal-content" ng-controller="LoadSave">
+  <div class="modal-header">
+    <button type="button" ng-click="close()" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="archiveScenarioModalLabel">{% trans "Process Simulation Results" %}</h4>
+  </div>
+  <div class="modal-body">
+
+  <div class="row">
+    <div class="col-sm-12 popup-row">
+
+     <form name="myForm">
+
+      <input class="popup-input"
+             type="text"
+             name="scenario_name"
+             ng-model="scenario_name"
+             required
+             ng-trim="false"
+             placeholder="{% trans "Give it a name.." %}">
+      <span class="fa fa-remove red" ng-show="myForm.scenario_name.$error.required">
+      </span>
+      <span class="fa fa-check green" ng-show="!myForm.scenario_name.$error.required">
+      </span>
+      <label>
+        <input type="checkbox" ng-model="notify"> {% trans "Notify me by e-mail when ready" %}
+      </label>
+      <h5>{% trans "Which results would you like?" %}</h5>
+
+      <div class="checkbox">
+          <label>
+              <input type="checkbox"
+                     ng-model="results.max_depth"
+                     disabled
+              > {% trans "Maximum water depth" %}</input>
+          </label>
+      </div>
+      <div class="checkbox">
+          <label>
+              <input type="checkbox"
+                    ng-model="results.arrival_time"
+                    disabled
+                    > {% trans "Arrival time" %}</input>
+          </label>
+      </div>
+
+      <div class="checkbox form-inline">
+          <label>
+            <input type="checkbox"
+                   ng-model="results.arrival_time_at_depth_enabled"
+                   disabled
+            >{% trans "Arrival time at a water depth [m]:" %}</input>
+          </label>
+
+          <label for="arrivalTimeDepthInput"></label>
+          <input type="text" ng-model="results.arrival_time_at_depth_value"
+                 class="form-control text-muted"
+                 id="arrivalTimeDepthInput"
+                 ></input>
+      </div>
+
+      <div class="checkbox">
+          <label>
+              <input type="checkbox" ng-model="results.water_flow_velocity" disabled> {% trans "Water flow velocity" %}</input>
+          </label>
+      </div>
+      <div class="checkbox">
+          <label>
+              <input type="checkbox" ng-model="results.water_rise_velocity" disabled> {% trans "Water rise velocity" %}</input>
+          </label>
+      </div>
+      <div class="checkbox">
+          <label>
+              <input type="checkbox" ng-model="results.vulnerable_buildings" > {% trans "Vulnerable buildings" %}</input>
+          </label>
+      </div>
+      <div class="checkbox">
+          <label>
+              <input type="checkbox" ng-model="results.roads" > {% trans "Inundated roads" %}</input>
+          </label>
+      </div>
+
+      <div class="checkbox">
+          <label>
+              <input type="checkbox" ng-model="results.wss"> {% trans "WaterSchadeSchatter damage estimation" %}</input>
+          </label>
+      </div>
+      <div class="checkbox">
+          <label>
+              <input type="checkbox" ng-model="results.hisssm" > {% trans "HIS SSM damage estimation" %}</input>
+          </label>
+      </div>
+    </form>
+
+  </div>
+  <div class="col-sm-12 popup-row">
+
+    <a href="#" class="btn btn-default button-lg popup-button" ng-class="{disabled: !state.master || storing || myForm.scenario_name.$error.required, green: storing}"
+      ng-click="archive_scenario()" title="Archive scenario on disk (takes a while)">
+      Archive
+    </a>
+
+  </div>
+</div>
+
+
+  </div>
+  <div class="modal-footer footer-left">
+  </div>
+</div>  <!-- modal-content -->

@@ -1,0 +1,247 @@
+{% load i18n %}
+{% load compress %}
+<!DOCTYPE html>
+<html lang="en" ng-app="usage">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans "3Di - Usage" %} </title>
+
+    {% compress css %}
+    <link rel='stylesheet' href='{{ STATIC_URL }}vendor/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='{{ STATIC_URL }}vendor/nvd3/build/nv.d3.css' />
+    <link rel='stylesheet' href='{{ STATIC_URL }}css/usage.css' />
+    {% endcompress %}
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-controller="MainCtrl">
+    <nav class="navbar navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+           <img class="logo-img" src="{{ STATIC_URL }}images/3di-logo.png" alt="3Di">
+         </a>
+          <a class="navbar-brand" href="#">
+           <span>{% trans "Usage overview" %}</span>
+         </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">{% trans "Back to calculation" %}</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="{% trans 'Filter simulations...' %}" ng-model="search">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid main">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>{% trans "Active Simulations" %}</h4>
+          <table class="table table striped">
+            <thead>
+
+              <tr>
+                <th>{% trans "Killswitch"%} </th>
+                <th>{% trans "User"%} </th>
+                <th>{% trans "Model"%} </th>
+                {% if superuser %}
+                <th>{% trans "Organisation"%} </th>
+                {% endif %}
+                <th ng-if="activeSimulations!=={}">{% trans "Address" %} </th>
+                <th>{% trans "Logs"%} </th>
+             </tr>
+            </thead>
+            <tbody>
+
+              <tr ng-repeat="simulation in activeSimulations | filter:search"
+                ng-class="{hide: simulation.suspending}">
+                <td><a ng-click="suspendMachine(simulation.subgrid_id, $index)" class="btn btn-warning" ng-cloak>suspend - {[{ simulation.subgrid_id }]}</td>
+                <td>{[{ simulation.user }]}</td>
+                <td>{[{ simulation.model }]}</td>
+                {% if superuser %}
+                <td>{[{ simulation.organisation }]}</td>
+                {% endif %}
+                <td ng-if="simulation.address">{[{ simulation.address }]}</td>
+                <td><a href="{{ kibana_base_url }}#/discover?_g=%28refreshInterval:%28display:%271%20minute%27,pause:!f,section:2,value:60000%29,time:%28from:now%2Fd,mode:quick,to:now%2Fd%29%29&_a=%28columns:!%28levelname,user_email,event,message%29,index:[logstash-]YYYY.MM.DD,interval:auto,query:%28query_string:%28analyze_wildcard:!t,query:%27%22{[{ simulation.subgrid_id }]}%22%27%29%29,sort:!%28%27@timestamp%27,desc%29%29" target="_blank">logs</a></td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+
+      {% if superuser %}
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <bubble-graph-static data="usageMonitor">
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <h4>Usage per organization</h4>
+          <table class="table table striped">
+            <thead>
+              <tr>
+                {% if superuser %}
+                <th>{% trans "Organisation"%} </th>
+                {% endif %}
+                <th>{% trans "Hours (remaining / bought)"%} </th>
+                <th>{% trans "Nr of models"%} </th>
+                <th>{% trans "Models size"%} </th>
+                <th>{% trans "Nr of stored scenarios"%} </th>
+                <th>{% trans "Stored scenarios size"%} </th>
+                <th>{% trans "Total stored data"%} </th>
+                <th>{% trans "Message"%} </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="(org, hourOverview) in hours | filter:search"
+                  ng-class="{
+                      'active': activeOrganisation === org,
+                      'hidden': activeOrganisation !== undefined && activeOrganisation !== org
+                      }">
+                <td width="20%">{[{ org }]}</td>
+                <td width="20%"
+                    ng-click="toggleKey(org, 'activeOrganisation')"
+                    class="clickable">
+                  <div class="progress">
+                    <div class="progress-bar"
+                      ng-class="{
+                        'progress-bar-success': hourOverview.percentage > 40,
+                        'progress-bar-warning': hourOverview.percentage < 40,
+                        'progress-bar-danger': hourOverview.percentage < 10,
+                        }"
+                      role="progressbar"
+                      aria-valuenow="{[{ hourOverview.machine_uptime }]}s"
+                      aria-valuemin="0"
+                      aria-valuemax="{[{ hourOverview.bought }]}"
+                      style="width: {[{ hourOverview.percentage | number:0 }]}%;"
+                      title="available: {[{ hourOverview.bought - hourOverview.machine_uptime }]}, usage: {[{ hourOverview.machine_uptime }]}, bought: {[{ hourOverview.bought }]}, percentage: {[{ hourOverview.percentage }]}">
+                      {[{ hourOverview.bought - hourOverview.machine_uptime | number:2 }]} /  {[{ hourOverview.bought }]}
+                    </div>
+                  </div>
+                </td>
+                <td class="clickable"
+                    ng-click="redirect_url('http://models.lizard.net/')">
+                  {[{ storage[org].nr_of_models }]}
+                </td>
+                <td>{[{ storage[org].total_storage_models / 1024 / 1024 / 1024 | number: 2 }]} GiB</td>
+                <td>{[{ storage[org].nr_of_stored_scenarios }]}</td>
+                <td>{[{ storage[org].total_storage_stored_scenarios / 1024 / 1024 / 1024 | number: 2 }]} GiB</td>
+                <td>{[{ storage[org].total_stored_data  / 1024 / 1024 / 1024 | number: 2 }]} GiB</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+       <div class="row" ng-if="activeOrganisation !== undefined">
+        <div class="col-sm-4 col-md-4">
+          <h4>Usage per user</h4>
+          <table class="table table striped">
+            <thead>
+              <tr>
+                <th>{% trans "User "%} </th>
+                <th>{% trans "Hours used"%} </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="(user, hours) in users[activeOrganisation] | orderBy:'-hours'"
+                class="clickable"
+                ng-class="{'active': user === activeUser}"
+                ng-click="toggleKey(user, 'activeUser')">
+                <td ng-bind="user"></td>
+                <td width="30%">
+                  <div class="progress">
+                    <div class="progress-bar"
+                      ng-class="{
+                        'progress-bar-success': hours.percentage > 40,
+                        'progress-bar-warning': hours.percentage < 40,
+                        'progress-bar-danger': hours.percentage < 10,
+                        }"
+                      role="progressbar"
+                      aria-valuenow="{[{ hours.userHours }]}"
+                      aria-valuemin="0"
+                      aria-valuemax="{[{ hours[activeOrganisation].used }]}"
+                      style="width: {[{ hours.percentage | number:0 }]}%;">
+                      {[{ hours.percentage }]}%
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-sm-8 col-md-8">
+          <h4>{% trans "Simulation Detail" %}</h4>
+          <table class="table table striped">
+            <thead>
+              <tr>
+                <th>{% trans "User "%} </th>
+                <th>{% trans "Start Calculation"%} </th>
+                <th>{% trans "End Calculation"%} </th>
+              </tr>
+            </thead>
+            <tbody>
+
+              {# known bug: the filter:activeUser works like a 'contains' #}
+              <tr ng-repeat="simulation in pastSimulations | filter:search | filter:activeUser | filter: activeOrganisation">
+                <td>{[{ simulation.user }]}</td>
+                <td>{[{ simulation.start_time }]}</td>
+                <td>{[{ simulation.end_time }]}</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div><!-- row -->
+    </div>
+
+    <script type="text/javascript">
+      var socket_url = '{{ socket_url }}';
+{% autoescape off %}
+      var active_simulations = {{ active_simulations }};
+      var past_simulations = {{ past_simulations }};
+      var usage_monitor = {{ usage_monitor }};
+{% endautoescape %}
+    </script>
+
+    {% compress js %}
+    <script src="{{ STATIC_URL }}vendor/d3/d3.js"></script>
+    <script src="{{ STATIC_URL }}vendor/nvd3/build/nv.d3.js"></script>
+
+    <script src="{{ STATIC_URL }}vendor/jquery/jquery.js"></script>
+    <script src="{{ STATIC_URL }}vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}vendor/angular/angular.js"></script>
+    <script src="{{ STATIC_URL }}js/usage/usage.js"></script>
+
+    <script src="{{ STATIC_URL }}js/threedi-graph/threedi-graph.js"></script>
+    <script src="{{ STATIC_URL }}js/threedi-graph/bubble-graph-static.js"></script>
+
+    <script src="{{ STATIC_URL }}js/state/state.js"></script>
+    <script src="{{ STATIC_URL }}js/state/socket-service.js"></script>
+    {% endcompress %}
+  </body>
+</html>

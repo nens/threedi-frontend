@@ -1,0 +1,12 @@
+<div>
+  <input type="number" class="editable form-control"
+    ng-model="candidate"
+    step="{[{ step }]}"
+    ng-change="callCallback()">
+  <div class="btn-group pull-right">
+    <a class="btn btn-default btn-edit"
+      ng-click="changeValue(-step)"><i class="fa fa-minus"></i></a>
+    <a class="btn btn-default btn-edit"
+      ng-click="changeValue(step)"><i class="fa fa-plus"></i></a>
+  </div>
+</div>

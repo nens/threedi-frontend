@@ -1,0 +1,26 @@
+<div class="modal-content"
+     ng-controller="MakeSureCtrl">
+  <div class="modal-header">
+    <h4>
+      Log out
+    </h4>
+  </div>
+  <div class="modal-body">
+    <p class="sure">
+      Are you sure you want to log out? This machine will remain running while you are logged out, you can revisit this machine under "follow running simulations".
+    </p>
+    <button id="logout-btn-via-modal"
+            class="btn btn-danger"
+            ng-click="logUserOut()"
+            data-url="{% url 'logout_with_master_removal' %}?next=/">
+      Log out
+    </button>
+
+    <button class="btn"
+            ng-click="close()">
+      Cancel
+    </button>
+  </div>
+  <div class="modal-footer footer-left">
+  </div>
+</div>

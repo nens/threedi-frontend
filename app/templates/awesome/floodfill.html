@@ -1,0 +1,20 @@
+
+<div ng-switch-when="floodfill">
+  <div class="box-awesome-head">
+    <h4>{% trans "Floodfill" %} {[{ content.properties.code }]}</h4>
+  </div>
+
+  <div class="box-awesome-contents">
+    <div class="row small-spacer">
+      <div class="col-sm-6">
+        <span>Absolute MSL</span>
+      </div>
+      <div class="col-sm-6">
+        <div class="btn-group pull-right">
+          <a class="btn btn-default btn-box-small disabled"
+            ng-bind="box.content.properties.level | number: 2"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

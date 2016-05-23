@@ -1,0 +1,24 @@
+@import './vendor.scss';
+
+@import './threedi.scss';
+@import './nxt-box.scss';
+@import './lizard5.scss';
+@import './sidemenu.scss';
+@import './overrides.scss';
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 2000;
+    color: #fff;
+}

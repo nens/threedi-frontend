@@ -1,0 +1,32 @@
+<div class="modal-dialog">
+  <div class="modal-content" ng-controller="RemoteControl">
+    <div class="modal-header">
+      <button type="button"
+        ng-click="close()"
+        class="close"
+        data-dismiss="modal"
+        aria-hidden="true">
+        ×
+      </button>
+      <h4 ng-controller="GetMessages" id="confirmModalLabel">{[{ confirmMessage }]}</h4>
+    </div>
+    <div class="modal-body">
+      <a href="#"
+        ng-click="reset()">
+        <button type="button"
+          class="btn btn-primary btn-box btn-danger"
+          data-dismiss="modal">
+          Reset
+        </button>
+      </a>
+      <button type="button"
+        ng-click="close()"
+        class="btn btn-default"
+        data-dismiss="modal">
+        Cancel
+      </button>
+    </div>
+    <div class="modal-footer footer-left">
+    </div>
+  </div>  <!-- modal-content -->
+

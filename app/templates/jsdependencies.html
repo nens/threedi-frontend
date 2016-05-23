@@ -1,0 +1,62 @@
+{% load compress %}
+{% compress js %}
+<script type="text/javascript" src="{{ STATIC_URL }}vendor/leaflet/dist/leaflet.js"></script>
+<!-- bower:js -->
+<script src="{{ STATIC_URL }}vendor/jquery/jquery.js"></script>
+<script src="{{ STATIC_URL }}vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+<script src="{{ STATIC_URL }}vendor/Leaflet.bouncemarker/bouncemarker.js"></script>
+<script src="{{ STATIC_URL }}vendor/angular/angular.js"></script>
+<script src="{{ STATIC_URL }}vendor/angular-resource/angular-resource.js"></script>
+<script src="{{ STATIC_URL }}vendor/angular-ui-utils/keypress.js"></script>
+<script src="{{ STATIC_URL }}vendor/bootstrap/dist/js/bootstrap.js"></script>
+<script src="{{ STATIC_URL }}vendor/bootstrap-css/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}vendor/moment/moment.js"></script>
+<script src="{{ STATIC_URL }}vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{ STATIC_URL }}vendor/jquery-ui/ui/jquery-ui.js"></script>
+<script src="{{ STATIC_URL }}vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+<script src="{{ STATIC_URL }}vendor/d3/d3.js"></script>
+<script src="{{ STATIC_URL }}vendor/nvd3/build/nv.d3.js"></script>
+<!-- endbower -->
+
+<!-- some things bower won't resolve -->
+<script src="{{ STATIC_URL }}vendor/socket.io-client/dist/socket.io.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}vendor/Leaflet.draw/dist/leaflet.draw.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}vendor/leaflet-tilelayer-geojson/TileLayer.GeoJSON.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}leaflet-plugins/TileLayer.WMS.incrementalSingleTile.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}vendor/Leaflet.functionaltilelayer/src/leaflet.functionaltilelayer.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}leaflet-plugins/TileLayer.GeoJSONd3.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/utils.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-ng.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-leaflet.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-boxes.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/leaflet.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/animations.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/filters.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/nxt-box.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-ui/bootstrap-ui.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-ui/modal-directive.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap-ui/datetimepicker-directive.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-graph/threedi-graph.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-graph/bubble-graph-static.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-graph/line-graph-static.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-graph/threedi-cross-section.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-graph/threedi-timeseries.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/threedi-graph/threedi-windrose.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/utils/utils.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/utils/utils-service.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/state/state.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/state/socket-service.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/state/clientstate-service.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/state/layer-service.js"></script>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/settings/settings-controller.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/settings/edit-number-directive.js"></script>
+
+{% endcompress %}

@@ -1,0 +1,66 @@
+#off-canvas.show {
+	right: 0;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+#off-canvas {
+	width: 281px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 1010;
+	position: fixed;
+	top: 45px;
+	padding-top: 23px;
+	right: -270px;
+	-webkit-transition: all 0.2s ease-in-out;
+  	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	-webkit-transform: translate3d(0,0,0);
+	-webkit-backface-visibility: hidden;
+	-webkit-perspective: 1000;
+	-webkit-overflow-scrolling: touch;
+	color: darkgrey;
+/*	opacity: 0.8;*/
+}
+
+#off-canvas ul {
+	margin: 0 0 0 5px;
+}
+
+#off-canvas li {
+	list-style-type: none;
+}
+
+#off-canvas li a {
+	color: grey;
+}
+
+#off-canvas li a.btn {
+	width: 220px;
+	margin: 0.2em;
+}
+
+.green {
+	color: #272;
+}
+
+#off-canvas a {
+	width: 240px;
+	/*color: darkgrey;*/
+	text-align: center;
+}
+
+#off-canvas a.btn {
+	border: 1px solid darkgrey;
+}
+
+#off-canvas dt {
+}
+
+#off-canvas dd {
+	text-align: right;
+}

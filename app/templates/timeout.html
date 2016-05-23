@@ -1,0 +1,121 @@
+
+<div class="modal-content" ng-controller="ActiveSimulations">
+  <div class="modal-header">
+    <h4 id="landingModalLabel">Session timed out. Try again?
+      <a class="pull-right h6 landing-logout" href="{% url 'logout_with_master_removal' %}?next=/">
+          <i class="fa fa-power-off"></i>
+          {% trans "Logout" %}
+        </a>
+        </h4>
+  </div>
+  <div class='tabs-wrapper'>
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" ng-class="{'active': tab === 'new'}">
+      <a ng-click="tab = 'new'">
+        New simulation
+      </a>
+      </li>
+      <li role="presentation" ng-class="{'active': tab === 'follow'}">
+      <a ng-click="tab = 'follow'; get_active_simulations()"
+        >Follow running simulation
+      </a>
+      </li>
+    </ul>
+  </div>
+  <div class="tab-content modal-body">
+    <div ng-controller="ModelChooser" class="tab-pane fade"
+      ng-class="{'active in': tab === 'new'}">
+      <div ng-class="{hide: is_loading}">
+          <div class="pull-right" id="model-search">
+              <form class="form-search" ng-submit="do_model_search()">
+                  <div class="input-group">
+                    <input type="text" class="form-control input" name="q" placeholder="Search model" value="">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div>
+              </form>
+          </div>
+          <table class="table table-striped">
+              <thead>
+              <tr>
+                  <th class="model-col"><a title="Click to sort by model." ng-click="getSortedModelList('model')">Model</a><i class="glyphicon"
+                         ng-class="
+                            {'glyphicon-arrow-down': model_sort_key === 'model' && model_sort_direction === 'desc',
+                             'glyphicon-arrow-up': model_sort_key === 'model' && model_sort_direction === 'asc'}">
+                      </i>
+                  </th>
+                  <th class="last-update-col"><a title="Click to sort by last update." ng-click="getSortedModelList('last_update')">Last update</a><i class="glyphicon"
+                         ng-class="
+                            {'glyphicon-arrow-down': model_sort_key === 'last_update' && model_sort_direction === 'desc',
+                             'glyphicon-arrow-up': model_sort_key === 'last_update' && model_sort_direction === 'asc'}">
+                      </i>
+                  </th>
+                  <th class="commit-user-col">By</th>
+                  <th class="info-col">&nbsp;</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="model in model_list">
+                  <td scope="row">
+                      <a title="{[{ model.description }]}" ng-click="touchDown(true); setModel(model, false)">
+                        {[{ model.display_name || '-' }]}
+                    </a>
+                  </td>
+                  <td>
+                    {[{ model['revision'].last_update || '-' }]}
+                  </td>
+                  <td>
+                    <span title="{[{ model['revision'].commit_user || '-' }]}">{[{ model['revision'].commit_user || '-' }]}</span>
+                  </td>
+                  <td>
+                      <span title="{[{ model.description || 'No description available.' }]}" class="glyphicon glyphicon-info-sign disabled"></span>
+                  </td>
+              </tr>
+              </tbody>
+              </table>
+              <ul class="pager">
+                <li class="previous btn-sm" ng-class="{disabled: model_list_previous_url === null}"><a title="Previous page" ng-click="model_list_previous_url === null || getModelList('previous');">&larr; Previous</a></li>
+                <li ng-class="{hide: !is_loading_model_data}"><i class="fa fa-spinner fa fa-spin fa fa-large" ></i> {[{ loading_model_data_text }]}</li>
+                <li ng-class="{hide: !error_text}" class="error">{[{ error_text }]}</li>
+                <li class="next btn-sm" ng-class="{disabled: model_list_next_url === null}"><a title="Next page" ng-click="model_list_next_url === null || getModelList('next');">Next &rarr;</a></li>
+              </ul>
+      </div>
+    </div>
+    <div class="tab-pane fade" ng-class="{'active in': tab === 'follow'}">
+      <h3>Follow running simulations</h3>
+      <div class="inline-containers">
+        <div ng-show="active_simulations == null">
+          <i class="fa fa-spinner fa fa-spin fa fa-large" ></i> {[{ load_text }]}
+        </div>
+        <div id="simulation-list-wrapper">
+          <ul class="list-unstyled">
+            <li ng-repeat="(key, value) in active_simulations">
+            <a ng-show="value[4] && value[2]" ng-click="followActiveSimulation(key)">
+              {[{ value[4] }]} ( {[{ value[2] }]} is director)
+            </a>
+            <a ng-show="value[4] && !value[2]" ng-click="followActiveSimulation(key)">
+              {[{ value[4] }]} (no director)
+            </a>
+            </li>
+            <li ng-show="no_simulation">
+            {[{ no_simulations_text }]}
+            </li>
+          </ul>
+        </div> <!--end simulation list wrapper-->
+
+        <div id="refresh-simulation-list">
+          <a id="refresh-link"
+            class="right-side"
+            ng-click="get_active_simulations()">
+            <i class="fa fa-refresh right-side"></i>
+            refresh list
+          </a>
+        </div>
+
+      </div> <!--end inline-containers-->
+    </div>
+  </div>
+  <div class="modal-footer footer-left">
+  </div>
+</div>

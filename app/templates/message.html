@@ -1,0 +1,20 @@
+{# just a message, based on make_sure.html #}
+<div class="modal-content" ng-controller="MakeSureCtrl">
+  <div class="modal-header">
+    <h4>Notification</h4>
+  </div>
+  <div class="modal-body">
+    <div class="alert-danger alert-in-modal" ng-show="checkErrorMessage()">
+      <i class="fa fa-cogs fa-mega .center-cogs"></i>
+      <div class="normal_or_error_message">{[{ error_message }]}</div>
+    </div>
+    <div class="alert-normal alert-in-modal" ng-show="checkNormalMessage()">
+      <i class="fa fa-globe fa-mega center-globe"></i>
+      <div class="normal_or_error_message">{[{ normal_message }]}</div>
+    </div>
+    <button class="btn btn-primary btn-box btn-success btn-model-picker"
+            ng-click="model_picker()">OK</button>
+  </div>
+  <div class="modal-footer footer-left">
+  </div>
+</div>

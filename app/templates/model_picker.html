@@ -1,0 +1,109 @@
+
+<div class="modal-content" ng-controller="ModelChooser">
+  <div ng-switch on="mode" ng-class="{hide: show_loading()}">
+    <div ng-switch-when="model">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 id="modelChooserModalLabel">{% trans "Load model" %}</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-class="{hide: show_loading()}">
+            <div class="pull-right" id="model-search">
+              <form class="form-search" ng-submit="do_model_search()">
+                  <div class="input-group">
+                    <input type="text" class="form-control input" name="q" placeholder="Search model" value="">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div>
+              </form>
+            </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+              <th class="model-col"><a title="Click to sort by model." ng-click="getSortedModelList('model')">Model</a><i class="glyphicon"
+                     ng-class="
+                        {'glyphicon-arrow-down': model_sort_key === 'model' && model_sort_direction === 'desc',
+                         'glyphicon-arrow-up': model_sort_key === 'model' && model_sort_direction === 'asc'}">
+                  </i>
+              </th>
+              <th class="last-update-col"><a title="Click to sort by last update." ng-click="getSortedModelList('last_update')">Last update</a><i class="glyphicon"
+                     ng-class="
+                        {'glyphicon-arrow-down': model_sort_key === 'last_update' && model_sort_direction === 'desc',
+                         'glyphicon-arrow-up': model_sort_key === 'last_update' && model_sort_direction === 'asc'}">
+                  </i>
+              </th>
+              <th class="commit-user-col">By</th>
+              <th class="info-col">&nbsp;</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="model in model_list">
+              <td scope="row">
+                  <a title="{[{ model.display_name }]}" ng-click="touchDown(true); setModel(model, true)">
+                    {[{ model.display_name  || '-' }]}
+                </a>
+              </td>
+              <td>
+                {[{ model['revision'].last_update || '-' }]}
+              </td>
+              <td>
+                <span title="{[{ model['revision'].commit_user || '-' }]}">{[{ model['revision'].commit_user || '-' }]}</span>
+              </td>
+              <td>
+                  <span title="{[{ model.description || 'No description available.' }]}" class="glyphicon glyphicon-info-sign disabled"></span>
+              </td>
+          </tr>
+          </tbody>
+        </table>
+        <ul class="pager">
+            <li class="previous btn-sm" ng-class="{disabled: model_list_previous_url === null}"><a title="Previous page" ng-click="model_list_previous_url === null || getModelList('previous');">&larr; Previous</a></li>
+            <li ng-class="{hide: !is_loading_model_data}"><i class="fa fa-spinner fa fa-spin fa fa-large" ></i> {[{ loading_model_data_text }]}</li>
+            <li ng-class="{hide: !error_text}" class="error">{[{ error_text }]}</li>
+            <li class="next btn-sm" ng-class="{disabled: model_list_next_url === null}"><a title="Next page" ng-click="model_list_next_url === null || getModelList('next');">Next &rarr;</a></li>
+        </ul>
+        </div>
+      </div>
+
+        <div class="modal-footer footer-left">
+      </div>
+    </div>  <!-- ng-switch-when -->
+
+    <div ng-switch-when="scenario">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 id="modelChooserModalLabel">{% trans "Choose scenario" %}</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-class="{hide: show_loading()}">
+          <ul>
+            <li>
+            <a ng-click="setScenario(null)">Standard</a>
+            </li>
+            <li data-ng-repeat="scenario in scenarios">
+            <a ng-click="setScenario(scenario.slug)">{[{ scenario.name }]}</a>
+            </li>
+          </ul>
+          <a class="btn" ng-click="setMode('model');">back</a>
+        </div>
+      </div>
+      <div class="modal-footer footer-left">
+      </div>
+    </div>  <!-- ng-switch-when -->
+  </div>  <!-- ng-switch -->
+
+  <div ng-class="{hide: !show_loading()}">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    </div>
+    <div class="modal-body loading-body">
+      <a href="https://www.google.com/doodles/30th-anniversary-of-pac-man" target="_blank">
+        <img class="loader" src="{{ STATIC_URL }}images/loader.gif" />
+      </a>
+      <span class="loading-status-load-text">{[{ load_text }]}</span>
+      <span class="loading-status-state-text">[current status: {[{ state_text }]}]</span>
+    </div>
+    <div class="modal-footer footer-left">
+    </div>
+  </div>  <!-- show_loading -->
+</div>  <!-- modal-content -->

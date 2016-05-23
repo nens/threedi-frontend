@@ -1,0 +1,40 @@
+<div class="modal-content" ng-controller="BootingStatus">
+  <div class="modal-header">
+    <div class="booting-status-wrapper">
+      <h4 id="bootingModalLabel">Booting machine...</h4>
+    </div>
+  </div><!-- modal header -->
+  <div class="modal-body">
+    <div class="booting-status" ng-show="!state.machines_busy">
+      <h4>This may take up to 10 minutes.</h4>
+      <span id="booting-status">[current status: {[{ state.state_text }]}]</span>
+      <div class="progress progress-booting">
+        <div class="progress-bar progress-bar-success progress-striped progress-bar-striped active"
+          role="progressbar"
+          aria-valuenow="{[{ progressAmount }]}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          style="width: {[{ progressAmount }]}%">
+          <span>{[{ progressAmount }]}%</span>
+        </div>
+      </div>
+    </div> <!--booting-status-wrapper-->
+    <div ng-show="state.machines_busy" class="booting-status-wrapper">
+      <h2 id="busyModalLabel">Sorry...</h2>
+      <div class="booting-status">
+        <i class='fa fa-scale'></i>
+        <p> ...{[{ state.status_label }]} </p>
+        <p id="step-forward">
+        <a href="#"
+          ng-click="returnFromBusyState()">
+          <i class='fa fa-step-forward'></i>
+          back home!
+        </a>
+        </p>
+      </div>
+    </div> <!--booting-status-wrapper-->
+  </div><!-- modal-body -->
+  <div class="modal-footer footer-left">
+  </div>
+
+</div> <!-- modal-content -->

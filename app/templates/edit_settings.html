@@ -1,0 +1,532 @@
+
+{% load tools %}
+<div class="modal-content"
+     ng-controller="EditSettings">
+  <div ng-switch="clientstate.program_mode">
+    <div ng-switch-when="rain">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                ng-click="close()"
+                aria-hidden="true">
+          ×
+        </button>
+        <h4 id="editSettingsModalLabelRain">
+          Rain settings
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div class="btn-group btn-group-bar"
+             style="width: 100%;">
+          <a class="btn btn-default"
+             style="width: 25%;"
+             ng-click="set_rain_type('off');"
+             ng-class="{'btn-primary': rain_type === 'off'}"
+             ng-show="clientstate.features.scenario_rain_local">
+
+            local only
+
+          </a>
+          {# 'off' is the same al 'local only', but without the settings #}
+          <a class="btn btn-default"
+             style="width: 25%;"
+             ng-click="set_rain_type('off');"
+             ng-class="{'btn-primary': rain_type === 'off'}"
+             ng-show="!clientstate.features.scenario_rain_local">
+
+            off
+
+          </a>
+          <a class="btn btn-default"
+             style="width: 25%;"
+             ng-click="set_rain_type('radar');"
+             ng-class="{'btn-primary': rain_type === 'radar'}"
+             ng-show="clientstate.features.scenario_rain_radar">
+
+            radar
+
+          </a>
+          <a class="btn btn-default"
+             style="width: 25%;"
+             ng-click="set_rain_type('design');"
+             ng-class="{'btn-primary': rain_type === 'design'}"
+             ng-show="clientstate.features.scenario_rain_design">
+
+            design
+
+          </a>
+          <a class="btn btn-default"
+             style="width: 25%;"
+             ng-click="set_rain_type('constant');"
+             ng-class="{'btn-primary': rain_type === 'constant'}"
+             ng-show="clientstate.features.scenario_rain_constant">
+
+            constant
+
+          </a>
+        </div>
+
+        <div ng-switch="rain_type"
+             class="settings-rain-choice">
+          <div ng-switch-when="off">
+            <div ng-show="clientstate.features.scenario_rain_local">
+              <div class="center-input-group">
+                {% slider 'rain' %}
+                {% slider 'rain_duration' %}
+                {% slider 'rain_size' %}
+              </div>
+              <div class="settings-text center-text">
+                The amount of rain per event is {[{ clientstate.edit_ranges['rain'].value * clientstate.edit_ranges['rain_duration'].value | number:clientstate.edit_ranges['rain'].decimals }]} mm.
+              </div>
+            </div>
+            <div class="center-text">
+              Select one of the other rain modes to turn on area wide rain.
+            </div>
+          </div>
+
+          <div ng-switch-when="radar"
+               ng-show="clientstate.features.scenario_rain_radar"
+               class="center-input-group">
+            <datetimepicker date-model="$parent.$parent.radar_dt"
+                            class="datetimepicker-elem">
+            </datetimepicker>
+            <div class="btn-group bar-buttons edit-wrapper edit-wrapper-rain">
+              <div class="switch-input-type"
+                   ng-show="manual_input_radar === false"
+                   ng-click="manual_input_radar = true">
+                <a href="#"
+                   title="manual input">
+                  <i class="fa fa-pencil manual-edit">
+                  </i>
+                </a>
+              </div>
+              <div class="progress settings-progress"
+                   ng-show="manual_input_radar === false"
+                   ng-mousedown="mouse_down('radar_multiplier', $event);"
+                   ng-mouseup="mouse_up('radar_multiplier', $event) && emit_to_socket()"
+                   ng-mousemove="mouse_move('radar_multiplier', $event) && emit_to_socket()">
+                <div class="progress-bar"
+                     role="progressbar"
+                     aria-valuemin="{[{ clientstate.edit_ranges.radar_multiplier.min }]}"
+                     aria-valuemax="{[{ clientstate.edit_ranges.radar_multiplier.max }]}"
+                     style="width: {[{ value_percentage.radar_multiplier }]}%;">
+                  <span style="color:white; white-space:nowrap;">
+                  </span>
+                </div>
+                <div class="progress-label"
+                  ng-hide="manualInputRadar.$error.required && manual_input_radar === false">
+                  {[{ clientstate.edit_ranges.radar_multiplier.name }]}
+                  {[{ clientstate.edit_ranges.radar_multiplier.value | number : clientstate.edit_ranges['radar_multiplier'].decimals }]}
+                  {[{ clientstate.edit_ranges.radar_multiplier.unit }]}
+                </div>
+                <div class="progress-label error"
+                  ng-show="manualInputRadar.$error.required && manual_input_radar === false">
+                  Default will be used!
+                </div>
+              </div>
+              <div class="switch-input-type"
+                ng-show="manual_input_radar === true"
+                ng-click="manual_input_radar = false">
+                <a href="#" title="back to slider">
+                  <i class="fa fa-share manual-edit"></i>
+                </a>
+              </div>
+              <div class="centerize manual-form-wrapper settings-progress"
+                ng-show="manual_input_radar === true">
+                <form name="manualInputRadar"
+                      class="manual-input-form">
+                  <label class="small-label"
+                         for="radar">
+                    {[{ clientstate.edit_ranges.radar_multiplier.name }]} [{[{ clientstate.edit_ranges.radar_multiplier.unit }]}]
+                  </label>
+                  <input
+                    type="number"
+                    id="radar"
+                    ng-model="clientstate.edit_ranges.radar_multiplier.value"
+                    value="{[{ clientstate.edit_ranges.radar_multiplier.value | number : clientstate.edit_ranges.radar_multiplier.decimals }]}"
+                    max="{[{ clientstate.edit_ranges.radar_multiplier.max }]}"
+                    min="{[{ clientstate.edit_ranges.radar_multiplier.min }]}"
+                    class="form-control form-alongside manual-input-box"
+                    ng-required="true" />
+                </form>
+              </div>
+              <div class="validation error"
+                   ng-show="manualInputRadar.$error.required &&
+                            manual_input_radar === true">
+                Default will be used!
+              </div>
+            </div> <!--btn...edit-wrapper-->
+          </div> <!--ng-switch rain-radar-->
+
+          <div ng-switch-when="design"
+               ng-show="clientstate.features.scenario_rain_design">
+            <div class="btn-group btn-group-bar"
+                 style="width: 100%;">
+              {% include "threedi_server/includes/design_rain_choice.html" with index=3 width=12 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=4 width=12 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=5 width=12 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=6 width=12 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=7 width=13 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=8 width=13 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=9 width=13 %}
+              {% include "threedi_server/includes/design_rain_choice.html" with index=10 width=13 %}
+            </div>
+            {% include "threedi_server/includes/design_rain_messages.html" %}
+          </div>
+
+          <div ng-switch-when="constant"
+               ng-show="clientstate.features.scenario_rain_constant">
+            <div class="btn-group bar-buttons edit-wrapper edit-wrapper-constant-rain center-input-group">
+              <div class="switch-input-type"
+                   ng-show="manual_input_constant === false"
+                   ng-click="manual_input_constant = true">
+                <a href="#"
+                   title="manual input">
+                  <i class="fa fa-pencil manual-edit"></i>
+                </a>
+              </div>
+              <div class="progress settings-progress edit-wrapper edit-wrapper-rain"
+                   ng-show="manual_input_constant === false"
+                   ng-mousedown="mouse_down('rain_constant_intensity', $event);"
+                   ng-mouseup="mouse_up('rain_constant_intensity', $event);"
+                   ng-mousemove="mouse_move('rain_constant_intensity', $event);">
+                <div class="progress-bar"
+                     role="progressbar"
+                     aria-valuemin="{[{ clientstate.edit_ranges.rain_constant_intensity.min }]}"
+                     aria-valuemax="{[{ clientstate.edit_ranges.rain_constant_intensity.max }]}"
+                     style="width: {[{ value_percentage.rain_constant_intensity }]}%;">
+                  <span style="color:white; white-space:nowrap;">
+                  </span>
+                </div>
+                <div class="progress-label"
+                     ng-hide="manualInputConstant.$error.required
+                              && manual_input_constant === false">
+                  {[{ clientstate.edit_ranges.rain_constant_intensity.name }]}
+                  {[{ clientstate.edit_ranges.rain_constant_intensity.value | number : clientstate.edit_ranges['rain_constant_intensity'].decimals }]}
+                  {[{ clientstate.edit_ranges.rain_constant_intensity.unit }]}
+                </div>
+                <div class="progress-label error"
+                     ng-show="manualInputConstant.$error.required && manual_input_constant === false">
+                  Default will be used!
+                </div>
+              </div>
+              <div class="switch-input-type"
+                   ng-show="manual_input_constant === true"
+                   ng-click="manual_input_constant = false">
+                <a href="#"
+                   title="back to slider">
+                  <i class="fa fa-share manual-edit">
+                  </i>
+                </a>
+              </div>
+              <div class="centerize manual-form-wrapper settings-progress"
+                   ng-show="manual_input_constant === true">
+                <form name="manualInputConstant"
+                      class="manual-input-form">
+                  <label class="small-label"
+                         for="constant">
+                    {[{ clientstate.edit_ranges.rain_constant_intensity.name }]} [{[{ clientstate.edit_ranges.rain_constant_intensity.unit }]}]
+                  </label>
+                  <input type="number"
+                         id="constant"
+                         step="0.1"
+                         ng-model="clientstate.edit_ranges.rain_constant_intensity.value"
+                         value="{[{ clientstate.edit_ranges.rain_constant_intensity.value | number : clientstate.edit_ranges.rain_constant_intensity.decimals }]}"
+                         max="{[{ clientstate.edit_ranges.rain_constant_intensity.max }]}"
+                         min="{[{ clientstate.edit_ranges.rain_constant_intensity.min }]}"
+                         class="form-control form-alongside manual-input-box"
+                         ng-required="true" />
+                </form>
+              </div>
+              <div class="validation error"
+                ng-show="manualInputConstant.$error.required
+                         && manual_input_constant === true">
+                Default will be used!
+              </div>
+            </div>  <!-- btn...edit-wrapper -->
+          </div> <!-- ng-switch rain-constant -->
+        </div> <!-- ng-switch rain -->
+      </div>
+
+      <div class="modal-pre-footer">
+        <div ng-switch="rain_type">
+          <button ng-switch-when="radar"
+                  type="button"
+                  class="btn btn-primary btn-box btn-success centerize pull-right"
+                  ng-click="close_via_OK_button()">
+            OK
+          </button>
+          <button
+            ng-switch-default=""
+            type="button"
+            class="btn btn-primary btn-box btn-success centerize pull-right"
+            ng-click="close()">
+            OK
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer footer-left"
+           ng-switch on="rain_type">
+        <div ng-switch-when="radar"
+             class="change-warning-radar">
+          Push the "OK" button to submit the radar data.
+        </div>
+        <div ng-switch-default>
+          After closing the window, the rain settings will remain active.
+        </div>
+      </div>
+    </div> <!-- ng-switch rain -->
+
+    <div ng-switch-when="discharge">
+
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                ng-click="close()"
+                aria-hidden="true">
+          ×
+        </button>
+        <h4>Discharge/pump settings</h4>
+      </div>
+
+      <div class="modal-body">
+        {% slider 'discharge' %}
+
+        <div class="btn-group bar-buttons popup-radio-buttons">
+          <div class="radio">
+            <label>
+              <input type="radio"
+                     name="optradio"
+                     ng-model="clientstate.edit_ranges['discharge_type'].value"
+                     value="1">
+              Overland
+            </label>
+          </div>
+          <div ng-if="model_type === '3di'"
+               class="radio">
+            <label>
+              <input type="radio"
+                     name="optradio"
+                     ng-model="clientstate.edit_ranges['discharge_type'].value"
+                     value="2">
+              Groundwater
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer footer-left">
+      </div>
+    </div>
+
+    {# to be able to show either absolute or relative floodfill ng-class is used here instead of ng-switch #}
+    <div ng-class="{hide: !(clientstate.program_mode === 'flood_fill_absolute' ||
+                          clientstate.program_mode === 'flood_fill_relative')}">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                ng-click="close()"
+                aria-hidden="true">
+          ×
+        </button>
+        <h4>Edit floodfill settings</h4>
+      </div>
+      <div class="modal-body">
+        <div class="btn-group bar-buttons edit-wrapper">
+          <div class="switch-input-type"
+               ng-show="manual_input === false"
+               ng-click="manual_input = true">
+            <a href="#"
+               title="manual input">
+              <i id="pencil-floodfill-settings"
+                 class="fa fa-pencil manual-edit">
+              </i>
+            </a>
+          </div>
+          <div id="slider-floodfill-settings"
+               class="progress settings-progress"
+               ng-show="clientstate.edit_ranges['flood_fill_mode'].value === '1'
+                        && manual_input === false"
+               ng-mousedown="mouse_down('flood_fill_absolute', $event);"
+               ng-mouseup="mouse_up('flood_fill_absolute', $event);"
+               ng-mousemove="mouse_move('flood_fill_absolute', $event);">
+            <div ng-class="{'progress-bar': clientstate.edit_ranges[clientstate.program_mode].value >= 0,
+                            'progress-bar progress-bar-neg': clientstate.edit_ranges[clientstate.program_mode].value < 0}"
+                 role="progressbar"
+                 aria-valuemin="{[{ clientstate.edit_ranges.flood_fill_absolute.min }]}"
+                 aria-valuemax="{[{ clientstate.edit_ranges.flood_fill_absolute.max }]}"
+                 style="width: {[{ value_percentage.flood_fill_absolute }]}%;">
+              <span style="color:white; white-space:nowrap;">
+              </span>
+            </div>
+            <div class="progress-label"
+                 ng-hide="manualInputAbsolute.$error.required &&
+                          manual_input === false">
+              {[{ clientstate.edit_ranges.flood_fill_absolute.name }]}
+              {[{ clientstate.edit_ranges.flood_fill_absolute.value | number : clientstate.edit_ranges.flood_fill_absolute.decimals }]}
+              {[{ clientstate.edit_ranges.flood_fill_absolute.unit }]}
+            </div>
+            <div class="progress-label error"
+                 ng-show="manualInputAbsolute.$error.required &&
+                          manual_input === false">
+              Default will be used!
+            </div>
+          </div>
+          <div class="switch-input-type"
+               ng-show="manual_input === true"
+               ng-click="manual_input = false">
+            <a href="#"
+               title="back to slider">
+              <i class="fa fa-share manual-edit">
+              </i>
+            </a>
+          </div>
+          <div class="centerize manual-form-wrapper settings-progress"
+               ng-show="clientstate.edit_ranges.flood_fill_mode.value === '1'
+                        && manual_input === true">
+            <form name="manualInputAbsolute"
+                  class="manual-input-form">
+              <label class="small-label"
+                     for="absolute">
+                {[{ clientstate.edit_ranges.flood_fill_absolute.name }]} [{[{ clientstate.edit_ranges.flood_fill_absolute.unit }]}]
+              </label>
+              <input type="number"
+                     id="absolute"
+                     ng-model="clientstate.edit_ranges.flood_fill_absolute.value"
+                     value="{[{ clientstate.edit_ranges.flood_fill_absolute.value | number:2 }]}"
+                     max="{[{ clientstate.edit_ranges.flood_fill_absolute.max }]}"
+                     min="{[{ clientstate.edit_ranges.flood_fill_absolute.min }]}"
+                     class="form-control form-alongside manual-input-box"
+                     ng-required="true" />
+            </form>
+          </div>
+
+          <div id="slider-floodfill-settings-relative "
+               class="progress settings-progress"
+               ng-show="clientstate.edit_ranges.flood_fill_mode.value === '0'
+                        && manual_input === false"
+               ng-mousedown="mouse_down('flood_fill_relative', $event);"
+               ng-mouseup="mouse_up('flood_fill_relative', $event);"
+               ng-mousemove="mouse_move('flood_fill_relative', $event);">
+            <div class="progress-bar"
+                 role="progressbar"
+                 aria-valuemin="{[{ clientstate.edit_ranges.flood_fill_relative.min }]}"
+                 aria-valuemax="{[{ clientstate.edit_ranges.flood_fill_relative.max }]}"
+                 style="width: {[{ value_percentage.flood_fill_relative }]}%;">
+              <span style="color:white; white-space:nowrap;">
+              </span>
+            </div>
+            <div class="progress-label"
+                 ng-hide="manualInput.$error.required
+                          && manual_input === false">
+              {[{ clientstate.edit_ranges.flood_fill_relative.name }]}
+              {[{ clientstate.edit_ranges.flood_fill_relative.value | number : clientstate.edit_ranges.flood_fill_relative.decimals }]}
+              {[{ clientstate.edit_ranges.flood_fill_relative.unit }]}
+            </div>
+            <div class="progress-label error"
+              ng-show="manualInput.$error.required
+                       && manual_input === false">
+              Default will be used!
+            </div>
+          </div>
+          <div class="centerize manual-form-wrapper settings-progress"
+               ng-show="clientstate.edit_ranges.flood_fill_mode.value === '0'
+                        && manual_input === true">
+            <form name="manualInput"
+                  class="manual-input-form">
+              <label class="small-label"
+                     for="relative">
+                {[{ clientstate.edit_ranges.flood_fill_relative.name }]} [{[{ clientstate.edit_ranges.flood_fill_relative.unit }]}]
+              </label>
+              <input type="number"
+                     ng-model="clientstate.edit_ranges.flood_fill_relative.value"
+                     id="relative"
+                     value="{[{ clientstate.edit_ranges.flood_fill_relative.value | number : 2 }]}"
+                     max="{[{ clientstate.edit_ranges.flood_fill_relative.max }]}"
+                     min="{[{ clientstate.edit_ranges.flood_fill_relative.min }]}"
+                     class="form-control form-alongside manual-input-box"
+                     ng-required="true" />
+            </form>
+          </div>
+          <div class="validation error"
+              ng-show="must_show_flood_fill_validation_error()">
+              Default will be used!
+          </div>
+          <div class="btn-group bar-buttons popup-radio-buttons popup-radio-buttons-floodfill">
+            <div class="radio">
+              <label>
+                <input type="radio"
+                       name="optradio"
+                       ng-model="clientstate.edit_ranges.flood_fill_mode.value"
+                       value="0">
+                relative
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio"
+                       name="optradio"
+                       ng-model="clientstate.edit_ranges.flood_fill_mode.value"
+                       value="1">
+                absolute
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer footer-left">
+      </div>
+    </div>
+
+    {# edit #}
+    <div ng-switch-when="edit">
+
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                ng-click="close()"
+                aria-hidden="true">
+          ×
+        </button>
+        <h4 id="editSettingsModalLabel">
+          Edit 2D settings
+        </h4>
+      </div>
+      <div class="modal-body">
+        {% slider 'edit_bathy' %}
+        {% slider 'edit_soil' %}
+        {% slider 'edit_crop_type' %}
+        {% slider 'edit_infiltration' %}
+        {% slider 'edit_interception' %}
+      </div>
+      <div class="modal-footer footer-left">
+      </div>
+    </div>
+
+    {# wind #}
+    <div ng-switch-when="wind">
+
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                ng-click="close()"
+                aria-hidden="true">
+          ×
+        </button>
+        <h4>
+          Wind settings
+        </h4>
+      </div>
+
+      <div class="modal-body"
+           ng-controller="DefaultSettings">
+        <threedi-windrose></threedi-windrose>
+        <p>Wind direction: {[{ get_wind_direction() }]}</p>
+        <p>Wind speed: {[{ wind_speed_beaufort }]} Beaufort ({[{ beaufort_to_ms(wind_speed_beaufort, 2) }]} m/s)</p>
+      </div>
+      <div class="modal-footer footer-left">
+      </div>
+    </div>
+
+  </div>  <!-- ng-switch -->
+</div>  <!-- modal-content -->
+

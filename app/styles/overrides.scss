@@ -1,0 +1,11 @@
+/*
+We make sure this file is the final CSS file that gets loaded for our SPA
+(via: .../threedi_server/templates/threedi_server/includes/cssdependencies.html)
+That way, we can eliminate the use of the dreaded "!important" modifier which
+currently obfuscates our CSS.
+*/
+
+.leaflet-control-zoom-in,
+.leaflet-bar a {
+  color: grey;
+}

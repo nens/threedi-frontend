@@ -1,0 +1,63 @@
+
+<div ng-switch-when="weir" ng-controller="Weir">
+  <div class="box-awesome-head">
+    <h4>Weir ({[{ content.properties.display_name }]})</h4>
+  </div>
+
+  <div class="box-awesome-contents">
+    <div class="row small-spacer">
+      <div class="col-sm-6">
+        <span>Crest Level [m MSL]</span>
+      </div>
+      <div class="col-sm-6">
+        <edit-number
+          candidate="content.properties.crest_level"
+          callback="set_weir"
+          step="0.05">
+        </edit-number>
+      </div>
+    </div>
+
+    <div class="row small-spacer">
+      <div class="col-sm-6">
+        <span>Crest Width [m]</span>
+      </div>
+      <div class="col-sm-6">
+        <edit-number
+          candidate="content.properties.crest_width"
+          callback="set_weir">
+        </edit-number>
+      </div>
+    </div>
+
+    <div class="row small-spacer">
+      <div class="col-sm-6">
+        <span>
+           {[{ selectedInfo.name }]}
+        </span>
+      </div>
+        <div class="col-sm-6">
+          <div class="btn-group structures-graph-selector pull-right">
+             <a ng-click="selectInfo(selectedInfo.previous)" class="btn btn-box-small btn-default" ng-class="{disabled: selectedInfo.previous == undefined}"><i class="fa fa-arrow-left"></i></a>
+            <a ng-click="selectInfo(selectedInfo.next)" class="btn btn-default btn-box-small " ng-class="{disabled: selectedInfo.next == undefined}"><i class="fa fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    <div class="row small-spacer">
+        <div class="col-sm-11 structures-graph">
+          <threedi-timeseries url="{[{ selectedUrl }]}" title="{[{selectedInfo.name}]}" unit="{[{selectedInfo.unit}]}" height="200px" width="370px"></threedi-timeseries>
+        </div>
+    </div>
+    <div class="row-fluid download-row">
+        <span class="col-sm-10">
+        </span>
+        <span class="col-sm-2">
+            <a href="{[{ selectedUrl }]}&format=csv&object_type=weir&display_name=weir_{[{ content.properties.display_name }]}_{[{selectedInfo.name}]}" title="Download timeseries">
+                <i class="fa fa-download fa-2x"></i>
+            </a>
+        </span>
+    </div>
+
+  </div>
+</div>
+

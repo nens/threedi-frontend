@@ -1,0 +1,20 @@
+
+{# is nearly exactly the same as infopoint.html #}
+<div ng-switch-when="sewerage-orifice" ng-controller="InfoPoint">
+    <div class="box-awesome-head">
+        <h4>
+            {[{ selectedInfo.name }]}
+            <span class="graph-selector btn-group pull-right">
+            <a ng-click="selectInfo(selectedInfo.previous)" class="btn btn-default" ng-class="{disabled: selectedInfo.previous == undefined}"><i class="fa fa-arrow-left"></i></a>
+            <a ng-click="selectInfo(selectedInfo.next)" class="btn btn-default" ng-class="{disabled: selectedInfo.next == undefined}">
+            <i class="fa fa-arrow-right"></i></a>
+            </span>
+        </h4>
+    </div>
+    <div class="row-fluid">
+        <span class="col-sm-12">
+            {[{ content.condition }]}
+        </span>
+    </div>
+    <threedi-timeseries url="{[{ selectedUrl }]}" title="{[{selectedInfo.name}]}" unit="{[{selectedInfo.unit}]}" height="300px" width="390px"></threedi-timeseries>
+</div>

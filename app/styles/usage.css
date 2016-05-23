@@ -1,0 +1,28 @@
+.main {
+    margin-top: 50px;
+}
+
+.logo-img {
+    max-height: 30px;
+}
+
+svg {
+    height: 350px;
+    width: 100%;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+tr {
+    transition: all 0.3s linear;
+}
+
+
+/*
+ * bootstrap override
+ */
+.progress {
+    margin-bottom: 5px;
+}

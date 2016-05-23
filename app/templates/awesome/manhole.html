@@ -1,0 +1,51 @@
+
+<div ng-switch-when="manhole" ng-controller="PopupSlider" style="height: 10em;">
+  <div ng-controller="Discharge">
+
+  <div class="box-awesome-head">
+    <h4>{% trans "Flow" %}</h4>
+  </div>
+  <div class="box-awesome-contents">
+
+    <div class="row spacer">
+      <div class="col-sm-12">
+        <div class="btn-group bar-buttons">
+            <div class="progress progress-popup"
+                 ng-mousedown="mouse_down('discharge', $event);"
+                 ng-mouseup="mouse_up('discharge', $event);"
+                 ng-mousemove="mouse_move('discharge', $event);">
+                <div class="progress-bar" role="progressbar"
+                   aria-valuemin="{[{ clientstate.edit_ranges['discharge'].min }]}"
+                   aria-valuemax="{[{ clientstate.edit_ranges['discharge'].max }]}"
+                   style="width: {[{ value_percentage['discharge'] }]}%;">
+                    <span style="color:white; white-space:nowrap;">
+                    </span>
+                </div>
+                <div class="progress-label">
+                  {[{ clientstate.edit_ranges['discharge'].name }]}
+                  {[{ box.content.properties.amount | number : clientstate.edit_ranges['discharge'].decimals }]}
+                  {[{ clientstate.edit_ranges['discharge'].unit }]}
+                  {[{ discharge_display }]}
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row spacer">
+      <div class="col-sm-6">
+        <a ng-click="stop()" class="btn btn-default btn-box btn-danger">
+          <i class="fa fa-trash"></i>
+        </a>
+      </div>
+      <div class="col-sm-6">
+        <a ng-click="save()" class="btn btn-default btn-success btn-box pull-right">
+          OK
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+</div>

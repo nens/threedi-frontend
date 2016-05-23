@@ -1,0 +1,80 @@
+{
+  "name": "threedi-server",
+  "version": "0.12.2",
+  "homepage": "https://github.com/nens/threedi-server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nens/threedi-server"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors --hot --inline --port 3000 --host 127.0.0.1",
+    "build": "webpack -p -progress --colors",
+    "test": "mocha"
+  },
+  "authors": [
+    "jackha",
+    "jsmits",
+    "reinoutvanrees",
+    "fritzvd",
+    "deltares"
+  ],
+  "description": "3Di is a project to quickly calculate and analyze flooding and other Hydrological phenomena.",
+  "keywords": [
+    "threedi",
+    "3di",
+    "flooding",
+    "cloud",
+    "computing"
+  ],
+  "license": "-",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "bugs": {
+    "url": "https://github.com/nens/threedi-server/issues"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb-es5": "^1.0.9",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.17.0",
+    "jasmine-core": "^2.2.0",
+    "jsx-loader": "^0.13.2",
+    "karma": "^0.12.31",
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-nyan-reporter": "0.0.50",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.4.5",
+    "mocha-loader": "^0.7.1",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.9.1",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "text-loader": "0.0.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-resource": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "d3": "^3.5.17",
+    "font-awesome": "^4.6.1",
+    "jquery": "^2.2.3",
+    "leaflet": "^0.7.7",
+    "leaflet-draw": "^0.3.0",
+    "moment": "^2.13.0",
+    "nvd3": "^1.8.3",
+    "socket.io-client": "^1.4.6"
+  }
+}
