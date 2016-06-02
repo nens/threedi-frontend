@@ -15,6 +15,8 @@
  *   Match D3 idioms for .classed(), .style(), etc
  *   Work on allowing feature popups, etc.
  */
+const L = require('leaflet');
+
 L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
     onAdd : function(map) {
         L.TileLayer.prototype.onAdd.call(this,map);
@@ -296,3 +298,5 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
         }
     }
 });
+
+module.exports = L.TileLayer.GeoJSONd3;

@@ -9,6 +9,20 @@ const angular = require('angular');
 const d3 = require('d3');
 const map = require('./leaflet');
 const L = require('leaflet');
+require('drmonty-leaflet-awesome-markers');
+L.TileLayer.GeoJSONd3 = require('./lib/leaflet-plugins/TileLayer.GeoJSONd3');
+
+// Creates a red marker with the coffee icon
+const infoMarker = function (color) {
+  if (!color) {
+    color = 'green'; // eslint-disable-lines
+  }
+  return L.AwesomeMarkers.icon({
+    icon: 'info',
+    prefix: 'fa',
+    markerColor: color
+  });
+};
 
 // require('./threedi'); // threedi-client module
 
@@ -132,6 +146,7 @@ angular.module('threedi-client').service('leaflet', [
       return clientstate.show_onedee[layer_name];
     };
 
+    require('./lib/leaflet-plugins/TileLayer.GeoJSON')
     /* All 1d objects in 1 layer: culvert, weir, pumpstation and orifice */
     clientstate.spatial.layers.createObjectLayer = function () {
         // used to filter only point objects.
@@ -421,6 +436,7 @@ angular.module('threedi-client').service('leaflet', [
       'coordinates': [[0, 0], [0, 0]]
     }).addTo(map);
 
+    require('./lib/leaflet-plugins/TileLayer.GeoJSONd3')
     clientstate.spatial.layers.createChannelLayer = function (inverted) {
         // onedee_url must be created dynamically
 
@@ -1970,6 +1986,7 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
       return request_url;
     };
 
+    const $ = require('jquery');
     // Update DEM range, if DEM layer is enabled.
     // The ranges are updated 'smart', not too often and using a calculated granularity.
     this.updateDEMRange = function () {
@@ -2328,6 +2345,7 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
         this.use_server_extent_as_master = false;
         clientstate.spatial.extent = JSON.parse(state.state.player.extent); // event comes in as string
           // for some reason this neeeeeds to happen here.
+          //
         map.fitBounds([
             [clientstate.spatial.extent[0], clientstate.spatial.extent[1]],
             [clientstate.spatial.extent[2], clientstate.spatial.extent[3]]]);

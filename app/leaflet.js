@@ -6,24 +6,11 @@ const L = require('leaflet');
 var map = L.map('map', {
   maxZoom: 20,
   noWrap: true
-})
-// .fitBounds([
-//     [model_extent[0], model_extent[1]],
-//     [model_extent[2], model_extent[3]]
-// ]);
+}).fitBounds([
+  [model_extent[0], model_extent[1]],
+  [model_extent[2], model_extent[3]]
+]);
 
-
-// Creates a red marker with the coffee icon
-var infoMarker = function (color) {
-  if (color === undefined) {
-    color = 'green';
-  }
-  return L.AwesomeMarkers.icon({
-    icon: 'info',
-    prefix: 'fa',
-    markerColor: color
-  });
-};
 
 var raincloudIcon = function (color, uuid) {
   if (color === undefined) {

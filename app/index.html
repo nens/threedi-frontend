@@ -285,13 +285,13 @@
               </i>
 
               <i class="non-btn fa fa-cloud-on clickable"
-                 ng-class="{'fa-threedi-rain': add_rain_icon()}"
+                 ng-class="{'fa-threedi-rain': addRainIcon()}"
                  ng-click="show_rain_data = !show_rain_data;"
                  title="{[{ rain_label }]}">
               </i>
 
-              <i class="non-btn fa fa-cloud-on fa-threedi-windrose clickable ng-class:get_windrose_class()"
-                 ng-show="(state.vars.wind_speed > 0 &&
+              <i class="non-btn fa fa-cloud-on fa-threedi-windrose clickable ng-class:getWindroseClass()"
+                 ng-show="(state.vars.windSpeed > 0 &&
                            c.features.scenario_global_wind)"
                  ng-click="show_wind_data = !show_wind_data;"
                  title="{[{ wind_label }]}">
@@ -1117,7 +1117,7 @@
   <div id="alert_placeholder"></div>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization&sensor=false"></script>
-  <script src="http://localhost:9000/hand-crank.js"></script>
+  <script src="hand-crank.js"></script>
 
 </body>
 </html>

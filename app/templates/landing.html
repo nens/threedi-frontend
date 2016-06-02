@@ -2,13 +2,13 @@
 <div class="modal-content" ng-controller="ActiveSimulations">
   <div class="modal-header">
     <h4 id="landingModalLabel">Welcome to 3Di
-      <a class="pull-right h6 landing-logout" href="{% url 'logout_with_master_removal' %}?next=/">
+      <a class="pull-right h6 landing-logout" href="{[{ logoutUrl }]}">
           <i class="fa fa-power-off"></i>
-          {% trans "Logout" %}
+          <!-- {% trans "Logout" %} -->
         </a>
         </h4>
   </div>
-  <div class='tabs-wrapper'>
+  <div class="tabs-wrapper">
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" ng-class="{'active': tab === 'new'}">
       <a ng-click="tab = 'new'">

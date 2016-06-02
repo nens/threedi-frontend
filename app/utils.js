@@ -95,8 +95,3 @@ var listKeys = function (obj) {
     }
     console.log("\n");
 };
-
-var contains = function (ls, x) {
-    // Check whether an element is in a JS list/"array"
-    return ls.indexOf(x) > -1;
-};

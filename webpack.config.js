@@ -3,22 +3,16 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const sassLoaders = [
-  'css-loader',
-  'postcss-loader',
-  'sass-loader?includePaths[]=' + path.resolve(__dirname, './src')
-];
-
 const config = {
   entry: {
-   app: [
-     './app/threedi.js',
-   ]
- },
+    app: [
+      './app/threedi.js'
+    ]
+  },
   output: {
     filename: '[name].js',
     path: path.join(__dirname, './dist'),
-    chunkFilename: '[id].chunk.js',
+    chunkFilename: '[id].chunk.js'
   },
   module: {
     loaders: [

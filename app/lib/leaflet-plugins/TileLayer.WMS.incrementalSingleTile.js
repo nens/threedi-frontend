@@ -5,14 +5,14 @@
 	the improvment is that a lot of WMS-Requests get combined to a single request (for performance issues).
 	It is done by merging all of the TilePoints to blocks described by L.Bounds. Each L.bound results in only one Request ("singleTile").
 	After a  pan there is nop need to load the map as a whole but only to incement the tiles in the empty areas ("incremental").
-	
+
 	The behaviour (typical):
 	on first load of the wms layer: 1 WMS-request in container-size
 	after a pan-gesture: 1 request for a row or a column
 	(works also for the rare case that after panning in a wide circle there is a only a small gap between loaded blocks)
-	
+
 	in the case that the zoom and the options result in multiple earths in a row we end up with one request for each of the earths (but there are only 3 cases possible: left-cut-off, full, right cut off; so for more than one in the middle/full browsercaching kicks in)
-	
+
 	feel free to clean up this mess ;-)
  */
 
@@ -21,7 +21,7 @@ L.TileLayer.WMS.incrementalSingleTile = L.TileLayer.WMS.extend({
 	initialize: function(url, options) {
 		L.TileLayer.WMS.prototype.initialize.call(this, url, options);
 		// tilePoints is a look-up table to store ids for "tilePoints" that where loaded in a bigger tile
-		// it works as an replacment for the look-up functionality of the typed Array the tiles are stored in 
+		// it works as an replacment for the look-up functionality of the typed Array the tiles are stored in
 		this.tilePoints = [];
 	},
 
@@ -63,7 +63,7 @@ L.TileLayer.WMS.incrementalSingleTile = L.TileLayer.WMS.extend({
 		if (this.tilePoints.indexOf(tilePoint.x + ':' + tilePoint.y) != -1){
 			return false;
 		}
-		
+
 
 		var options = this.options;
 

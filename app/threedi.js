@@ -16,6 +16,7 @@ require('./bootstrap-ui/bootstrap-ui');
 require('./utils/utils');
 require('./modes');
 require('jquery');
+require('./templates.js');
 
 var app = angular.module('threedi-client', [
   'global-state',
@@ -23,6 +24,7 @@ var app = angular.module('threedi-client', [
   'threedi-graph',
   'ui.keypress',
   'modes-module',
+  'templates',
   'utils'
 ]);
 

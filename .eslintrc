@@ -3,6 +3,7 @@
   "rules": {
     "func-names": 0,
     "no-else-return": 0,
-    "space-before-function-paren": [2, "always"]
-  }
+    "space-before-function-paren": [2, "always"],
+    "radix": 0
+    }
 }

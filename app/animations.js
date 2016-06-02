@@ -2,6 +2,10 @@
  * Support for animations
  * Animated layer: keep track of an animated wms.
 */
+
+const map = require('./leaflet');
+require('./lib/leaflet-plugins/TileLayer.WMS.incrementalSingleTile');
+
 angular.module('threedi-client')
   .factory('AnimatedLayer', [function () {
     var startedLoading,
@@ -163,7 +167,7 @@ angular.module('threedi-client')
             // console.log('adding to map ', ts);
         this.startedLoading = Date.now();
         var new_layer = this.layerFromTs(timestep, extra_options);
-        map.addLayer(new_layer);
+        // map.addLayer(new_layer); // TODO: turn on
         this.current_in_map[currentLayerKey] = new_layer;
         this.readyForNext = currentLayerKey;
       }
