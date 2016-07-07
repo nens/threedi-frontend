@@ -162,16 +162,45 @@
                ng-show="clientstate.features.scenario_rain_design">
             <div class="btn-group btn-group-bar"
                  style="width: 100%;">
-              {% include "threedi_server/includes/design_rain_choice.html" with index=3 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=4 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=5 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=6 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=7 width=13 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=8 width=13 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=9 width=13 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=10 width=13 %}
+              <a ng-repeat="n in [3, 4, 5, 6, 7, 8, 9, 10]"
+                 ng-click="mouse_click('rain_design_definition', n)"
+                    class="btn btn-default"
+                    style="width: 12%;"
+                    ng-class="{'btn-primary':
+                                   clientstate.edit_ranges['rain_design_definition'].value
+                                   === n }">
+                   rain {[{ n }]}
+                 </a>
             </div>
-            {% include "threedi_server/includes/design_rain_messages.html" %}
+            <div>
+             <div ng-switch="clientstate.edit_ranges['rain_design_definition'].value">
+               <div ng-switch-when="3">
+                 Rain 3 is a designed event that statistically occurs twice a year. The duration of this event is 75 minutes. The event has a peak at the front of 25 mm/h. (T=0.5 year, V=14.4 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="4">
+                 Rain 4 is a designed event that statistically occurs twice a year. The duration of this event is 75 minutes. The event has a peak at the back of 25 mm/h. (T=0.5 year, V=14.4 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="5">
+                 Rain 5 is a designed event that statistically occurs once a year. The duration of this event is 75 minutes. The event has a peak at the front of 32 mm/h. (T=1.0 year, V=16.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="6">
+                 Rain 6 is a designed event that statistically occurs once a year. The duration of this event is 60 minutes. The event has a peak at the back of 32 mm/h. (T=1.0 year, V=16.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="7">
+                 Rain 7 is a designed event that statistically occurs once every 2 years. The duration of this event is 60 minutes. The event has a peak at the front of 39 mm/h. (T=2.0 year, V=19.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="8">
+                 Rain 8 is a designed event that statistically occurs once every 2 years. The duration of this event is 60 minutes. The event has a peak at the back of 39 mm/h. (T=2.0 year, V=19.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="9">
+                 Rain 9 is a designed event that statistically occurs once every 5 years. The duration of this event is 60 minutes. The event has a total volume of 29.4 mm/h. (T=5.0 year, V=29.4 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="10">
+                 Rain 10 is a designed event that statistically occurs once every 10 years. The duration of this event is 45 minutes. The event has a peak at the front of 75 mm/h. (T=10.0 year, V=35.7 mm, C2100 RIONED)
+               </div>
+             </div>
+           </div>
+
           </div>
 
           <div ng-switch-when="constant"
