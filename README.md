@@ -1,5 +1,5 @@
-# threedi-ng
-Angular frontend for threedi.
+# threedi-frontend
+Extraction and refactoring of the threedi frontend. Angular frontend for threedi.
 
 ## install and running
 This uses npm for packaging and npm scripts for running it in development mode.
@@ -67,3 +67,4 @@ The biggest mess is still in `app/controllers`. This folder contains all of the
 angular controllers, that really don't need be controllers but are. Sorry about
 that.
 We're working hard on refactoring that.
+
