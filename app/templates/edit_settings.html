@@ -71,11 +71,9 @@
           <div ng-switch-when="off">
             <div ng-show="clientstate.features.scenario_rain_local">
               <div class="center-input-group">
-                <slider var-name='rain'></slider>
-                
-                {% slider 'rain' %}
-                {% slider 'rain_duration' %}
-                {% slider 'rain_size' %}
+                <slider var-name="rain"></slider>
+                <slider var-name="rain_duration"></slider>
+                <slider var-name="rain_size"></slider>
               </div>
               <div class="settings-text center-text">
                 The amount of rain per event is {[{ clientstate.edit_ranges['rain'].value * clientstate.edit_ranges['rain_duration'].value | number:clientstate.edit_ranges['rain'].decimals }]} mm.
@@ -292,7 +290,7 @@
       </div>
 
       <div class="modal-body">
-        {% slider 'discharge' %}
+        <slider var-name="discharge"></slider>
 
         <div class="btn-group bar-buttons popup-radio-buttons">
           <div class="radio">
@@ -320,7 +318,7 @@
       </div>
     </div>
 
-    {# to be able to show either absolute or relative floodfill ng-class is used here instead of ng-switch #}
+    <!-- {# to be able to show either absolute or relative floodfill ng-class is used here instead of ng-switch #} -->
     <div ng-class="{hide: !(clientstate.program_mode === 'flood_fill_absolute' ||
                           clientstate.program_mode === 'flood_fill_relative')}">
       <div class="modal-header">
@@ -479,7 +477,7 @@
       </div>
     </div>
 
-    {# edit #}
+    <!-- {# edit #} -->
     <div ng-switch-when="edit">
 
       <div class="modal-header">
@@ -494,17 +492,17 @@
         </h4>
       </div>
       <div class="modal-body">
-        {% slider 'edit_bathy' %}
-        {% slider 'edit_soil' %}
-        {% slider 'edit_crop_type' %}
-        {% slider 'edit_infiltration' %}
-        {% slider 'edit_interception' %}
+        <slider var-name="edit_bathy"></slider>
+        <slider var-name="edit_soil"></slider>
+        <slider var-name="edit_crop_type"></slider>
+        <slider var-name="edit_infiltration"></slider>
+        <slider var-name="edit_interception"></slider>
       </div>
       <div class="modal-footer footer-left">
       </div>
     </div>
 
-    {# wind #}
+    <!-- {# wind #} -->
     <div ng-switch-when="wind">
 
       <div class="modal-header">

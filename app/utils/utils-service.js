@@ -10,7 +10,9 @@ angular.module('utils').service('UtilService', [
   '$interpolate',
   'clientState',
   function ($rootScope, $interpolate, clientState) {
-    var openWelcomePopup = function () {
+    var utils = {};
+
+    utils.openWelcomePopup = function () {
       $rootScope.$broadcast('close_box', '');
       if (!clientState.modal.active ||
         clientState.modal.templateName !== 'landing') {
@@ -18,21 +20,28 @@ angular.module('utils').service('UtilService', [
       }
     };
 
-    var svgTemp = function (templateName, context) {
+    utils.svgTemp = function (templateName, context) {
       let template = require('../svg-icons/' + templateName);
       const interpolater = $interpolate(template);
       return interpolater(context);
     };
 
-    var contains = function (ls, x) {
+    utils.contains = function (ls, x) {
       // Check whether an element is in a JS list/"array"
       return ls.indexOf(x) > -1;
     };
 
-    return {
-      openWelcomePopup: openWelcomePopup,
-      svgTemp: svgTemp,
-      contains: contains
+    utils.updatePercentage = function (value, max, min) {
+      const fullPercentage = 100;
+      return fullPercentage * (value - min) / (max - min);
     };
+
+    utils.updatePercentagePow2 = function (value, max, min) {
+      const fullPercentage = 100;
+      const powerBy = 0.5;
+      return fullPercentage * Math.pow((value - min) / (max - min), powerBy);
+    };
+
+    return utils;
   }
 ]);
