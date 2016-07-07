@@ -1,0 +1,38 @@
+<div class="btn-group bar-buttons edit-wrapper edit-wrapper-slider-container">
+
+  BLAAAAA
+  <!-- slider template rewrite -->
+  <div class="edit-wrapper-slider edit-wrapper-slider">
+    <div class="toggle-type"
+         ng-show="localState.edit_mode"
+         ng-click="toggle_edit_mode(localState.edit_mode)">
+      <a href="#" title="Switch mode">
+        <i class="fa fa-sun-o"
+           ng-class="{'fa-sun-o': localState.edit_mode === localState.edit_mode,
+                      'fa-moon-o move-a-bit': localState.edit_mode !== localState.edit_mode}"></i>
+      </a>
+    </div>
+    <div class="switch-input-type"
+         ng-show="manual_input === false"
+         ng-click="manual_input = true">
+      <a href="#" title="manual input">
+        <i class="fa fa-pencil manual-edit"></i>
+      </a>
+    </div>
+    <div class="progress settings-progress"
+         ng-show="manual_input === false"
+         ng-mousedown="mouse_down(varName, $event);"
+         ng-mouseup="mouse_up(varName, $event);"
+         ng-mousemove="mouse_move(varName, $event);">
+      <div ng-class="{'progress-bar': localState.value >= 0,
+                      'progress-bar progress-bar-neg': localState.value < 0}"
+           role="progressbar"
+           aria-valuemin="{[{ localState.min }]}"
+           aria-valuemax="{[{ localState.max }]}"
+           style="width: {[{ valuePercentage }]}%;">
+                          <span style="color:white; white-space:nowrap;">
+                          </span>
+      </div>
+    </div>
+  </div>
+</div>

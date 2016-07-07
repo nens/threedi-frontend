@@ -9,6 +9,8 @@ function putTemplateInCache (template, templateName) {
   }]);
 }
 
+putTemplateInCache(require('./components/slider/slider.html'), './components/slider/slider.html');
+
 putTemplateInCache(require('./templates/design_rain_choice.html'), './templates/design_rain_choice.html');
 putTemplateInCache(require('./templates/landing.html'), './templates/landing.html');
 putTemplateInCache(require('./templates/modal.html'), './templates/modal.html');
@@ -26,7 +28,7 @@ putTemplateInCache(require('./templates/windrose.html'), './templates/windrose.h
 putTemplateInCache(require('./templates/confirmation.html'), './templates/confirmation.html');
 putTemplateInCache(require('./templates/booting.html'), './templates/booting.html');
 putTemplateInCache(require('./templates/archive_scenario.html'), './templates/archive_scenario.html');
-putTemplateInCache(require('./templates/jsdependencies.html'), './templates/jsdependencies.html');
+// putTemplateInCache(require('./templates/jsdependencies.html'), './templates/jsdependencies.html');
 putTemplateInCache(require('./templates/awesome/sewerage-orifice.html'), './templates/awesome/sewerage-orifice.html');
 putTemplateInCache(require('./templates/awesome/sewerage-weir.html'), './templates/awesome/sewerage-weir.html');
 putTemplateInCache(require('./templates/awesome/pumpstation.html'), './templates/awesome/pumpstation.html');

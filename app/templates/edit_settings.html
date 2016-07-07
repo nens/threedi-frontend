@@ -71,6 +71,8 @@
           <div ng-switch-when="off">
             <div ng-show="clientstate.features.scenario_rain_local">
               <div class="center-input-group">
+                <slider var-name='rain'></slider>
+                
                 {% slider 'rain' %}
                 {% slider 'rain_duration' %}
                 {% slider 'rain_size' %}
