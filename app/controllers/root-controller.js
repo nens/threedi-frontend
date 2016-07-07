@@ -64,6 +64,7 @@ angular.module('threedi-client').controller('Root', [
     };
 
     $scope.state = state;
+    $scope.user = user;
 
     // set initial heartbeat timeout
     $scope.heartbeat_timeout = new Date().getTime() + 11000;

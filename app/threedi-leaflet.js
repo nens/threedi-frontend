@@ -7,10 +7,17 @@ require('jquery');
 
 const angular = require('angular');
 const d3 = require('d3');
-const map = require('./leaflet');
+const mapItems = require('./leaflet');
 const L = require('leaflet');
 require('drmonty-leaflet-awesome-markers');
 L.TileLayer.GeoJSONd3 = require('./lib/leaflet-plugins/TileLayer.GeoJSONd3');
+
+const map = mapItems.map;
+const raincloudIcon = mapItems.raincloudIcon;
+const floodfillIcon = mapItems.floodfillIcon;
+const dischargeIcon = mapItems.dischargeIcon;
+const manholeIcon = mapItems.manholeIcon;
+const editIcon = mapItems.editIcon;
 
 // Creates a red marker with the coffee icon
 const infoMarker = function (color) {
@@ -109,7 +116,7 @@ angular.module('threedi-client').service('leaflet', [
 
     // translate object type to box type
     var box_type = function (object_type) {
-      return contains(INFOPOINT_BOX_TYPES, object_type)
+      return UtilService.contains(INFOPOINT_BOX_TYPES, object_type)
             ? 'infopoint'
             : object_type;
     };
@@ -1238,7 +1245,7 @@ angular.module('threedi-client').service('leaflet', [
                 // TODO: d.properties.link_number
                 //       vs.
                 //       d.properties.line_idx??
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1268,7 +1275,7 @@ angular.module('threedi-client').service('leaflet', [
                 // TODO: d.properties.link_number
                 //       vs.
                 //       d.properties.line_idx??
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1299,7 +1306,7 @@ angular.module('threedi-client').service('leaflet', [
                 // TODO: d.properties.link_number
                 //       vs.
                 //       d.properties.line_idx??
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1330,7 +1337,7 @@ angular.module('threedi-client').service('leaflet', [
                 // TODO: d.properties.link_number
                 //       vs.
                 //       d.properties.line_idx??
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1361,7 +1368,7 @@ angular.module('threedi-client').service('leaflet', [
                 // TODO: d.properties.link_number
                 //       vs.
                 //       d.properties.line_idx??
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1393,7 +1400,7 @@ angular.module('threedi-client').service('leaflet', [
                 // TODO: d.properties.line_number
                 //       vs.
                 //       d.properties.line_idx??
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1420,7 +1427,7 @@ angular.module('threedi-client').service('leaflet', [
       d3.selectAll('.v2_channel, .v2_pipe, .v2_culvert, .v2_orifice, .v2_weir')
             .style('stroke-width', function (d) {
 
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1446,7 +1453,7 @@ angular.module('threedi-client').service('leaflet', [
             });
       d3.selectAll('.v2_pumpstation')
             .style('stroke-width', function (d) {
-              if (contains([null, undefined], d)
+              if (UtilService.contains([null, undefined], d)
                     || !data
                     || !data.data
                     || !data.data.q
@@ -1474,8 +1481,8 @@ angular.module('threedi-client').service('leaflet', [
 
     var update_flod_flou = function (flod_data, flou_data) {
 
-      if (contains([flod_data, flou_data], undefined) ||
-            contains([flod_data, flou_data], null)) {
+      if (UtilService.contains([flod_data, flou_data], undefined) ||
+            UtilService.contains([flod_data, flou_data], null)) {
         return;
       }
 

@@ -1,5 +1,5 @@
 const angular = require('angular');
-const backgroundLayerDefaultIndex = 0; //backgroundLayerDefaultIndex;
+const backgroundLayerDefaultIndex = 0; // backgroundLayerDefaultIndex;
 
 /* BackgroundLayer with Leaflet */
 angular.module('threedi-client').controller('BackgroundLayer', [

@@ -13,7 +13,7 @@
 
     <title>3Di Live</title>
 
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
 
     <script>
       var debug = true; // legacy
@@ -138,8 +138,7 @@
              &times;
           </a>
         </div>
-        <div ng-switch on="box.content.type">
-          require('./app/templates/awesome/manhole.html')
+          <omnibox></omnibox>
           <!-- {% include "threedi_server/includes/awesome/manhole.html" %}
           {% include "threedi_server/includes/awesome/infopoint.html" %}
           {% include "threedi_server/includes/awesome/infoline.html" %}
@@ -155,7 +154,6 @@
           {% include "threedi_server/includes/awesome/sewerage-orifice.html" %}
           {% include "threedi_server/includes/awesome/sewerage-pumpstation.html" %}
           {% include "threedi_server/includes/awesome/event.html" %} -->
-        </div>
       </div>
     </div>
   </div>
@@ -558,7 +556,7 @@
                    data-parent="#accordion-user"
                    href="#collapse-user">
 
-                  Logged in as {{ user }}
+                  Logged in as {[{ user.username }]}
 
                 </a>
               </div>
@@ -566,15 +564,13 @@
                    class="panel-collapse collapse in">
                 <div class="panel-body">
 
-                  {% if user.is_authenticated %}
-
-                  <ul class="list-unstyled">
+                  <ul ng-if="user.is_authenticated" class="list-unstyled">
                     <li>
                       <a href="#"
                          ng-controller="Director">
                         <i class="fa fa-user"></i>
                         <span>
-                          {{ user }}
+                          {[{ user.username }]}
                         </span>
                       </a>
                     </li>
@@ -669,13 +665,14 @@
                          ng-click="buttonLogOut()">
                         <i class="fa fa-power-off"></i>
 
-                        {% trans "Log out" %}
+                        <!-- {% trans "Log out" %}  translate the hell out of the motherfucker-->
+                        Log out
 
                       </a>
                     </li>
-                  </ul>
-                {% else %}
+                  </ul> <!-- if authenticated -->
 
+                <div ng-if="!user.is_authenticated">
                   Not logged in.
 
                   <ul class="list-unstyled">
@@ -687,7 +684,7 @@
                       </a>
                     </li>
                   </ul>
-                {% endif %}
+                </div>
                 </div>
               </div>
             </div>
@@ -760,8 +757,37 @@
                     <div ng-controller="Modules">
                       <div class="module-spacer"
                            ng-repeat="(mod_name,var) in modules">
-
-                        {% include "threedi_server/partials/module.html" %}
+                            <!-- loops over modules, variables available: mod_name, var, controller Module -->
+                           <form class="single-module">
+                             <fieldset>
+                               <legend>{[{ var.common.display_name }]}
+                                 <a href="#" class="module-power-button btn-off fa fa-off" ng-show="var.common.active == 'False'"
+                                    ng-click="on(mod_name+':common:active')" title="turn on">
+                                 </a>
+                                 <a href="#" class="module-power-button btn-on fa fa-off" ng-show="var.common.active == 'True'"
+                                    ng-click="off(mod_name+':common:active')" title="turn off">
+                                 </a>
+                                 </legend>
+                                 <dl ng-repeat="(var_id, var_value) in var.control" ng-show="var.common.active == 'True'" class="module-dl">
+                                   <dt>{[{ var_id }]}</dt>
+                                   <dd ng-switch="var_value">
+                                     <a ng-switch-when="True" class="btn module-btn module-btn-on" ng-click="off(mod_name+':control:'+var_id)">Turn Off</a>
+                                     <a ng-switch-when="False" class="btn module-btn module-btn-off" ng-click="on(mod_name+':control:'+var_id)">Turn On</a>
+                                     <div ng-switch-default>{[{ var_value }]}</div>
+                                   </dd>
+                                 </dl>
+                                 <dl ng-repeat="(var_id, var_params) in var.graphs" ng-show="var.common.active == 'True'" class="module-dl">
+                                   <dt>{[{ var_id }]}</dt>
+                                   <div class="module-graph">
+                                     <threedi-timeseries url="{[{ var_url(var_params) }]}" title="{[{ var_id }]}" unit="seconds"></threedi-timeseries>
+                                   </div>
+                                 </dl>
+                                 <dl ng-repeat="(var_id, var_value) in var.view" ng-show="var.common.active == 'True'" class="module-dl">
+                                   <dt>{[{ var_id }]}</dt>
+                                   <dd>{[{ var_value }]}</dd>
+                                 </dl>
+                             </fieldset>
+                           </form>
 
                       </div>
                     </div>

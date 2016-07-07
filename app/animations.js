@@ -3,7 +3,7 @@
  * Animated layer: keep track of an animated wms.
 */
 
-const map = require('./leaflet');
+const map = require('./leaflet').map;
 require('./lib/leaflet-plugins/TileLayer.WMS.incrementalSingleTile');
 
 angular.module('threedi-client')

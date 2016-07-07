@@ -2,6 +2,7 @@ const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 const config = {
   entry: {
@@ -22,12 +23,14 @@ const config = {
         loader: ExtractTextPlugin.extract('css!sass')
         // loaders: ["style", "css", "sass"]
       },
+      { test: /\.json$/, loader: 'json'},
       { test: /\.html$/, loader: 'text' },
-      { test: /.(png|jpg|gif|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=8192' }
+      { test: /.(png|jpg|gif|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/, loader: 'url-loader?limit=18192' }
     ]
   },
   plugins: [
     new ExtractTextPlugin('[name].css', {allChunks: true}),
+    new webpack.optimize.DedupePlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve('app', 'index.html'),
       inject: 'body'

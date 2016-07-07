@@ -101,4 +101,11 @@ L.Control.RemoveAll = L.Control.extend(
 var removeAllControl = new L.Control.RemoveAll();
 map.addControl(removeAllControl);
 
-module.exports = map;
+module.exports = {
+  map: map,
+  raincloudIcon: raincloudIcon,
+  floodfillIcon: floodfillIcon,
+  editIcon: editIcon,
+  dischargeIcon: dischargeIcon,
+  manholeIcon: manholeIcon
+};

@@ -1,3 +1,6 @@
+const angular = require('angular')
+require('nvd3')
+
 // create the directives as re-usable components
 angular.module("threedi-graph")
 .directive('threediTimeseries', function($http) {
@@ -61,13 +64,13 @@ angular.module("threedi-graph")
             .x(function(d) { return Date.parse(d[0]); })
             .y(function(d) { return d[1]; })
             .clipEdge(true)
-            .tooltipContent(function(key, y, e, graph) {
-              prefix = getPrefix();
-
-              var header = updateUnit(scope.unit, yUnit, prefix);
-              return '<h3 class="graph-header">' + header + ' </h3>' +
-              '<p>' + e + ' at ' + y + ' </p>';
-            })
+            // .tooltipContent(function(key, y, e, graph) {
+            //   prefix = getPrefix();
+            //
+            //   var header = updateUnit(scope.unit, yUnit, prefix);
+            //   return '<h3 class="graph-header">' + header + ' </h3>' +
+            //   '<p>' + e + ' at ' + y + ' </p>';
+            // })
             .useVoronoi(false);
 
 
@@ -181,4 +184,3 @@ angular.module("threedi-graph")
     link: link
   };
 });
-

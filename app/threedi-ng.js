@@ -8,6 +8,7 @@ require('./controllers/clientstate-controller');
 require('./controllers/confirmation-controller');
 require('./controllers/debug-controller');
 require('./controllers/defaultsettings-controller');
+require('./controllers/edit-settings-controller');
 require('./controllers/editlayer-controller');
 require('./controllers/getmessage-controller');
 require('./controllers/loadsave-controller');

@@ -8,17 +8,32 @@ const devserver = new WDS(webpack(config), {
   hot: true,
   inline: true,
   progress: true,
-  reload: true,
   stats: { colors: true },
   proxy: [
     {
-      path: '*',
+      path: '/active_simulations/',
+      target: 'http://localhost:9000' // <- backend
+    },
+    {
+      path: '/socket.io',
+      target: 'http://localhost:9000' // <- backend
+    },
+    {
+      path: '/hand-crank.js',
+      target: 'http://localhost:9000' // <- backend
+    },
+    {
+      path: '/api/v1/*',
+      target: 'http://localhost:9000' // <- backend
+    },
+    {
+      path: '/onedee/*',
       target: 'http://localhost:9000' // <- backend
     }
   ]
 });
 
-devserver.listen(PORT, 'localhost');
+devserver.listen(PORT, '127.0.0.1');
 
 
 // this config is the equivalent too

@@ -8,7 +8,7 @@
 
 const $ = require('jquery');
 const angular = require('angular');
-const map = require('../leaflet');
+const map = require('../leaflet').map;
 const showalert = require('../showalert');
 
 angular.module('global-state').service('clientState', ['modes', function (modes) {

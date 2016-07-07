@@ -38,7 +38,7 @@ angular.module('bootstrap-ui')
     scope: {
       'dateModel': '='
     },
-    templateUrl: '/template/datetimepicker/'
+    templateUrl: './templates/datetimepicker.html'
   };
 
 }]);

@@ -1,5 +1,5 @@
 
-{% load tools %}
+<!-- {% load tools %} -->
 <div class="modal-content"
      ng-controller="EditSettings">
   <div ng-switch="clientstate.program_mode">
@@ -27,7 +27,7 @@
             local only
 
           </a>
-          {# 'off' is the same al 'local only', but without the settings #}
+          <!-- {# 'off' is the same al 'local only', but without the settings #} -->
           <a class="btn btn-default"
              style="width: 25%;"
              ng-click="set_rain_type('off');"
@@ -529,4 +529,3 @@
 
   </div>  <!-- ng-switch -->
 </div>  <!-- modal-content -->
-

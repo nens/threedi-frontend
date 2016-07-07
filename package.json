@@ -47,6 +47,7 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.17.0",
     "jasmine-core": "^2.2.0",
+    "json-loader": "^0.5.4",
     "jsx-loader": "^0.13.2",
     "karma": "^0.12.31",
     "karma-firefox-launcher": "^0.1.4",
@@ -75,8 +76,8 @@
     "jquery": "^2.2.3",
     "leaflet": "^0.7.7",
     "leaflet-draw": "^0.3.0",
-    "moment": "^2.13.0",
-    "nvd3": "^1.8.3",
+    "moment": "^2.14.1",
+    "nvd3": "^1.7.0",
     "socket.io-client": "^0.9.16"
   }
 }

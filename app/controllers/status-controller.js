@@ -1,6 +1,6 @@
 const angular = require('angular');
 const moment = require('moment');
-const map = require('../leaflet');
+const map = require('../leaflet').map;
 
 /* Lower bar contents */
 angular.module('threedi-client').controller('Status', [
@@ -114,13 +114,8 @@ angular.module('threedi-client').controller('Status', [
         break;
       }
 
-      var contains = function (ls, x) {
-        // Check whether an element is in a JS list/"array"
-        return ls.indexOf(x) > -1;
-      };
-
       $scope.has_rtc = parseFloat(state.state.has_rtc);
-      $scope.pending_actions = (!contains(machineManagerStates, state.state.state)) ? parseInt(state.state.pending_actions) : NaN;
+      $scope.pending_actions = (!UtilService.contains(machineManagerStates, state.state.state)) ? parseInt(state.state.pending_actions) : NaN;
       $scope.timestep = currentTimestep;
         // rain grid label
       if ((state.state.rain) &&

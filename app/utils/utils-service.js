@@ -24,9 +24,15 @@ angular.module('utils').service('UtilService', [
       return interpolater(context);
     };
 
+    var contains = function (ls, x) {
+      // Check whether an element is in a JS list/"array"
+      return ls.indexOf(x) > -1;
+    };
+
     return {
       openWelcomePopup: openWelcomePopup,
-      svgTemp: svgTemp
+      svgTemp: svgTemp,
+      contains: contains
     };
   }
 ]);

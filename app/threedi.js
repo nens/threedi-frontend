@@ -15,8 +15,9 @@ require('../vendor/angular-ui-utils/keypress');
 require('./bootstrap-ui/bootstrap-ui');
 require('./utils/utils');
 require('./modes');
-require('jquery');
+window.$ = require('jquery');
 require('./templates.js');
+require('./components/omnibox/omnibox');
 
 var app = angular.module('threedi-client', [
   'global-state',
@@ -24,6 +25,7 @@ var app = angular.module('threedi-client', [
   'threedi-graph',
   'ui.keypress',
   'modes-module',
+  'omnibox',
   'templates',
   'utils'
 ]);
@@ -31,8 +33,10 @@ var app = angular.module('threedi-client', [
 require('./filters');
 require('./threedi-ng');
 require('./threedi-leaflet');
+require('./threedi-boxes');
 require('./animations');
 require('./nxt-box');
+require('./schlider');
 
 /* Prevent tags collapsing with Django template tags */
 angular.module('threedi-client').config(function cb ($interpolateProvider) {

@@ -93,7 +93,7 @@ angular.module('bootstrap-ui').directive('modal', [
       function (n, o) {
         if (n === o) { return; }
         var mode = (clientState.modal.active) ? 'show' : 'hide';
-        el.modal(mode);
+        $(el).modal(mode);
       });
 
       // ensures there is no conflict between Bootstrap set state and ng internals
