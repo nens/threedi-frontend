@@ -36,7 +36,7 @@ angular.module('threedi-client')
       var valueMax = scope.localState.max;
       var valueMin = scope.localState.min;
       var decimalFactor = Math.pow(10, scope.localState.decimals);
-      var oldValue = scope.value;
+      var oldValue = scope.localState.value;
 
       if ((scope.localState.slider_type === undefined) ||
           (scope.localState.slider_type === 'linear')) {
@@ -64,7 +64,7 @@ angular.module('threedi-client')
      */
     var getX = function (event) {
       var x = event.offsetX;  // normal browsers
-      if (x === undefined) {
+      if (!x) {
         // hack for firefox
         x = event.clientX - $(event.currentTarget).offset().left;
       }
@@ -77,7 +77,7 @@ angular.module('threedi-client')
 
     scope.mouseup = function (event) {
       scope.mouseisdown = false;
-      return scope.setValue(getX(event) / scope.slider_width);
+      return scope.setValue(getX(event) / sliderWidth);
     };
 
     scope.mousemove = function (event) {
@@ -86,7 +86,6 @@ angular.module('threedi-client')
       }
       return false;
     };
-
   };
 
   return {
