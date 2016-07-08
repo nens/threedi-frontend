@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html ng-app="threedi-client">
+<!doctype html>
+<html class="no-js" lang="en" ng-app="threedi-client">
   <head>
     <meta http-equiv="Content-Type"
           content="text/html; charset=utf-8">
@@ -134,26 +134,11 @@
           <a href="#"
              ng-click="close_box()"
              class="box-awesome-action"
-             title="{% trans "Close" %}">
+             title="Close">
              &times;
           </a>
         </div>
           <omnibox></omnibox>
-          <!-- {% include "threedi_server/includes/awesome/manhole.html" %}
-          {% include "threedi_server/includes/awesome/infopoint.html" %}
-          {% include "threedi_server/includes/awesome/infoline.html" %}
-          {% include "threedi_server/includes/awesome/generic-info.html" %}
-          {% include "threedi_server/includes/awesome/pumpstation.html" %}
-          {% include "threedi_server/includes/awesome/raincloud.html" %}
-          {% include "threedi_server/includes/awesome/orifice.html" %}
-          {% include "threedi_server/includes/awesome/weir.html" %}
-          {% include "threedi_server/includes/awesome/culvert.html" %}
-          {% include "threedi_server/includes/awesome/floodfill.html" %}
-          {% include "threedi_server/includes/awesome/node.html" %}
-          {% include "threedi_server/includes/awesome/sewerage-weir.html" %}
-          {% include "threedi_server/includes/awesome/sewerage-orifice.html" %}
-          {% include "threedi_server/includes/awesome/sewerage-pumpstation.html" %}
-          {% include "threedi_server/includes/awesome/event.html" %} -->
       </div>
     </div>
   </div>
@@ -1143,7 +1128,7 @@
   <div id="alert_placeholder"></div>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization&sensor=false"></script>
-  <script src="hand-crank.js"></script>
+  <script src="hand-crank.js" async></script>
 
 </body>
 </html>

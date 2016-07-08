@@ -1,9 +1,14 @@
 {
   "extends": "eslint-config-airbnb-es5",
+  "excludes": ["*/*.html"],
   "rules": {
     "func-names": 0,
     "no-else-return": 0,
     "space-before-function-paren": [2, "always"],
     "radix": 0
-    }
+  },
+  "globals": {
+    "angular": true,
+    "$": true
+  }
 }
