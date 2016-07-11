@@ -33,7 +33,6 @@ var app = angular.module('threedi-client', [
 require('./filters');
 require('./threedi-ng');
 require('./threedi-leaflet');
-require('./threedi-boxes');
 require('./animations');
 require('./nxt-box');
 require('./components/slider/slider-directive');

@@ -29,6 +29,18 @@ require('./controllers/structurelayer-controller');
 require('./controllers/threedislider-controller');
 require('./controllers/touchingground-controller');
 
+require('./controllers/popup-controller');
+require('./components/omnibox/controllers/rain-cloud-controller');
+require('./components/omnibox/controllers/discharge-controller');
+require('./components/omnibox/controllers/culvert-controller');
+require('./components/omnibox/controllers/weir-controller');
+require('./components/omnibox/controllers/info-line-controller');
+require('./components/omnibox/controllers/info-points-controller');
+require('./components/omnibox/controllers/pumpstation-controller');
+require('./components/omnibox/controllers/structure-settings-controller');
+require('./components/omnibox/controllers/orifice-controller');
+
+
 /* Grants access to messages from different controllers. */
 angular.module('threedi-client')
   .factory('Message', function () {
