@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 /* The load model button */
 angular.module('threedi-client').controller('ModelChooserButton', [

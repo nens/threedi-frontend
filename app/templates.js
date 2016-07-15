@@ -1,6 +1,6 @@
 // a temporary necessary evil.
 
-const angular = require('angular');
+
 const module = angular.module('templates', []);
 
 function putTemplateInCache (template, templateName) {

@@ -1,6 +1,6 @@
 // Path definitions for tests and builds
 
-var basePath = './app';
+var basePath = './app/';
 var threediFiles = {
   vendor: basePath + 'vendor/',
   leaflet_plugins: basePath + 'leaflet-plugins/',
@@ -12,25 +12,25 @@ var threediFiles = {
 module.exports = {
   images: basePath + 'images/**',
   vendorfiles:[
-  'threedi_server/static/vendor/leaflet/dist/leaflet.js',
+  'node_modules/leaflet/dist/leaflet.js',
   // bower:js
-  'threedi_server/static/vendor/jquery/jquery.js',
-  'threedi_server/static/vendor/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
-  'threedi_server/static/vendor/Leaflet.bouncemarker/bouncemarker.js',
-  'threedi_server/static/vendor/Leaflet.groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js',
-  'threedi_server/static/vendor/Leaflet.utfgrid/dist/leaflet.utfgrid.js',
-  'threedi_server/static/vendor/angular/angular.js',
-  'threedi_server/static/vendor/angular-resource/angular-resource.js',
-  'threedi_server/static/vendor/angular-ui-utils/keypress.js',
-  'threedi_server/static/vendor/bootstrap/dist/js/bootstrap.js',
-  'threedi_server/static/vendor/bootstrap-css/js/bootstrap.min.js',
-  'threedi_server/static/vendor/moment/moment.js',
-  'threedi_server/static/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
-  'threedi_server/static/vendor/jquery-ui/ui/jquery-ui.js',
-  'threedi_server/static/vendor/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
-  'threedi_server/static/vendor/d3/d3.js',
-  'threedi_server/static/vendor/nvd3/build/nv.d3.js',
-  'threedi_server/static/vendor/angular-mocks/angular-mocks.js',
+  'node_modules/jquery/dist/jquery.js',
+  'node_modules/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js',
+  'node_modules/Leaflet.bouncemarker/bouncemarker.js',
+  'node_modules/Leaflet.groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.js',
+  'node_modules/Leaflet.utfgrid/dist/leaflet.utfgrid.js',
+  'node_modules/angular/angular.js',
+  'node_modules/angular-resource/angular-resource.js',
+  'node_modules/angular-ui-utils/keypress.js',
+  'node_modules/bootstrap/dist/js/bootstrap.js',
+  'node_modules/bootstrap-css/js/bootstrap.min.js',
+  'node_modules/moment/moment.js',
+  'node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+  'node_modules/jquery-ui/ui/jquery-ui.js',
+  'node_modules/moment-timezone/builds/moment-timezone-with-data-2010-2020.js',
+  'node_modules/d3/d3.js',
+  'node_modules/nvd3/build/nv.d3.js',
+  'node_modules/angular-mocks/angular-mocks.js',
   // endbower
   threediFiles.leaflet_plugins + 'TileLayer.GeoJSONd3.js',
   threediFiles.vendor + 'socket.io-client/dist/socket.io.js'

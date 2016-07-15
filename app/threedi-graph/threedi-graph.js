@@ -4,7 +4,7 @@
  * graph types.
  *
  */
-const angular = require('angular');
+
 angular.module('threedi-graph', []);
 
 require('./bubble-graph-static');

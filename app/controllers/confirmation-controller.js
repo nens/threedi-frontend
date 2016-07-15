@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 /* Resetting the model needs confirmation */
 angular.module('threedi-client').controller('Confirmation', [

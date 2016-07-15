@@ -4,7 +4,7 @@
  * @returns {object} Dict with some utils
  */
 
-const angular = require('angular');
+
 angular.module('utils').service('UtilService', [
   '$rootScope',
   '$interpolate',

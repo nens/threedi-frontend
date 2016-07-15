@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 /* StructureLayer with Leaflet */
 angular.module('threedi-client').controller('StructureLayer', [

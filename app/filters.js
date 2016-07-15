@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 angular.module("threedi-client")
 .filter("serverTimeToMinutes", function () {

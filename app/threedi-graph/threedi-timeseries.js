@@ -1,5 +1,4 @@
-const angular = require('angular')
-require('nvd3')
+require('nvd3');
 
 // create the directives as re-usable components
 angular.module("threedi-graph")

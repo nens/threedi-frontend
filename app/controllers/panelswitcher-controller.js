@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const $ = require('jquery');
 
 /* This is the PI menu. */

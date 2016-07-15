@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 /* Controller that provides access to the Message object via a getter */
 angular.module('threedi-client')

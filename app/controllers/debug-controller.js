@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const d3 = require('d3');
 
 angular.module('threedi-client').controller('Debug', [

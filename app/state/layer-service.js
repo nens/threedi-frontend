@@ -3,7 +3,7 @@
  * Datalayers can be initiated and added later on.
  */
 
-const angular = require('angular');
+
 
 angular.module('global-state').factory('Layer', [
     'LeafletLayer',

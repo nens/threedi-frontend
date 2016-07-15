@@ -1,15 +1,7 @@
 <div class="btn-group bar-buttons edit-wrapper edit-wrapper-slider-container">
   <!-- slider template rewrite -->
   <div class="edit-wrapper-slider edit-wrapper-slider">
-    <div class="toggle-type"
-         ng-show="localState.edit_mode"
-         ng-click="toggleEditMode(localState.edit_mode)">
-      <a href="#" title="Switch mode">
-        <i class="fa fa-sun-o"
-           ng-class="{'fa-sun-o': localState.edit_mode === localState.edit_mode,
-                      'fa-moon-o move-a-bit': localState.edit_mode !== localState.edit_mode}"></i>
-      </a>
-    </div>
+
     <div class="switch-input-type"
          ng-show="manualInput === false"
          ng-click="manualInput = true">

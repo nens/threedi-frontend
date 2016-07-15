@@ -1,6 +1,6 @@
 // here be dragons
 
-const angular = require('angular');
+
 const $ = require('jquery');
 
 /* EditLayer with Leaflet */

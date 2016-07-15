@@ -1,5 +1,7 @@
+require('../tests-helper');
+
 describe('Testing the Modal stuff in Bootstrap ui module', function () {
-  
+
   var el,
       clientState,
       scope,
@@ -25,21 +27,20 @@ describe('Testing the Modal stuff in Bootstrap ui module', function () {
   it('should start out with the default html', function () {
     var landingHTML = el.children().html();
     expect(landingHTML).toBe(
-      templateCache.get('/template/' + clientState.modal.templateName  + '/')); 
+      templateCache.get('/template/' + clientState.modal.templateName  + '/'));
   });
 
   it('should change to a template set in setTemplate', function () {
     clientState.modal.setTemplate('faker', true);
-    
+
     // run angular magic to make sure scopes are set and
     // watches are triggered
     scope.$digest()
 
     var fakerHTML = el.children().html();
     expect(fakerHTML).toBe(
-      templateCache.get('/template/faker/')); 
+      templateCache.get('/template/faker/'));
   });
 
 
 });
-

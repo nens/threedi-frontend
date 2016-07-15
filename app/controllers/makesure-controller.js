@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 /* Controller for 'make_sure' and 'message' */
 angular.module('threedi-client').controller('MakeSureCtrl', [

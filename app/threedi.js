@@ -6,8 +6,10 @@
  *
  */
 
+require('jquery');
+require('angular');
+
 require('./styles/base.scss');
-const angular = require('angular');
 
 require('./state/state');
 require('./threedi-graph/threedi-graph');
@@ -15,7 +17,7 @@ require('../vendor/angular-ui-utils/keypress');
 require('./bootstrap-ui/bootstrap-ui');
 require('./utils/utils');
 require('./modes');
-window.$ = require('jquery');
+
 require('./templates.js');
 require('./components/omnibox/omnibox');
 
@@ -33,7 +35,6 @@ var app = angular.module('threedi-client', [
 require('./filters');
 require('./threedi-ng');
 require('./threedi-leaflet');
-require('./threedi-boxes');
 require('./animations');
 require('./nxt-box');
 require('./components/slider/slider-directive');

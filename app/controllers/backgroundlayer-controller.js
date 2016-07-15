@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const backgroundLayerDefaultIndex = 0; // backgroundLayerDefaultIndex;
 
 /* BackgroundLayer with Leaflet */

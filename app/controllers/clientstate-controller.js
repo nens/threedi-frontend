@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 
 /**
  * The ClientState controller controls and watches the state. In every child you

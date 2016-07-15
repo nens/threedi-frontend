@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const $ = require('jquery');
 
 /* Content of model popup */

@@ -1,5 +1,5 @@
 
-const angular = require('angular');
+
 
 angular.module('threedi-client').controller('ScenarioInfo', [
   '$scope', '$rootScope', 'clientState',

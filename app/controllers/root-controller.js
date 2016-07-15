@@ -36,7 +36,7 @@ distributed to all its children for free.
 
 */
 
-const angular = require('angular');
+
 const showalert = require('../showalert');
 const $ = require('jquery');
 

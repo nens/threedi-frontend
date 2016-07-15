@@ -5,7 +5,7 @@ const MAX_ONEDEE_PENDING_REQUESTS = 0;
 
 require('jquery');
 
-const angular = require('angular');
+
 const d3 = require('d3');
 const mapItems = require('./leaflet');
 const L = require('leaflet');

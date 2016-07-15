@@ -1,9 +1,9 @@
 /**
  * Some state constants.
  */
-const angular = require('angular');
 
-let module = angular.module('modes-module', []).service('modes', function modes () {
+
+var module = angular.module('modes-module', []).service('modes', function modes () {
   this.MODE_NAVIGATE = 'navigate';
   this.MODE_FLOODFILL_ABSOLUTE = 'flood_fill_absolute'; // --> flood_fill_mode 1
   this.MODE_FLOODFILL_RELATIVE = 'flood_fill_relative'; // --> flood_fill_mode 0

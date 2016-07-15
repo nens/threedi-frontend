@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node webpack-dev-server",
     "build": "webpack -p -progress --colors",
-    "test": "mocha"
+    "test": "mocha tests/*.js"
   },
   "authors": [
     "jackha",
@@ -38,6 +38,7 @@
     "url": "https://github.com/nens/threedi-server/issues"
   },
   "devDependencies": {
+    "angular-mocks": "^1.5.5",
     "autoprefixer": "^6.3.6",
     "css-loader": "^0.23.1",
     "directory-tree": "^1.0.0",
@@ -47,6 +48,7 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.17.0",
     "jasmine-core": "^2.2.0",
+    "jsdom": "^9.4.1",
     "json-loader": "^0.5.4",
     "jsx-loader": "^0.13.2",
     "karma": "^0.12.31",
@@ -70,8 +72,10 @@
     "angular": "^1.5.5",
     "angular-resource": "^1.5.5",
     "bootstrap": "^3.3.6",
+    "chai": "^3.5.0",
     "d3": "^3.5.17",
     "drmonty-leaflet-awesome-markers": "^2.0.2",
+    "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.1",
     "jquery": "^2.2.3",
     "leaflet": "^0.7.7",
