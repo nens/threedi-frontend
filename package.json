@@ -1,15 +1,18 @@
 {
-  "name": "threedi-server",
-  "version": "0.12.2",
-  "homepage": "https://github.com/nens/threedi-server",
+  "name": "threedi-frontend",
+  "version": "0.1",
+  "homepage": "https://github.com/nens/threedi-frontend",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nens/threedi-server"
+    "url": "https://github.com/nens/threedi-frontend"
   },
   "scripts": {
     "start": "node webpack-dev-server",
     "build": "webpack -p -progress --colors",
-    "test": "mocha tests/*.js"
+    "test": "mocha tests/*.js",
+    "bump": "release-it",
+    "tarball": "node release.js",
+    "release": "npm bump && npm tarball"
   },
   "authors": [
     "jackha",
@@ -35,7 +38,7 @@
     "tests"
   ],
   "bugs": {
-    "url": "https://github.com/nens/threedi-server/issues"
+    "url": "https://github.com/nens/threedi-frontend/issues"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.5",
@@ -61,6 +64,7 @@
     "mocha-loader": "^0.7.1",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.9.1",
+    "release-it": "^2.4.0",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "text-loader": "0.0.1",
