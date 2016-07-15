@@ -6,8 +6,10 @@
  *
  */
 
+require('jquery');
+require('angular');
+
 require('./styles/base.scss');
-const angular = require('angular');
 
 require('./state/state');
 require('./threedi-graph/threedi-graph');
@@ -15,7 +17,7 @@ require('../vendor/angular-ui-utils/keypress');
 require('./bootstrap-ui/bootstrap-ui');
 require('./utils/utils');
 require('./modes');
-window.$ = require('jquery');
+
 require('./templates.js');
 require('./components/omnibox/omnibox');
 

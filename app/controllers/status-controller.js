@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const moment = require('moment');
 const map = require('../leaflet').map;
 

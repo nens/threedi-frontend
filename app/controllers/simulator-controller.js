@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const map = require('../leaflet').map;
 
 /* Edit functions: Edit the current simulation. Must be in scope of ClientState */

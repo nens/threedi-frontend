@@ -3,7 +3,7 @@
  * Socket stuff happens here
  */
 
-const angular = require('angular');
+
 const io = require('socket.io-client');
 const socketUrl = 'http://localhost:9000/';
 

@@ -1,5 +1,5 @@
 
-const angular = require('angular');
+
 
 /* Play, stop, reset */
 angular.module('threedi-client').controller('RemoteControl', [

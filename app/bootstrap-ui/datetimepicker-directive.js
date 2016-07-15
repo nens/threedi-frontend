@@ -4,7 +4,9 @@
  *
  */
 
-const angular = require('angular');
+
+
+require('eonasdan-bootstrap-datetimepicker');
 
 angular.module('bootstrap-ui')
   .directive('datetimepicker', ["$filter", function ($filter) {

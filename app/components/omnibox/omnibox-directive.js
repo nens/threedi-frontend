@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 angular.module('omnibox')
 .directive('omnibox', ['$compile', '$templateCache',
 function ($compile, $templateCache) {

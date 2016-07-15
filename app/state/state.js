@@ -2,7 +2,7 @@
  * Initiates state module
  */
 
-const angular = require('angular');
+
 require('../modes');
 
 angular.module('global-state', [

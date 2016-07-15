@@ -8,7 +8,7 @@
  * clientstate service.
  */
 
-const angular = require('angular');
+
 const $ = require('jquery');
 window.jQuery = $;
 require('bootstrap');

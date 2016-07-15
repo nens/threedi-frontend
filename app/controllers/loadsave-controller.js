@@ -1,4 +1,4 @@
-const angular = require('angular');
+
 const showalert = require('../showalert');
 
 /*

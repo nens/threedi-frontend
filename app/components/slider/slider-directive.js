@@ -1,6 +1,6 @@
 // const app = require('../../threedi');
 const $ = require('jquery');
-const angular = require('angular');
+
 
 angular.module('threedi-client')
 .directive('slider', function (clientState, UtilService) {
