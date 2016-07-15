@@ -12,7 +12,6 @@ var github = new GHApi({
   version: '3.0.0'
 });
 
-console.log(require('./deploy/auth.json').token);
 github.authenticate({
   type: 'oauth',
   token: require('./deploy/auth.json').token
@@ -20,26 +19,29 @@ github.authenticate({
 
 rimraf.sync('./tmp');
 fs.mkdirSync('./tmp');
-var files = fs.readdirSync('./dist');
+var files = fs.readdirSync('./dist').map(function (file) {
+  return { source: './dist/' + file, target: file};
+});
 
 var zip = new EasyZip();
 zip.batchAdd(files, function () {
+  console.log('Compressing contents of ./dist/ to tmp/' + version + '.zip')
   zip.writeToFile(fileName);
 });
 
-github.repos.uploadAsset({
-  user: 'nens',
-  repo: pkg.name,
-  id: version,
-  filePath: fileName,
-  headers: {
-    'Content-Type': 'application/zip'
-  },
-  name: version + '.zip'
-}, function (err) {
-  if (err) { throw err; }
-  rimraf('./tmp', function (rerr) {
-    if (rerr) { throw rerr; }
-    console.log('succesfully cleaned up tmp folder');
-  });
-});
+// github.repos.uploadAsset({
+//   user: 'nens',
+//   repo: pkg.name,
+//   id: version,
+//   filePath: fileName,
+//   headers: {
+//     'Content-Type': 'application/zip'
+//   },
+//   name: version + '.zip'
+// }, function (err) {
+//   if (err) { throw err; }
+//   rimraf('./tmp', function (rerr) {
+//     if (rerr) { throw rerr; }
+//     console.log('succesfully cleaned up tmp folder');
+//   });
+// });

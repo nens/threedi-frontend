@@ -1,4 +1,5 @@
 npm-debug
+tmp/
 node_modules/
 vendor/
 dist/

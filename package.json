@@ -4,7 +4,8 @@
   "homepage": "https://github.com/nens/threedi-frontend",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nens/threedi-frontend"
+    "url": "git@github.com:nens/threedi-frontend.git",
+    "name": "nens/threedi-frontend"
   },
   "scripts": {
     "start": "node webpack-dev-server",
@@ -45,6 +46,7 @@
     "autoprefixer": "^6.3.6",
     "css-loader": "^0.23.1",
     "directory-tree": "^1.0.0",
+    "easy-zip": "0.0.4",
     "eslint": "^2.10.2",
     "eslint-config-airbnb-es5": "^1.0.9",
     "extract-text-webpack-plugin": "^1.0.1",
@@ -65,6 +67,7 @@
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.9.1",
     "release-it": "^2.4.0",
+    "rimraf": "^2.5.3",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "text-loader": "0.0.1",
