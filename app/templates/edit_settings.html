@@ -1,5 +1,3 @@
-
-<!-- {% load tools %} -->
 <div class="modal-content"
      ng-controller="EditSettings">
   <div ng-switch="clientstate.program_mode">
@@ -71,9 +69,9 @@
           <div ng-switch-when="off">
             <div ng-show="clientstate.features.scenario_rain_local">
               <div class="center-input-group">
-                {% slider 'rain' %}
-                {% slider 'rain_duration' %}
-                {% slider 'rain_size' %}
+                <slider var-name="rain"></slider>
+                <slider var-name="rain_duration"></slider>
+                <slider var-name="rain_size"></slider>
               </div>
               <div class="settings-text center-text">
                 The amount of rain per event is {[{ clientstate.edit_ranges['rain'].value * clientstate.edit_ranges['rain_duration'].value | number:clientstate.edit_ranges['rain'].decimals }]} mm.
@@ -162,16 +160,45 @@
                ng-show="clientstate.features.scenario_rain_design">
             <div class="btn-group btn-group-bar"
                  style="width: 100%;">
-              {% include "threedi_server/includes/design_rain_choice.html" with index=3 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=4 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=5 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=6 width=12 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=7 width=13 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=8 width=13 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=9 width=13 %}
-              {% include "threedi_server/includes/design_rain_choice.html" with index=10 width=13 %}
+              <a ng-repeat="n in [3, 4, 5, 6, 7, 8, 9, 10]"
+                 ng-click="mouse_click('rain_design_definition', n)"
+                    class="btn btn-default"
+                    style="width: 12%;"
+                    ng-class="{'btn-primary':
+                                   clientstate.edit_ranges['rain_design_definition'].value
+                                   === n }">
+                   rain {[{ n }]}
+                 </a>
             </div>
-            {% include "threedi_server/includes/design_rain_messages.html" %}
+            <div>
+             <div ng-switch="clientstate.edit_ranges['rain_design_definition'].value">
+               <div ng-switch-when="3">
+                 Rain 3 is a designed event that statistically occurs twice a year. The duration of this event is 75 minutes. The event has a peak at the front of 25 mm/h. (T=0.5 year, V=14.4 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="4">
+                 Rain 4 is a designed event that statistically occurs twice a year. The duration of this event is 75 minutes. The event has a peak at the back of 25 mm/h. (T=0.5 year, V=14.4 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="5">
+                 Rain 5 is a designed event that statistically occurs once a year. The duration of this event is 75 minutes. The event has a peak at the front of 32 mm/h. (T=1.0 year, V=16.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="6">
+                 Rain 6 is a designed event that statistically occurs once a year. The duration of this event is 60 minutes. The event has a peak at the back of 32 mm/h. (T=1.0 year, V=16.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="7">
+                 Rain 7 is a designed event that statistically occurs once every 2 years. The duration of this event is 60 minutes. The event has a peak at the front of 39 mm/h. (T=2.0 year, V=19.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="8">
+                 Rain 8 is a designed event that statistically occurs once every 2 years. The duration of this event is 60 minutes. The event has a peak at the back of 39 mm/h. (T=2.0 year, V=19.8 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="9">
+                 Rain 9 is a designed event that statistically occurs once every 5 years. The duration of this event is 60 minutes. The event has a total volume of 29.4 mm/h. (T=5.0 year, V=29.4 mm, C2100 RIONED)
+               </div>
+               <div ng-switch-when="10">
+                 Rain 10 is a designed event that statistically occurs once every 10 years. The duration of this event is 45 minutes. The event has a peak at the front of 75 mm/h. (T=10.0 year, V=35.7 mm, C2100 RIONED)
+               </div>
+             </div>
+           </div>
+
           </div>
 
           <div ng-switch-when="constant"
@@ -290,7 +317,7 @@
       </div>
 
       <div class="modal-body">
-        {% slider 'discharge' %}
+        <slider var-name="discharge"></slider>
 
         <div class="btn-group bar-buttons popup-radio-buttons">
           <div class="radio">
@@ -318,7 +345,7 @@
       </div>
     </div>
 
-    {# to be able to show either absolute or relative floodfill ng-class is used here instead of ng-switch #}
+    <!-- {# to be able to show either absolute or relative floodfill ng-class is used here instead of ng-switch #} -->
     <div ng-class="{hide: !(clientstate.program_mode === 'flood_fill_absolute' ||
                           clientstate.program_mode === 'flood_fill_relative')}">
       <div class="modal-header">
@@ -477,7 +504,7 @@
       </div>
     </div>
 
-    {# edit #}
+    <!-- {# edit #} -->
     <div ng-switch-when="edit">
 
       <div class="modal-header">
@@ -492,17 +519,17 @@
         </h4>
       </div>
       <div class="modal-body">
-        {% slider 'edit_bathy' %}
-        {% slider 'edit_soil' %}
-        {% slider 'edit_crop_type' %}
-        {% slider 'edit_infiltration' %}
-        {% slider 'edit_interception' %}
+        <slider var-name="edit_bathy"></slider>
+        <slider var-name="edit_soil"></slider>
+        <slider var-name="edit_crop_type"></slider>
+        <slider var-name="edit_infiltration"></slider>
+        <slider var-name="edit_interception"></slider>
       </div>
       <div class="modal-footer footer-left">
       </div>
     </div>
 
-    {# wind #}
+    <!-- {# wind #} -->
     <div ng-switch-when="wind">
 
       <div class="modal-header">

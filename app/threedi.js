@@ -36,6 +36,8 @@ require('./threedi-leaflet');
 require('./threedi-boxes');
 require('./animations');
 require('./nxt-box');
+require('./components/slider/slider-directive');
+
 require('./schlider');
 
 /* Prevent tags collapsing with Django template tags */

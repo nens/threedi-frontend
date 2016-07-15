@@ -6,7 +6,8 @@
             <text x="196" y="394">S</text>
             <text x="4" y="205">W</text>
         </g>
-        <g>{# the windrose #}
+        <g>
+          <!-- the windrose -->
             <circle cx="200" cy="200" r="20" />
             <circle cx="200" cy="200" r="40" />
             <circle cx="200" cy="200" r="60" />
@@ -22,7 +23,8 @@
             <line x1="59" y1="59" x2="341" y2="341" />
             <line x1="341" y1="59" x2="59" y2="341" />
         </g>
-        <g>{# the arrow #}
+        <g>
+          <!-- the arrow -->
             <path d="M 0 0 L -1 -1.5 L 0 5 L 1 -1.5 z"
                 fill="darkgrey" opacity="0.8" stroke="darkgrey" stroke-width=".1" ng-attr-transform="translate(200, 200) rotate({[{ windrose_marker.rotate }]}) scale({[{ 4*windrose_marker.magnitude }]})" />
         </g>

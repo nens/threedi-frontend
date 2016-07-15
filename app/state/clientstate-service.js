@@ -37,6 +37,7 @@ angular.module('global-state').service('clientState', ['modes', function (modes)
   };
 
   var backgroundLayers = [];
+  backgroundLayers.concat(window.backgroundLayers);
   var osm = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
   var leaflet = require('leaflet');
   var osmlayer = {

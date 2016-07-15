@@ -74,8 +74,7 @@ angular.module("threedi-graph")
   return {
     restrict: 'E',
     replace: true,
-    templateUrl: '/template/windrose/',
+    templateUrl: './templates/windrose.html',
     link: link
   };
 });
-

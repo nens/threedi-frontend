@@ -1,0 +1,70 @@
+<div class="btn-group bar-buttons edit-wrapper edit-wrapper-slider-container">
+  <!-- slider template rewrite -->
+  <div class="edit-wrapper-slider edit-wrapper-slider">
+    <div class="toggle-type"
+         ng-show="localState.edit_mode"
+         ng-click="toggleEditMode(localState.edit_mode)">
+      <a href="#" title="Switch mode">
+        <i class="fa fa-sun-o"
+           ng-class="{'fa-sun-o': localState.edit_mode === localState.edit_mode,
+                      'fa-moon-o move-a-bit': localState.edit_mode !== localState.edit_mode}"></i>
+      </a>
+    </div>
+    <div class="switch-input-type"
+         ng-show="manualInput === false"
+         ng-click="manualInput = true">
+      <a href="#" title="manual input">
+        <i class="fa fa-pencil manual-edit"></i>
+      </a>
+    </div>
+    <div class="progress settings-progress"
+         ng-show="manualInput === false"
+         ng-mousedown="mousedown($event);"
+         ng-mouseup="mouseup($event);"
+         ng-mousemove="mousemove($event);">
+      <div ng-class="{'progress-bar': localState.value >= 0,
+                      'progress-bar progress-bar-neg': localState.value < 0}"
+           role="progressbar"
+           aria-valuemin="{[{ localState.min }]}"
+           aria-valuemax="{[{ localState.max }]}"
+           style="width: {[{ valuePercentage }]}%;">
+                          <span style="color:white; white-space:nowrap;">
+                          </span>
+      </div>
+      <div class="progress-label"
+           ng-hide="manualInputEdit.$error.required && manualInput === false">
+        {[{ localState.name }]}
+        {[{ localState.value | number : localState.decimals }]}
+        {[{ localState.unit }]}
+      </div>
+      <div class="progress-label error"
+           ng-show="manualInputEdit.$error.required && manualInput === false">
+        Default will be used!
+      </div>
+    </div>
+    <div class="switch-input-type"
+         ng-show="manualInput === true"
+         ng-click="manualInput=false">
+      <a href="#" title="back to slider">
+        <i class="fa fa-share manual-edit"></i>
+      </a>
+    </div>
+    <div class="centerize manual-form-wrapper settings-progress"
+         ng-show="manualInput === true">
+      <form name="manualInputEdit" class="manual-input-form">
+        <label class="small-label" for="{[{ localState.name }]}">{[{ localState.name }]} [{[{ localState.unit }]}]</label>
+        <input type="number" step="{[{ localState.step }]}"
+               ng-model="localState.value"
+               value="{[{ localState.value | number : localState.decimals }]}"
+               max="{[{ localState.max }]}"
+               min="{[{ localState.min }]}"
+               class="form-control form-alongside manual-input-box"
+               ng-required="true" />
+      </form>
+    </div>
+    <div class="validation error"
+         ng-show="manualInputEdit.$error.required && manualInput === true">
+      Default will be used!
+    </div>
+  </div>
+</div>
