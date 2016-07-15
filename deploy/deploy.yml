@@ -1,0 +1,15 @@
+- hosts: all
+  gather_facts: no
+  sudo: yes
+
+  tasks:
+
+  - name: download release
+    sudo: yes
+    sudo_user: "{{ build_user }}"
+    get_url: url=https://github.com/nens/threedi-frontend/releases/download/{{ version }}/{{ version }}.zip dest=/srv/frontend/{{ version.zip }}
+
+  - name: unzip release
+    sudo: yes
+    sudo_user: "{{ build_user }}"
+    unarchive: src=/srv/frontend/{{ version.zip }} dest=/srv/frontend/www

@@ -1,0 +1,5 @@
+deploy_type: development
+project_path: "/srv/dev.3di.lizard.net"
+
+sitename: "localhost"
+build_user: vagrant
