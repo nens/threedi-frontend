@@ -38,6 +38,7 @@ distributed to all its children for free.
 
 
 const showalert = require('../showalert');
+const map = require('../leaflet').map;
 const $ = require('jquery');
 
 angular.module('threedi-client').controller('Root', [
@@ -240,6 +241,12 @@ angular.module('threedi-client').controller('Root', [
     };
 
     $scope.logoutUrl = logout_with_master_removal; // eslint-disable-line
+
+    // resets extent in client state and fitsbounds around that.
+    $scope.resetExtent = function () {
+      clientState.spatial.resetExtent();
+      map.fitBounds(clientState.spatial.extent);
+    };
   }
 
 ]);

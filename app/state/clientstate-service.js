@@ -58,11 +58,14 @@ angular.module('global-state').service('clientState', ['modes', function (modes)
 
   state.backgroundLayers = _backgroundLayers;
 
+  state.modelExtent = [
+    [window.model_extent[0], window.model_extent[1]],
+    [window.model_extent[2], window.model_extent[3]]
+  ];
+
   var Spatial = function () {
     this.defaultExtent = function () {
-      return [
-        [-40, -70.0], [40, 70.0]
-      ];
+      return state.modelExtent;
     };
 
     var extent = this.defaultExtent();
