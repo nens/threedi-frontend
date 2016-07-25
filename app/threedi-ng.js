@@ -39,8 +39,6 @@ require('./components/omnibox/controllers/info-line-controller');
 require('./components/omnibox/controllers/discharge-controller');
 require('./components/omnibox/controllers/culvert-controller');
 
-
-
 /* Grants access to messages from different controllers. */
 angular.module('threedi-client')
   .factory('Message', function () {

@@ -10,6 +10,8 @@ const $ = require('jquery');
 
 const map = require('../leaflet').map;
 const showalert = require('../showalert');
+const leaflet = require('leaflet');
+
 
 angular.module('global-state').service('clientState', ['modes', function (modes) {
   var state = {};
@@ -36,17 +38,25 @@ angular.module('global-state').service('clientState', ['modes', function (modes)
     };
   };
 
-  var backgroundLayers = [];
-  backgroundLayers.concat(window.backgroundLayers);
-  var osm = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-  var leaflet = require('leaflet');
-  var osmlayer = {
-    name: 'mapbox',
-    layer: leaflet.tileLayer(osm)
-  };
-  backgroundLayers.push(osmlayer);
+  var _backgroundLayers = [];
+  _backgroundLayers = _backgroundLayers.concat(window.backgroundLayers);
 
-  state.backgroundLayers = backgroundLayers;
+  _backgroundLayers.map(function (bgLayer) {
+    if (!(bgLayer.layer instanceof leaflet.Class)) {
+      switch (bgLayer.layer_type) {
+      case 'TMS':
+        bgLayer.layer = leaflet.tileLayer(bgLayer.layer, bgLayer.layer_options);
+        break;
+      case 'WMS':
+        bgLayer.layer = leaflet.tileLayer.wms(bgLayer.layer, bgLayer.layer_options);
+        break;
+      default:
+        break;
+      }
+    }
+  });
+
+  state.backgroundLayers = _backgroundLayers;
 
   var Spatial = function () {
     this.defaultExtent = function () {

@@ -22,7 +22,7 @@ const editIcon = mapItems.editIcon;
 // Creates a red marker with the coffee icon
 const infoMarker = function (color) {
   if (!color) {
-    color = 'green'; // eslint-disable-lines
+    color = 'green'; // eslint-disable-line
   }
   return L.AwesomeMarkers.icon({
     icon: 'info',
@@ -2529,7 +2529,7 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
     }
 
     // can be called to remove all drawings at once
-    var removeDrawings = function () {
+    function removeDrawings () {
       if (!isEmpty(xisting_ids)) {
         drawnItems.clearLayers();
       }

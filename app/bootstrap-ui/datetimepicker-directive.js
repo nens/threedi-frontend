@@ -4,14 +4,11 @@
  *
  */
 
-
-
 require('eonasdan-bootstrap-datetimepicker');
 
 angular.module('bootstrap-ui')
-  .directive('datetimepicker', ["$filter", function ($filter) {
-
-  var link = function (scope, elem, attrs) {
+.directive('datetimepicker', ['$filter', function ($filter) {
+  var link = function (scope, elem) {
     scope.displayModel = $filter('date')(
       scope.dateModel,
       'dd-MM-yyyy HH:mm'
@@ -21,13 +18,13 @@ angular.module('bootstrap-ui')
 
     angular.element(elem).datetimepicker({
       format: 'DD-MM-YYYY HH:mm',
-      locale: "en",
-      forceParse: false,
+      locale: 'en',
+      forceParse: false
     });
 
     // v0:
     // datetimepicker won't register a change when you picked dates
-    angular.element(elem).on('dp.change', function(e) {
+    angular.element(elem).on('dp.change', function (e) {
       var date = e.date._d;
       scope.dateModel = date;
     });
