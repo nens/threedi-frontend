@@ -14,13 +14,13 @@ angular.module('threedi-client').controller('Status', [
   function (
     $scope,
     state,
-    clientstate,
+    clientState,
     AnimatedLayer,
     socket,
     UtilService,
     BeaufortConverterService
   ) {
-    $scope.c = clientstate;
+    $scope.c = clientState;
     $scope.serverState = 'wait';
     $scope.has_rtc = '0';
     $scope.status_label = '-';
@@ -155,7 +155,7 @@ angular.module('threedi-client').controller('Status', [
     });
 
     $scope.addRainIcon = function () {
-      var c = $scope.clientstate;
+      var c = $scope.clientState;
       try {
         return ($scope.state.rain.current_rain_grid !== undefined &&
                     $scope.state.rain.current_rain_grid !== '{}') &&
@@ -205,10 +205,10 @@ angular.module('threedi-client').controller('Status', [
     $scope.resetExtent = function () {
         // event comes in as string
       if ($scope.state.player.hasOwnProperty('initial_extent')) {
-        clientstate.spatial.extent = JSON.parse($scope.state.player.initial_extent);
+        clientState.spatial.extent = JSON.parse($scope.state.player.initial_extent);
         map.fitBounds([
-              [clientstate.spatial.extent[0], clientstate.spatial.extent[1]],
-              [clientstate.spatial.extent[2], clientstate.spatial.extent[3]]]);
+              [clientState.spatial.extent[0], clientState.spatial.extent[1]],
+              [clientState.spatial.extent[2], clientState.spatial.extent[3]]]);
       } else {
         console.log('I am missing the serverState property player.initial_extent...');
       }

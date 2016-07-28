@@ -10,7 +10,7 @@ angular.module('threedi-client').controller('TouchingGround', [
   function (
     $rootScope,
     $scope,
-    clientstate,
+    clientState,
     state,
     socket,
     UtilService
@@ -28,10 +28,10 @@ angular.module('threedi-client').controller('TouchingGround', [
         /* Click on "Quit current session" */
     $scope.squareOne = function () {
       if (state.master) {
-        clientstate.makeSure();
+        clientState.makeSure();
       } else if (!state.master) {
         socket.emit('unfollow', state.master, function () {});
-        clientstate.spatial.resetExtent();
+        clientState.spatial.resetExtent();
         $rootScope.$broadcast('killOneDee');
         UtilService.openWelcomePopup();
       }
@@ -39,7 +39,7 @@ angular.module('threedi-client').controller('TouchingGround', [
 
         /* Click on Log out */
     $scope.buttonLogOut = function () {
-      clientstate.makeSureLogOut();
+      clientState.makeSureLogOut();
     };
   }
 ]);

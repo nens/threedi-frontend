@@ -3,14 +3,14 @@ angular.module('threedi-client').controller('RainCloud', [
   'socket',
   '$rootScope',
   'clientState',
-  function ($scope, socket, $rootScope, clientstate) {
+  function ($scope, socket, $rootScope, clientState) {
     $scope.properties = null;
 
     $scope.mouse_is_down = false;
     $scope.controller_width = 300;  // assume that every slider here has the same width
     $scope.display_name = '';  // text to inform user
 
-    $scope.clientstate = clientstate;
+    $scope.clientState = clientState;
 
     $scope.update_display = function (value) {
       if (value >= 80) {
@@ -57,7 +57,7 @@ angular.module('threedi-client').controller('RainCloud', [
         if (target_var == 'rain') {
           $scope.properties.amount = new_value;
           $scope.update_display(new_value);
-          $scope.clientstate = clientstate;  // set current values, they may have changed
+          $scope.clientState = clientState;  // set current values, they may have changed
         }
     };
 

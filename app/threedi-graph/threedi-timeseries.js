@@ -1,4 +1,5 @@
 require('nvd3');
+const $ = require('jquery');
 
 // create the directives as re-usable components
 angular.module("threedi-graph")

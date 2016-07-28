@@ -10,20 +10,20 @@ angular.module('threedi-client').controller('ClientState', [
   'state',
   'clientState',
   'modes',
-  function ($scope, state, clientstate, modes) {
-    $scope.clientstate = clientstate;
-    $scope.c = clientstate;
-    clientstate.bg_onedee_inverted = false; // for default bg, Google Satellite
+  function ($scope, state, clientState, modes) {
+    $scope.clientState = clientState;
+    $scope.c = clientState;
+    clientState.bg_onedee_inverted = false; // for default bg, Google Satellite
 
     $scope.setMode = function (mode) {
-      if (clientstate.program_mode !== mode) {
+      if (clientState.program_mode !== mode) {
         // turn button on
-        clientstate.setMode(mode);
+        clientState.setMode(mode);
       } else {
         // turn off if not info point or line
-        if ((clientstate.program_mode !== modes.MODE_INFO_POINT) &&
-        (clientstate.program_mode !== modes.MODE_INFO_LINE)) {
-          clientstate.setMode(modes.MODE_INFO_POINT);
+        if ((clientState.program_mode !== modes.MODE_INFO_POINT) &&
+        (clientState.program_mode !== modes.MODE_INFO_LINE)) {
+          clientState.setMode(modes.MODE_INFO_POINT);
         }
       }
     };
@@ -33,10 +33,10 @@ angular.module('threedi-client').controller('ClientState', [
     $scope.$on('serverState', function () {
       $scope.isMaster = state.master;
       if ((!$scope.isMaster) &&
-      (clientstate.program_mode !== modes.MODE_INFO_POINT) &&
-      (clientstate.program_mode !== modes.MODE_INFO_LINE)) {
+      (clientState.program_mode !== modes.MODE_INFO_POINT) &&
+      (clientState.program_mode !== modes.MODE_INFO_LINE)) {
         // Reset client state to navigation mode
-        clientstate.setMode(modes.MODE_INFO_POINT);
+        clientState.setMode(modes.MODE_INFO_POINT);
       }
     });
 
@@ -52,15 +52,15 @@ angular.module('threedi-client').controller('ClientState', [
 
     // Set InfoPoint mode --> Lars: disabled for now, is interfering with manual input
     /*
-    $scope.$on('keypress-1', function(message, value) {clientstate.setInfoMode('s1');});
-    $scope.$on('keypress-2', function(message, value) {clientstate.setInfoMode('su');});
-    $scope.$on('keypress-3', function(message, value) {clientstate.setInfoMode('vol');});
-    $scope.$on('keypress-4', function(message, value) {clientstate.setInfoMode('dep');});
-    $scope.$on('keypress-5', function(message, value) {clientstate.setInfoMode('ucx');});
-    $scope.$on('keypress-6', function(message, value) {clientstate.setInfoMode('ucy');});
-    $scope.$on('keypress-7', function(message, value) {clientstate.setInfoMode('interception');});
-    $scope.$on('keypress-8', function(message, value) {clientstate.setInfoMode('rain');});
-    $scope.$on('keypress-9', function(message, value) {clientstate.setInfoMode('evap');});
+    $scope.$on('keypress-1', function(message, value) {clientState.setInfoMode('s1');});
+    $scope.$on('keypress-2', function(message, value) {clientState.setInfoMode('su');});
+    $scope.$on('keypress-3', function(message, value) {clientState.setInfoMode('vol');});
+    $scope.$on('keypress-4', function(message, value) {clientState.setInfoMode('dep');});
+    $scope.$on('keypress-5', function(message, value) {clientState.setInfoMode('ucx');});
+    $scope.$on('keypress-6', function(message, value) {clientState.setInfoMode('ucy');});
+    $scope.$on('keypress-7', function(message, value) {clientState.setInfoMode('interception');});
+    $scope.$on('keypress-8', function(message, value) {clientState.setInfoMode('rain');});
+    $scope.$on('keypress-9', function(message, value) {clientState.setInfoMode('evap');});
     */
   }
 ]);

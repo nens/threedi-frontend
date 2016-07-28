@@ -199,7 +199,7 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
                                     result += ' v2_pumpstation';
                                     break;
                                 case 'v2_levee':
-                                    // default setting, must match clientstate service show_onedee.v2_levee
+                                    // default setting, must match clientState service show_onedee.v2_levee
                                     result += ' v2_levee hide';
                                     break;
 

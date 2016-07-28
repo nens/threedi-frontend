@@ -12,16 +12,16 @@
                      ng-mouseup="mouse_up('rain', $event);"
                      ng-mousemove="mouse_move('rain', $event);">
                     <div class="progress-bar" role="progressbar"
-                       aria-valuemin="{[{ clientstate.edit_ranges['rain'].min }]}"
-                       aria-valuemax="{[{ clientstate.edit_ranges['rain'].max }]}"
+                       aria-valuemin="{[{ clientState.edit_ranges['rain'].min }]}"
+                       aria-valuemax="{[{ clientState.edit_ranges['rain'].max }]}"
                        style="width: {[{ value_percentage['rain'] }]}%;">
                         <span style="color:white; white-space:nowrap;">
                         </span>
                     </div>
                     <div class="progress-label">
-                      {[{ clientstate.edit_ranges['rain'].name }]}
-                      {[{ box.content.properties.amount | number : clientstate.edit_ranges['rain'].decimals }]}
-                      {[{ clientstate.edit_ranges['rain'].unit }]}
+                      {[{ clientState.edit_ranges['rain'].name }]}
+                      {[{ box.content.properties.amount | number : clientState.edit_ranges['rain'].decimals }]}
+                      {[{ clientState.edit_ranges['rain'].unit }]}
                       {[{ display_name }]}
                     </div>
                 </div>

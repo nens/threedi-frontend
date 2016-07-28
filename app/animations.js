@@ -8,10 +8,11 @@ require('./lib/leaflet-plugins/TileLayer.WMS.incrementalSingleTile');
 
 angular.module('threedi-client')
   .factory('AnimatedLayer', [function () {
-    var startedLoading,
-      name,
-      options,
-      current_timestep;
+    var startedLoading;
+    var name;
+    var options;
+    var current_timestep;
+
     var current_in_map = {};  // indices if layers that are in OL.map
     var to_delete_from_map = null;
     var readyForNext = null;  // This is the layer that should be shown after stopping simulation
@@ -49,14 +50,14 @@ angular.module('threedi-client')
           // console.log('Ani wms with extras: ', this.options);
       }
 
-      // Normal wms layer with tiles
-      // var layer = new L.TileLayer.WMS(
-      //     this.url,
-      //     this.options);
-
-      // testing with single tile layer
-      var layer = new L.tileLayer.wmsIncrementalSingleTile(
-          this.url, this.options);
+      // // Normal wms layer with tiles
+      var layer = new L.TileLayer.WMS(
+          this.url,
+          this.options);
+      //
+      // // testing with single tile layer
+      // // var layer = new L.tileLayer.wmsIncrementalSingleTile(
+      // //     this.url, this.options);
 
       layer.on('loading', function (e) {
           // for debugging
@@ -166,9 +167,9 @@ angular.module('threedi-client')
             // for debugging
             // console.log('adding to map ', ts);
         this.startedLoading = Date.now();
-        var new_layer = this.layerFromTs(timestep, extra_options);
-        // map.addLayer(new_layer); // TODO: turn on
-        this.current_in_map[currentLayerKey] = new_layer;
+        var newLayer = this.layerFromTs(timestep, extra_options);
+        map.addLayer(newLayer);
+        this.current_in_map[currentLayerKey] = newLayer;
         this.readyForNext = currentLayerKey;
       }
         // if (debug){ console.log('current_in_map', this.current_in_map);
@@ -176,8 +177,8 @@ angular.module('threedi-client')
     };
 
     var animated_layer = function (options) {
+      var url = options.url;
       name = options.name;
-      url = options.url;
       options = options.options;
       current_timestep = 0;  // to be altered from outside
       return {

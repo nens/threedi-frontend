@@ -264,7 +264,7 @@ angular.module('threedi-client').service('state', [
           openBootingModal();
           break;
         case 'timed_out':
-          clientstate.modal.setTemplate('timeout', true);
+          clientState.modal.setTemplate('timeout', true);
           break;
         }
       },

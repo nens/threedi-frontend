@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /*
  * L.TileLayer.WMS.incrementalSingleTile is used for putting WMS tile layers on the map
 
@@ -17,15 +19,14 @@
  */
 
 L.TileLayer.WMS.incrementalSingleTile = L.TileLayer.WMS.extend({
-
-	initialize: function(url, options) {
+	initialize: function (url, options) {
 		L.TileLayer.WMS.prototype.initialize.call(this, url, options);
 		// tilePoints is a look-up table to store ids for "tilePoints" that where loaded in a bigger tile
 		// it works as an replacment for the look-up functionality of the typed Array the tiles are stored in
 		this.tilePoints = [];
 	},
 
-	getTileUrl: function(tileBounds, zoom) { // (Bounds, Number) -> String
+	getTileUrl: function (tileBounds, zoom) { // (Bounds, Number) -> String
 		// only minor changes to deal with the switchover in the input from tilePoint to tileBound
 		var width = tileBounds.max.x - tileBounds.min.x + 1;
 		var height = tileBounds.max.y - tileBounds.min.y + 1;

@@ -15,7 +15,7 @@ angular.module('threedi-client').controller('Simulator', [
     $rootScope,
     socket,
     state,
-    clientstate,
+    clientState,
     leaflet,
     modes
   ) {
@@ -25,7 +25,7 @@ angular.module('threedi-client').controller('Simulator', [
     $scope.mouse_is_down = false;
     $scope.time_mouse_is_down = 0;
 
-    var c = clientstate;
+    var c = clientState;
 
     $scope.mouse_down = function (newMode) {
       // we want to go to this mode, but we're not there yet
@@ -36,7 +36,7 @@ angular.module('threedi-client').controller('Simulator', [
         $scope.$emit('edit-pause');  // stop the current simulation
       }
 
-      if (clientstate.program_mode === modes.MODE_EDIT) {
+      if (clientState.program_mode === modes.MODE_EDIT) {
         // only in correct program mode
         leaflet.toggle_layer_edit(true);  // turn edit control on
       } else {
@@ -51,7 +51,7 @@ angular.module('threedi-client').controller('Simulator', [
 
     // special function when clicking flood fill mode button
     $scope.mouse_down_ff = function () {
-      if (clientstate.edit_ranges.flood_fill_mode.value === 0) {
+      if (clientState.edit_ranges.flood_fill_mode.value === 0) {
         $scope.mouse_down(modes.MODE_FLOODFILL_RELATIVE);
       } else {
         $scope.mouse_down(modes.MODE_FLOODFILL_ABSOLUTE);
@@ -139,7 +139,7 @@ angular.module('threedi-client').controller('Simulator', [
     });
 
     $rootScope.$on('new-model', function () {
-      clientstate.setMode(modes.MODE_INFO_POINT);
+      clientState.setMode(modes.MODE_INFO_POINT);
     });
   }
 ]);

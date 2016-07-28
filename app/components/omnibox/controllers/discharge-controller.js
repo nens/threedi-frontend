@@ -2,13 +2,13 @@
 /* Manholes AND discharges. Must be inside the PopupSlider controller */
 angular.module('threedi-client')
   .controller('Discharge', ['$scope', 'socket', 'clientState',
-    function ($scope, socket, clientstate) {
+    function ($scope, socket, clientState) {
 
       $scope.properties = null;
       $scope.mouse_is_down = false;
       $scope.controller_width = 300;  // assume that every slider here has the same width
       $scope.discharge_display = '';  // text to inform user that a negative value is a pump
-      $scope.clientstate = clientstate;
+      $scope.clientState = clientState;
 
       $scope.update_display = function (value) {
         if (value >= 0) {
@@ -44,7 +44,7 @@ angular.module('threedi-client')
         if (target_var === 'discharge') {
           $scope.properties.amount = new_value;
           $scope.update_display(new_value);
-          $scope.clientstate = clientstate;  // set current values, they may have changed
+          $scope.clientState = clientState;  // set current values, they may have changed
         }
       };
 

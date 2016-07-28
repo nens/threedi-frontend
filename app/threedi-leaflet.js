@@ -47,7 +47,7 @@ angular.module('threedi-client').service('leaflet', [
   function (
     $rootScope,
     $interpolate,
-    clientstate,
+    clientState,
     socket,
     modes,
     state,
@@ -95,8 +95,8 @@ angular.module('threedi-client').service('leaflet', [
 
     // set the initial default extent (world map)
     map.fitBounds([
-        [clientstate.spatial.extent[0], clientstate.spatial.extent[1]],
-        [clientstate.spatial.extent[2], clientstate.spatial.extent[3]]
+        [clientState.spatial.extent[0], clientState.spatial.extent[1]],
+        [clientState.spatial.extent[2], clientState.spatial.extent[3]]
     ]);
 
     // Placed a few animation things in leaflet, because they interact with
@@ -144,18 +144,18 @@ angular.module('threedi-client').service('leaflet', [
       return result;
     };
 
-    // look in clientstate.show_onedee if layer_name has to be shown
+    // look in clientState.show_onedee if layer_name has to be shown
     var show_onedee_layer = function (layer_name) {
-      if (!clientstate.show_onedee.hasOwnProperty(layer_name)) {
+      if (!clientState.show_onedee.hasOwnProperty(layer_name)) {
             // default
         return true;
       }
-      return clientstate.show_onedee[layer_name];
+      return clientState.show_onedee[layer_name];
     };
 
     require('./lib/leaflet-plugins/TileLayer.GeoJSON')
     /* All 1d objects in 1 layer: culvert, weir, pumpstation and orifice */
-    clientstate.spatial.layers.createObjectLayer = function () {
+    clientState.spatial.layers.createObjectLayer = function () {
         // used to filter only point objects.
       var point_objects = {
         'orifice': true,
@@ -444,7 +444,7 @@ angular.module('threedi-client').service('leaflet', [
     }).addTo(map);
 
     require('./lib/leaflet-plugins/TileLayer.GeoJSONd3')
-    clientstate.spatial.layers.createChannelLayer = function (inverted) {
+    clientState.spatial.layers.createChannelLayer = function (inverted) {
         // onedee_url must be created dynamically
 
       var classString = 'channel';
@@ -500,7 +500,7 @@ angular.module('threedi-client').service('leaflet', [
         d3.selectAll('.levee').remove();
         d3.selectAll('.background-channel').remove();
 
-        map.removeLayer(clientstate.spatial.layers.oneDeeLayerGroup.layer);
+        map.removeLayer(clientState.spatial.layers.oneDeeLayerGroup.layer);
         onedee_status.onedee_in_map = false;
         onedee_status.layer_group = null;
       }
@@ -547,7 +547,7 @@ angular.module('threedi-client').service('leaflet', [
         // determine if you need 1d or not
       var onedee_layers = [];
       if (state.state.has_onedee === '1') {
-        var layers = clientstate.spatial.layers;
+        var layers = clientState.spatial.layers;
             // if (inverted_color) {
         onedee_layers = [
           layers.createChannelLayer(inverted_color).layer,
@@ -575,7 +575,7 @@ angular.module('threedi-client').service('leaflet', [
 
       if (state.state.has_v2_levees === '1') {
         var leveeLayer = {
-          active: clientstate.show_onedee.v2_levee,  // initial, for gui
+          active: clientState.show_onedee.v2_levee,  // initial, for gui
           name: 'v2_levee',  // required in LayerService
           displayName: 'Levees',
           layerType: 'embedded',
@@ -586,7 +586,7 @@ angular.module('threedi-client').service('leaflet', [
 
       if (state.state.has_v2_breaches === '1') {
         var breachLayer = {
-          active: clientstate.show_onedee.v2_breach,  // initial, for gui
+          active: clientState.show_onedee.v2_breach,  // initial, for gui
           name: 'v2_breach',  // required in LayerService
           displayName: 'Breaches',
           layerType: 'embedded',
@@ -595,16 +595,16 @@ angular.module('threedi-client').service('leaflet', [
         LayerService.structureLayers.push(breachLayer);
       }
 
-      clientstate.spatial.layers.oneDeeLayerGroup = {
+      clientState.spatial.layers.oneDeeLayerGroup = {
         active: false,
         layer: new L.LayerGroup(onedee_layers)
       };
         // set up / reset onedee_status
       resetRequestedOnedee();
       if (state.state.has_onedee === '1' || state.state.has_levee === '1') {
-        map.addLayer(clientstate.spatial.layers.oneDeeLayerGroup.layer);
+        map.addLayer(clientState.spatial.layers.oneDeeLayerGroup.layer);
         onedee_status.onedee_in_map = true;
-        onedee_status.layer_group = clientstate.spatial.layers.oneDeeLayerGroup.layer;
+        onedee_status.layer_group = clientState.spatial.layers.oneDeeLayerGroup.layer;
       }
 
       this.use_server_extent_as_master = true;  // make the master listen to the extent for one time.
@@ -614,9 +614,9 @@ angular.module('threedi-client').service('leaflet', [
         // reset the data
       onedee_status.current_status = null;
         // set defaults for show_onedee
-      clientstate.show_onedee.v2_breach = clientstate.show_onedee_default.v2_breach;
-      clientstate.show_onedee.v2_levee = clientstate.show_onedee_default.v2_levee;
-      clientstate.show_onedee.v2_pumpstation = clientstate.show_onedee_default.v2_pumpstation;
+      clientState.show_onedee.v2_breach = clientState.show_onedee_default.v2_breach;
+      clientState.show_onedee.v2_levee = clientState.show_onedee_default.v2_levee;
+      clientState.show_onedee.v2_pumpstation = clientState.show_onedee_default.v2_pumpstation;
         // remove v1 levee layer if available
       if (LayerService.structureLayers.hasOwnProperty('Levees')) {
         LayerService.structureLayers['Levees'].remove();
@@ -657,7 +657,7 @@ angular.module('threedi-client').service('leaflet', [
         channelElm.classList.add('clicked-channel');
 
             // prevent default click handler
-        clientstate.program_mode = modes.MODE_EXTERNAL;
+        clientState.program_mode = modes.MODE_EXTERNAL;
             // now open the infopoint box
         $rootScope.$broadcast('open_box', {
           type: 'infopoint',
@@ -670,10 +670,10 @@ angular.module('threedi-client').service('leaflet', [
 
         // 'old' boundary point click
       d3.selectAll('.boundary-point').on('click', function (d) {
-        clientstate.program_mode = modes.MODE_EXTERNAL;
+        clientState.program_mode = modes.MODE_EXTERNAL;
         $rootScope.$broadcast('open_box', {
           type: 'infopoint',
-                // mode: clientstate.scenario_event_defaults.onedee_info_mode,
+                // mode: clientState.scenario_event_defaults.onedee_info_mode,
           contenttype: 'channel',
           loaded_model: state.state.loaded_model,
           properties: {
@@ -685,7 +685,7 @@ angular.module('threedi-client').service('leaflet', [
         });
       });
 
-      if (clientstate.show_onedee.v2_levee) {
+      if (clientState.show_onedee.v2_levee) {
         showLeveeLayer();
       } else {
         hideLeveeLayer();
@@ -736,7 +736,7 @@ angular.module('threedi-client').service('leaflet', [
           console.log('Initializing animation layer...');
           wms_ani_layer = AnimatedLayer.animation_init(
                     state.state.loaded_model, url,
-                    clientstate.scenario_event_defaults.wms_layer_depth
+                    clientState.scenario_event_defaults.wms_layer_depth
                     );
         } else {
           console.log('No animation layer.');
@@ -745,16 +745,16 @@ angular.module('threedi-client').service('leaflet', [
         wms_ani_initialized = state.state.loaded_model;
       }
       if (state.state.state === 'sim') {
-        clientstate.scenario_event_defaults.wms_options['fast'] = 2;
+        clientState.scenario_event_defaults.wms_options['fast'] = 2;
       } else {
-        clientstate.scenario_event_defaults.wms_options['fast'] = 1;
+        clientState.scenario_event_defaults.wms_options['fast'] = 1;
       }
       if (wms_ani_layer !== undefined && wms_ani_layer !== null) {
             // 3rd option is 'force': in case of a reset we want an explicit
             // update of the map layer.
         wms_ani_layer.setTimestep(
                 timestep_calc,  // We can also take timestep
-                clientstate.scenario_event_defaults.wms_options,
+                clientState.scenario_event_defaults.wms_options,
                 cmd === 'reset');
       }
         // fetch onedee data
@@ -779,14 +779,14 @@ angular.module('threedi-client').service('leaflet', [
       if (state.state.has_onedee === '1') {
             // TODO: better do apply the click handler after 'load', but
             // strangly the DOM is not yet updated at that time
-        if (clientstate.spatial.layers.oneDeeLayerGroup === undefined) {
+        if (clientState.spatial.layers.oneDeeLayerGroup === undefined) {
           console.log('warning: oneDeeLayerGroup is undefined, skipping.');
           return;
         }
             // Not all geojson tiles may be loaded yet:
             // with retryMakeOnedeeClickable/retryRefreshOnedeeLayer the click
             // handler + visualization are applied until all geojsons are loaded.
-        clientstate.spatial.layers.oneDeeLayerGroup.layer.eachLayer(function (layer) {
+        clientState.spatial.layers.oneDeeLayerGroup.layer.eachLayer(function (layer) {
           retryMakeOnedeeClickable(layer, 5);
           retryRefreshOnedeeLayer(layer, 10);
         });
@@ -1841,18 +1841,18 @@ angular.module('threedi-client').service('leaflet', [
       }
 
       console.log('handle short click');
-      if (clientstate.program_mode === modes.MODE_NAVIGATE) {
+      if (clientState.program_mode === modes.MODE_NAVIGATE) {
         console.log('click in navigate mode');
             // Close any open box. Why doesn't this work right away?
             // $rootScope.$broadcast('close_box', '');
-      } else if (clientstate.program_mode === modes.MODE_DISCHARGE) {
+      } else if (clientState.program_mode === modes.MODE_DISCHARGE) {
         var amount = getDefaultValue(
-                clientstate.edit_ranges[modes.MODE_DISCHARGE].value,
+                clientState.edit_ranges[modes.MODE_DISCHARGE].value,
                 'discharge_amount');
         console.log('LA click in manhole/discharge mode: ',
                 e.latlng.lng, e.latlng.lat,
                 amount);
-        var itype = parseInt(clientstate.edit_ranges['discharge_type'].value);
+        var itype = parseInt(clientState.edit_ranges['discharge_type'].value);
             // send data to server
         socket.emit('add_manhole', e.latlng.lng, e.latlng.lat,
                 amount, itype,
@@ -1863,16 +1863,16 @@ angular.module('threedi-client').service('leaflet', [
         var iconFn = amount >= 0 ? dischargeIcon : manholeIcon;
         drawTemp(e.latlng.lat, e.latlng.lng, iconFn());
 
-      } else if (clientstate.program_mode === modes.MODE_RAIN) {
+      } else if (clientState.program_mode === modes.MODE_RAIN) {
         var rain_size = getDefaultValue(
-                clientstate.edit_ranges['rain_size'].value,
+                clientState.edit_ranges['rain_size'].value,
                 'rain_size');
         var rain_diameter = extentSize() * rain_size;
         var rain_duration = getDefaultValue(
-                clientstate.edit_ranges['rain_duration'].value,
+                clientState.edit_ranges['rain_duration'].value,
                 'rain_duration');
         var rain_amount = getDefaultValue(
-                clientstate.edit_ranges[modes.MODE_RAIN].value,
+                clientState.edit_ranges[modes.MODE_RAIN].value,
                 'rain_amount');
         console.log('click in rain mode: ',
                 e.latlng.lng, e.latlng.lat,
@@ -1892,19 +1892,19 @@ angular.module('threedi-client').service('leaflet', [
         drawRainCloudDiameter(e.latlng.lat, e.latlng.lng, rain_diameter / 2,
                                   0.3);
 
-      } else if (clientstate.program_mode === modes.MODE_FLOODFILL_ABSOLUTE ||
-                   clientstate.program_mode === modes.MODE_FLOODFILL_RELATIVE) {
+      } else if (clientState.program_mode === modes.MODE_FLOODFILL_ABSOLUTE ||
+                   clientState.program_mode === modes.MODE_FLOODFILL_RELATIVE) {
         var level;
         var mode;
         var source;
 
-        mode = parseInt(clientstate.edit_ranges['flood_fill_mode'].value);
+        mode = parseInt(clientState.edit_ranges['flood_fill_mode'].value);
         if (mode === 0) {
           source = 'flood_fill_relative';
         } else {
           source = 'flood_fill_absolute';
         }
-        level = getDefaultValue(clientstate.edit_ranges[source].value, source);
+        level = getDefaultValue(clientState.edit_ranges[source].value, source);
 
         console.log('LA: click in floodfill mode: ',
                 e.latlng.lng, e.latlng.lat,
@@ -1919,9 +1919,9 @@ angular.module('threedi-client').service('leaflet', [
                         function () {});
             // place temp icon
         drawTemp(e.latlng.lat, e.latlng.lng, floodfillIcon());
-      }  else if (clientstate.program_mode === modes.MODE_EDIT) {
+      }  else if (clientState.program_mode === modes.MODE_EDIT) {
             // The actual edit function is activated with the polygon button.
-      } else if (clientstate.program_mode === modes.MODE_INFO_POINT) {
+      } else if (clientState.program_mode === modes.MODE_INFO_POINT) {
         $rootScope.$broadcast('open_box', {
           type: 'infopoint',
           contenttype: 'map_info',
@@ -1931,50 +1931,50 @@ angular.module('threedi-client').service('leaflet', [
         info_marker = L.marker(
                 e.latlng,
                 {icon: infoMarker(), bounceOnAdd: true}).addTo(map);
-      } else if (clientstate.program_mode === modes.MODE_INFO_LINE) {
+      } else if (clientState.program_mode === modes.MODE_INFO_LINE) {
             /*
 http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3A900913&line=LINESTRING+(487690.73298813+6804234.0094661%2C488588.86807036+6803985.5891242)&time=28
 
             */
 
-        if (clientstate.first_click === null) {
+        if (clientState.first_click === null) {
           removeLineMarker();
           drawFirstClick(e.latlng.lat, e.latlng.lng, extentSize() * 0.002,
                                0.8);
-          clientstate.first_click = e.latlng;
+          clientState.first_click = e.latlng;
           showalert('Now click a second time to draw a line.');
           return;
         }
 
         $rootScope.$broadcast('open_box', {
           type: 'infoline',
-          firstpoint: clientstate.first_click,
+          firstpoint: clientState.first_click,
           endpoint: e.latlng,
           loaded_model: state.state.loaded_model,
-          interpolate: clientstate.scenario_event_defaults.wms_options.interpolate
+          interpolate: clientState.scenario_event_defaults.wms_options.interpolate
         });
 
         clearTempObjects(0);
-        drawLine(clientstate.first_click, e.latlng);
-        clientstate.first_click = null;
+        drawLine(clientState.first_click, e.latlng);
+        clientState.first_click = null;
 
-      } else if (clientstate.program_mode === modes.MODE_EXTERNAL) {
+      } else if (clientState.program_mode === modes.MODE_EXTERNAL) {
             // an external handler shows markes / popups / etc.
             // go back to modes.MODE_INFO_POINT silently
-        clientstate.setMode(modes.MODE_INFO_POINT);
+        clientState.setMode(modes.MODE_INFO_POINT);
       } else {
-        console.log('going back to default mode from: ' + clientstate.program_mode);
-        clientstate.setMode(modes.MODE_INFO_POINT);
+        console.log('going back to default mode from: ' + clientState.program_mode);
+        clientState.setMode(modes.MODE_INFO_POINT);
       }
     };
 
     /*
     when no value is supplied by manual input this function returns a default
-    defined at clientstate.scenario_event_defaults
+    defined at clientState.scenario_event_defaults
      */
     function getDefaultValue (current_value, name) {
       if (typeof current_value === 'undefined' || current_value === 'NaN') {
-        return clientstate.scenario_event_defaults[name];
+        return clientState.scenario_event_defaults[name];
       } else {
         return current_value;
       }
@@ -2001,7 +2001,7 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
         var request_url = me.updateDEMRequestURL();
         $.get(request_url, function (data) {
           var limits = data.limits;
-          var orig_limits = clientstate.scenario_event_defaults.wms_limits;
+          var orig_limits = clientState.scenario_event_defaults.wms_limits;
           new_limit_low = Math.floor(data.limits[0]);
           new_limit_high = Math.floor(data.limits[1] + 1);
           if ((new_limit_low !== orig_limits[0]) || (new_limit_high !== orig_limits[1])) {
@@ -2009,7 +2009,7 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
           }
           if (need_change) {
             console.log('Rescaling DEM to ' + new_limit_low + ' to ' + new_limit_high);
-            clientstate.scenario_event_defaults.wms_limits = [new_limit_low, new_limit_high];
+            clientState.scenario_event_defaults.wms_limits = [new_limit_low, new_limit_high];
                     // hacking into existing L.tileLayer.wms...
             me.foregroundLayer.layer.wmsParams.limits = new_limit_low + ',' + new_limit_high;
             me.updatefgLayers(me.foregroundLayer, true);
@@ -2350,18 +2350,20 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
       if (((!state.master) && (state.state.player.extent)) ||
         (this.use_server_extent_as_master && state.state.state === 'wait')) {
         this.use_server_extent_as_master = false;
-        clientstate.spatial.extent = JSON.parse(state.state.player.extent); // event comes in as string
+        clientState.spatial.extent = JSON.parse(state.state.player.extent); // event comes in as string
           // for some reason this neeeeeds to happen here.
           //
         map.fitBounds([
-            [clientstate.spatial.extent[0], clientstate.spatial.extent[1]],
-            [clientstate.spatial.extent[2], clientstate.spatial.extent[3]]]);
+            [clientState.spatial.extent[0], clientState.spatial.extent[1]],
+            [clientState.spatial.extent[2], clientState.spatial.extent[3]]]);
       }
     });
 
     // initial background layer
-    const backgroundLayerDefaultIndex = 0;
-    var funcBackgroundLayer = clientstate.backgroundLayers[backgroundLayerDefaultIndex].layer;
+    const defaultLayer = clientState.backgroundLayers.filter(function (layer) {
+      if (layer.default) { return layer; }
+    });
+    var funcBackgroundLayer = defaultLayer[0].layer;
     map.addLayer(funcBackgroundLayer);
 
     backgroundLayer = funcBackgroundLayer;
@@ -2546,28 +2548,28 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
         console.log(layer_str);
 
             // TODO: use correct variables & values
-        var edit_mode = clientstate.edit_mode;
+        var edit_mode = clientState.edit_mode;
         var draw_value = 0;
         switch (edit_mode) {
         case EDIT_modes.MODE_CROP_TYPE:
-          draw_value = clientstate.edit_ranges['edit_crop_type'].value;
+          draw_value = clientState.edit_ranges['edit_crop_type'].value;
           console.log('crop type');
           break;
         case EDIT_modes.MODE_SOIL:
-          draw_value = clientstate.edit_ranges['edit_soil'].value;
+          draw_value = clientState.edit_ranges['edit_soil'].value;
           console.log('soil');
           break;
         case EDIT_modes.MODE_INFILTRATION:
-          draw_value = clientstate.edit_ranges['edit_infiltration'].value;
+          draw_value = clientState.edit_ranges['edit_infiltration'].value;
           console.log('infiltration');
           break;
         case EDIT_modes.MODE_INTERCEPTION:
-          draw_value = clientstate.edit_ranges['edit_interception'].value;
+          draw_value = clientState.edit_ranges['edit_interception'].value;
           console.log('interception');
           break;
         case EDIT_modes.MODE_BATHY:
                     // bathy is -dps ! We are actually drawing the dps.
-          draw_value = -clientstate.edit_ranges['edit_bathy'].value;
+          draw_value = -clientState.edit_ranges['edit_bathy'].value;
           console.log('bathy');
           break;
         }

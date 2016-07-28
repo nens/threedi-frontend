@@ -53,7 +53,7 @@
       <div ng-controller="PanelSwitcher"
            class="topnav">
         <div class="topnav-item"
-             ng-class="{'bar-item-selected': clientstate.active_panel == 'user'}"
+             ng-class="{'bar-item-selected': clientState.active_panel == 'user'}"
              ng-click="open_close('user');"
              title="User and model options">
           <a>
@@ -68,10 +68,10 @@
       <div ng-controller="RemoteControl">
         <div ng-controller="PanelSwitcher"
              class="sidebar"
-             ng-class="{'sidebar-selected': (clientstate.active_panel !== '')}">
+             ng-class="{'sidebar-selected': (clientState.active_panel !== '')}">
           <div class="sidebar-button sidebar-button-layers sidebar-button-divider"
                ng-class="{'sidebar-item-selected':
-                           clientstate.active_panel == 'Layers'}"
+                           clientState.active_panel == 'Layers'}"
                ng-click="open_close('Layers');"
                title="Map layers">
             <a>
@@ -81,7 +81,7 @@
 
           <div class="sidebar-button sidebar-button-pi sidebar-button-divider"
                ng-class="{'sidebar-item-selected':
-                           clientstate.active_panel == 'Settings'}"
+                           clientState.active_panel == 'Settings'}"
                ng-click="open_close('Settings');"
                title="Settings">
             <a>&pi;</a>
@@ -91,17 +91,17 @@
 
           <div class="sidebar-button sidebar-button-infopoint sidebar-button-divider"
                ng-show="must_show_infopoint_btn()">
-            <a ng-class="{'tool-active': clientstate.program_mode == 'infopoint'}"
-               ng-click="clientstate.setMode('infopoint')"
+            <a ng-class="{'tool-active': clientState.program_mode == 'infopoint'}"
+               ng-click="clientState.setMode('infopoint')"
                title="Point Info">
               <i class="fa fa-crosshairs"></i>
             </a>
           </div>
 
           <div class="sidebar-button sidebar-button-infoline"
-               ng-show="clientstate.features.gui_infoline_profile">
-            <a ng-class="{'tool-active': clientstate.program_mode == 'infoline'}"
-               ng-click="clientstate.setMode('infoline')"
+               ng-show="clientState.features.gui_infoline_profile">
+            <a ng-class="{'tool-active': clientState.program_mode == 'infoline'}"
+               ng-click="clientState.setMode('infoline')"
                title="Cross profile">
               <i class="fa fa-expand"></i>
             </a>
@@ -152,7 +152,7 @@
 
             <a class="btn btn-default btn-lg btn-rain"
                ng-class="{disabled: wait_for_server_response,
-                          'btn-primary': clientstate.program_mode == 'rain'}"
+                          'btn-primary': clientState.program_mode == 'rain'}"
                ng-show="must_show_rain_btn()"
                ng-mousedown="!isMaster || mouse_down('rain');"
                ng-mouseup="!isMaster || mouse_up('rain');"
@@ -162,7 +162,7 @@
 
             <a class="btn btn-default btn-lg btn-discharge"
                 ng-class="{disabled: wait_for_server_response,
-                          'btn-primary': clientstate.program_mode == 'discharge'}"
+                          'btn-primary': clientState.program_mode == 'discharge'}"
                 ng-show="must_show_discharge_btn()"
                 ng-mousedown="!isMaster || mouse_down('discharge')"
                 ng-mouseup="!isMaster || mouse_up('discharge')"
@@ -182,7 +182,7 @@
 
             <a class="btn btn-default btn-lg"
                 ng-class="{disabled: wait_for_server_response,
-                          'btn-primary': clientstate.program_mode == 'edit'}"
+                          'btn-primary': clientState.program_mode == 'edit'}"
                 ng-show="must_show_twodee_edit_btn()"
                 ng-mousedown="!isMaster || mouse_down('edit')"
                 ng-mouseup="!isMaster || mouse_up('edit')"
@@ -192,7 +192,7 @@
 
             <a class="btn btn-default btn-lg"
                 ng-class="{disabled: wait_for_server_response,
-                'btn-primary': clientstate.program_mode == 'wind'}"
+                'btn-primary': clientState.program_mode == 'wind'}"
                 ng-show="c.features.scenario_global_wind"
                 ng-mousedown="!isMaster || mouse_down('wind')"
                 ng-mouseup="!isMaster || mouse_up('wind')"
@@ -312,7 +312,7 @@
               ng-class="{hide: must_hide_inline_settings()}">
 
               <div ng-class="{'progress-bar-neg':
-                               clientstate.edit_ranges[range_name].value < 0}"
+                               clientState.edit_ranges[range_name].value < 0}"
                    class="progress-bar"
                    id="blurps"
                    role="progressbar"
@@ -324,9 +324,9 @@
               </div>
 
               <div class="progress-label">
-                  {[{ clientstate.edit_ranges[range_name].name }]}
-                  {[{ clientstate.edit_ranges[range_name].value | number : clientstate.edit_ranges[range_name].decimals }]}
-                  {[{ clientstate.edit_ranges[range_name].unit }]}
+                  {[{ clientState.edit_ranges[range_name].name }]}
+                  {[{ clientState.edit_ranges[range_name].value | number : clientState.edit_ranges[range_name].decimals }]}
+                  {[{ clientState.edit_ranges[range_name].unit }]}
               </div>
             </div>
           </div> <!-- btn-group -->
@@ -341,12 +341,12 @@
   <div id="off-canvas">
     <div ng-controller="PanelSwitcher"
          class="sidebar-background"
-         ng-class="{'sidebar-background-selected': (clientstate.active_panel !== '')}">
+         ng-class="{'sidebar-background-selected': (clientState.active_panel !== '')}">
 
       <!-- start controller: 'PanelSwitcher' (I) -->
 
       <h3 class="sidebar-header">
-        {[{ clientstate.active_panel | capitalize }]}
+        {[{ clientState.active_panel | capitalize }]}
       </h3>
 
       <div ng-controller="PanelSwitcher" class="side-panels">
@@ -355,7 +355,7 @@
 
         <!-- Note: we're not using ng-switch, because the angular code in it will only activate after switching, which can be a bit slow -->
 
-        <div ng-class="{hide: clientstate.active_panel != 'Layers'}">
+        <div ng-class="{hide: clientState.active_panel != 'Layers'}">
           <div ng-controller="EditLayer"
                class="panel-group"
                id="accordion-layers">
@@ -430,7 +430,7 @@
                   <ul class="list-unstyled">
                     <li ng-repeat="layer in animationLayers" ng-class="{'hidden': !layer.enabled}">
                       <a class="layer"
-                         ng-class="{ 'selected-layer': layer.name == clientstate.scenario_event_defaults.wms_layer_depth }"
+                         ng-class="{ 'selected-layer': layer.name == clientState.scenario_event_defaults.wms_layer_depth }"
                          ng-click="switchAnimationLayer(layer)">
                          {[{ layer.display_name }]}
                       </a>
@@ -526,7 +526,7 @@
           </div>  <!-- EditLayer controller -->
         </div>  <!-- panel switcher map layers -->
 
-        <div ng-class="{hide: clientstate.active_panel != 'user'}">
+        <div ng-class="{hide: clientState.active_panel != 'user'}">
           <div class="panel-group"
                id="accordion-user">
             <div class="panel panel-default">
@@ -672,7 +672,7 @@
         </div> <!-- panel switcher user -->
 
         <div ng-controller="ClientState"
-             ng-class="{hide: clientstate.active_panel != 'Settings'}">
+             ng-class="{hide: clientState.active_panel != 'Settings'}">
           <div class="panel-group"
                id="accordion2">
             <div class="panel panel-default">

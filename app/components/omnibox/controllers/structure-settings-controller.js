@@ -1,7 +1,7 @@
 
 angular.module('threedi-client')
   .controller('StructureSettings', ['$scope', 'state', 'clientState', '$rootScope', 'leaflet', 'socket',
-    function ($scope, state, clientstate, $rootScope, leaflet, socket) {
+    function ($scope, state, clientState, $rootScope, leaflet, socket) {
 
       $scope.has_changes_not_applied = false;
 

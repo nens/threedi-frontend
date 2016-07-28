@@ -1,9 +1,10 @@
 
+const $ = require('jquery');
+
 /* click on the map OR click on a channel, node, sewerage-weir, sewerage-orifice */
 angular.module('threedi-client')
   .controller('InfoPoint', ['$scope', 'state', 'clientState', '$rootScope', 'leaflet', 'socket',
-    function ($scope, state, clientstate, $rootScope, leaflet, socket) {
-
+    function ($scope, state, clientState, $rootScope, leaflet, socket) {
       $scope.content = null;
       $scope.state = state;
       $scope.counter = 0;
@@ -14,7 +15,7 @@ angular.module('threedi-client')
       $scope.selectedInfo = undefined;  // initial, must update manually after changing screens.
       $scope.selectedUrl = '';  // initial, must update manually after changing screens.
       $scope.close_after_apply = false;
-    // update clientstate.info_startingpoint accordingly as well
+    // update clientState.info_startingpoint accordingly as well
       $scope.must_show_delete_btn = undefined;
 
     // Valid object types that have settings
@@ -169,11 +170,11 @@ angular.module('threedi-client')
         $scope.selectedInfo = $scope.infourls[id];
         if ($scope.infourls.length - 1 > id) {
           $scope.selectedInfo.next = id + 1;
-          clientstate.info_startingpoint = id;
+          clientState.info_startingpoint = id;
         }
         if (id > 0) {
           $scope.selectedInfo.previous = id - 1;
-          clientstate.info_startingpoint = id;
+          clientState.info_startingpoint = id;
         }
         $scope.selectedUrl = $scope.selectedInfo.url;
         $scope.show_settings = false;
@@ -435,7 +436,7 @@ angular.module('threedi-client')
           if (content.properties.nod_type === '1d') {
             var nod_idx1 = content.properties.nod_idx1;  // 1-based indexing in netcdf?
             infourls = [
-            clientstate.features.gui_infonode && {
+            clientState.features.gui_infonode && {
                 name: 'Depth',
                 unit: '[m]',
                 type: 's1',
@@ -445,7 +446,7 @@ angular.module('threedi-client')
                         '&random=',
                 meta: content.properties.meta
               },
-            clientstate.features.gui_infonode && {
+            clientState.features.gui_infonode && {
                 name: 'Water Level',
                 type: 's1',
                 unit: '[m MSL]',
@@ -467,28 +468,28 @@ angular.module('threedi-client')
         } else if (content.contenttype === 'v2_manhole') {
           var node_idx = content.properties.node_idx;
           infourls = [
-          clientstate.features.gui_infonode && getTsDepth($layer, node_idx, content.properties.meta),
-          clientstate.features.gui_infonode && getTsWaterLevel($layer, node_idx, content.properties.meta),
-          clientstate.features.gui_infonode && has_1d2d && getTsFreeBoard($layer, node_idx, content.properties.meta)
+          clientState.features.gui_infonode && getTsDepth($layer, node_idx, content.properties.meta),
+          clientState.features.gui_infonode && getTsWaterLevel($layer, node_idx, content.properties.meta),
+          clientState.features.gui_infonode && has_1d2d && getTsFreeBoard($layer, node_idx, content.properties.meta)
         ];
         } else if (content.contenttype === 'v2_connection_nodes') {
         var node_idx = content.properties.node_idx;
         infourls = [
-            clientstate.features.gui_infonode && getTsDepth($layer, node_idx, content.properties.meta),
-            clientstate.features.gui_infonode && getTsWaterLevel($layer, node_idx, content.properties.meta)
+            clientState.features.gui_infonode && getTsDepth($layer, node_idx, content.properties.meta),
+            clientState.features.gui_infonode && getTsWaterLevel($layer, node_idx, content.properties.meta)
           ];
       } else if (content.contenttype === 'v2_node') {
             // added calculation node
           var node_idx = content.properties.node_idx;
           infourls = [
-            clientstate.features.gui_infonode && getTsDepth($layer, node_idx, content.properties.meta),
-            clientstate.features.gui_infonode && getTsWaterLevel($layer, node_idx, content.properties.meta)
+            clientState.features.gui_infonode && getTsDepth($layer, node_idx, content.properties.meta),
+            clientState.features.gui_infonode && getTsWaterLevel($layer, node_idx, content.properties.meta)
           ];
         } else if (content.contenttype === 'map_info') {
             // default, click on map
           var lonlat = content.point;
           infourls = [
-            clientstate.features.gui_infopoint_depth && {
+            clientState.features.gui_infopoint_depth && {
               name: 'Depth',
               unit: '[m]',
               type: 's1',
@@ -497,7 +498,7 @@ angular.module('threedi-client')
                     '&SRS=EPSG:4326&messages=true&POINT=' + lonlat.lng.toString() + ',' + lonlat.lat.toString() +
                     '&random='
             },
-            clientstate.features.gui_infopoint_waterlevel && {
+            clientState.features.gui_infopoint_waterlevel && {
               name: 'Water Level',
               type: 's1',
               unit: '[m MSL]',
@@ -506,7 +507,7 @@ angular.module('threedi-client')
                     '&SRS=EPSG:4326&messages=true&absolute=true&POINT=' + lonlat.lng.toString() + ',' + lonlat.lat.toString() +
                     '&random='
             },
-            clientstate.features.gui_infopoint_groundwaterlevel && {
+            clientState.features.gui_infopoint_groundwaterlevel && {
               name: 'Ground Water Level',
               type: 'sg',
               unit: '[m MSL]',
@@ -611,14 +612,14 @@ angular.module('threedi-client')
         addNextPreviousAttr($scope.infourls);
 
         // Adjust the starting point when changed
-        if (clientstate.info_startingpoint > $scope.infourls.length - 1) {
+        if (clientState.info_startingpoint > $scope.infourls.length - 1) {
             // length can be 0 if you do not have graphs
-          clientstate.info_startingpoint = Math.max($scope.infourls.length - 1, 0);
+          clientState.info_startingpoint = Math.max($scope.infourls.length - 1, 0);
         }
 
         // selectedInfo is set in v2_rain_cloud, so do not overwrite!
         if (updateSelectedInfo) {
-          $scope.selectedInfo = $scope.infourls[clientstate.info_startingpoint];
+          $scope.selectedInfo = $scope.infourls[clientState.info_startingpoint];
         }
 
         if (

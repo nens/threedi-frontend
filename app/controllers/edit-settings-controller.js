@@ -5,14 +5,14 @@ require('moment-timezone');
 /* Settings popup */
 angular.module('threedi-client')
   .controller('EditSettings', ['$scope', 'clientState', 'state', 'socket', 'modes',
-  function ($scope, clientstate, state, socket, modes) {
+  function ($scope, clientState, state, socket, modes) {
     $scope.close = function () {
-      clientstate.modal.active = false;
+      clientState.modal.active = false;
       $scope.emit_to_socket();
     };
 
     $scope.close_via_OK_button = function () {
-      clientstate.modal.active = false;
+      clientState.modal.active = false;
       // If this timeout is omitted, +/- 20% of emit_to_socket calls
       // erroniously use the previously set $scope.radar_dt value.
       // TODO: find out why this happens/use a neater ("more-angular-esque")
@@ -40,7 +40,7 @@ angular.module('threedi-client')
     $scope.manual_input_edit_infiltration = false;
     $scope.manual_input_edit_interception = false;
 
-    $scope.clientstate = clientstate;
+    $scope.clientState = clientState;
     $scope.mouse_is_down = false;
     $scope.value_percentage = [];
     $scope.slider_width = 300;
@@ -116,9 +116,9 @@ angular.module('threedi-client')
         $scope.radar_dt = momentDate.toDate();
       }
 
-      clientstate.edit_ranges['radar_multiplier'].value = rain_event.radar_multiplier;
-      clientstate.edit_ranges['rain_design_definition'].value = rain_event.design_definition;
-      clientstate.edit_ranges['rain_constant_intensity'].value = rain_event.constant_intensity;
+      clientState.edit_ranges['radar_multiplier'].value = rain_event.radar_multiplier;
+      clientState.edit_ranges['rain_design_definition'].value = rain_event.design_definition;
+      clientState.edit_ranges['rain_constant_intensity'].value = rain_event.constant_intensity;
     };
 
     // initial update
@@ -143,9 +143,9 @@ angular.module('threedi-client')
         socket.emit('area_wide_rain',
             $scope.rain_type,
             $scope.radar_dt.toISOString(),
-            clientstate.edit_ranges['radar_multiplier'].value,
-            clientstate.edit_ranges['rain_design_definition'].value,
-            clientstate.edit_ranges['rain_constant_intensity'].value,
+            clientState.edit_ranges['radar_multiplier'].value,
+            clientState.edit_ranges['rain_design_definition'].value,
+            clientState.edit_ranges['rain_constant_intensity'].value,
             function () {});
       } else {
         console.log(
@@ -175,11 +175,11 @@ angular.module('threedi-client')
     };
 
     $scope.must_show_flood_fill_validation_error = function () {
-      return (clientstate.edit_ranges.flood_fill_mode.value === '1'
+      return (clientState.edit_ranges.flood_fill_mode.value === '1'
               && $scope.manualInputAbsolute.$error.required
               && $scope.manual_input)
               ||
-              (clientstate.edit_ranges.flood_fill_mode.value === '0'
+              (clientState.edit_ranges.flood_fill_mode.value === '0'
               && $scope.manualInput.$error.required
               && $scope.manual_input);
     };

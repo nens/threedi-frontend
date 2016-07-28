@@ -16,7 +16,7 @@ angular.module('threedi-client').controller('RemoteControl', [
       socket,
       state,
       leaflet,
-      clientstate,
+      clientState,
        modes
      ) {
     $scope.wait_for_server_response = true;
@@ -41,14 +41,14 @@ angular.module('threedi-client').controller('RemoteControl', [
         $scope.stop();
       } else {
         $scope.isPlaying = true;
-        clientstate.setMode(modes.MODE_INFO_POINT);
+        clientState.setMode(modes.MODE_INFO_POINT);
         socket.emit(
                 'run_simulation',
                 function () {
                   console.log('emit simulation run');
                 });
             // update edit polygon button
-        if (clientstate.program_mode === modes.MODE_EDIT) {
+        if (clientState.program_mode === modes.MODE_EDIT) {
                 // only in correct program mode
           leaflet.toggle_layer_edit(true);  // turn edit control on
         } else {

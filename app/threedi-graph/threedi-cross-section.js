@@ -1,3 +1,4 @@
+const $ = require('jquery');
 
 angular.module("threedi-graph")
 .directive('threediCrossSection', function($http) {
@@ -234,4 +235,3 @@ angular.module("threedi-graph")
     link: link
   };
 });
-

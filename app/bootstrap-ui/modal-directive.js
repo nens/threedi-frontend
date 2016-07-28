@@ -5,7 +5,7 @@
  * start the following directive:
  * <modal></modal>
  * The state as well as the templateName are in the
- * clientstate service.
+ * clientState service.
  */
 
 

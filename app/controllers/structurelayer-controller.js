@@ -12,7 +12,7 @@ angular.module('threedi-client').controller('StructureLayer', [
     $rootScope,
     leaflet,
     LayerService,
-    clientstate
+    clientState
   ) {
     $scope.layers = LayerService.structureLayers;
 
@@ -27,12 +27,12 @@ angular.module('threedi-client').controller('StructureLayer', [
           layer.add();
         }
       } else if (layer.layerType === 'embedded') {
-        if (clientstate.show_onedee[layer.objectType]) {
-          clientstate.show_onedee[layer.objectType] = false;
+        if (clientState.show_onedee[layer.objectType]) {
+          clientState.show_onedee[layer.objectType] = false;
         } else {
-          clientstate.show_onedee[layer.objectType] = true;
+          clientState.show_onedee[layer.objectType] = true;
         }
-        layer.active = clientstate.show_onedee[layer.objectType];
+        layer.active = clientState.show_onedee[layer.objectType];
 
         // update layers
         $rootScope.$broadcast('resetOneDee');  // for points

@@ -1,6 +1,6 @@
 <div class="modal-content"
      ng-controller="EditSettings">
-  <div ng-switch="clientstate.program_mode">
+  <div ng-switch="clientState.program_mode">
     <div ng-switch-when="rain">
       <div class="modal-header">
         <button type="button"
@@ -20,7 +20,7 @@
              style="width: 25%;"
              ng-click="set_rain_type('off');"
              ng-class="{'btn-primary': rain_type === 'off'}"
-             ng-show="clientstate.features.scenario_rain_local">
+             ng-show="clientState.features.scenario_rain_local">
 
             local only
 
@@ -30,7 +30,7 @@
              style="width: 25%;"
              ng-click="set_rain_type('off');"
              ng-class="{'btn-primary': rain_type === 'off'}"
-             ng-show="!clientstate.features.scenario_rain_local">
+             ng-show="!clientState.features.scenario_rain_local">
 
             off
 
@@ -39,7 +39,7 @@
              style="width: 25%;"
              ng-click="set_rain_type('radar');"
              ng-class="{'btn-primary': rain_type === 'radar'}"
-             ng-show="clientstate.features.scenario_rain_radar">
+             ng-show="clientState.features.scenario_rain_radar">
 
             radar
 
@@ -48,7 +48,7 @@
              style="width: 25%;"
              ng-click="set_rain_type('design');"
              ng-class="{'btn-primary': rain_type === 'design'}"
-             ng-show="clientstate.features.scenario_rain_design">
+             ng-show="clientState.features.scenario_rain_design">
 
             design
 
@@ -57,7 +57,7 @@
              style="width: 25%;"
              ng-click="set_rain_type('constant');"
              ng-class="{'btn-primary': rain_type === 'constant'}"
-             ng-show="clientstate.features.scenario_rain_constant">
+             ng-show="clientState.features.scenario_rain_constant">
 
             constant
 
@@ -67,14 +67,14 @@
         <div ng-switch="rain_type"
              class="settings-rain-choice">
           <div ng-switch-when="off">
-            <div ng-show="clientstate.features.scenario_rain_local">
+            <div ng-show="clientState.features.scenario_rain_local">
               <div class="center-input-group">
                 <slider var-name="rain"></slider>
                 <slider var-name="rain_duration"></slider>
                 <slider var-name="rain_size"></slider>
               </div>
               <div class="settings-text center-text">
-                The amount of rain per event is {[{ clientstate.edit_ranges['rain'].value * clientstate.edit_ranges['rain_duration'].value | number:clientstate.edit_ranges['rain'].decimals }]} mm.
+                The amount of rain per event is {[{ clientState.edit_ranges['rain'].value * clientState.edit_ranges['rain_duration'].value | number:clientState.edit_ranges['rain'].decimals }]} mm.
               </div>
             </div>
             <div class="center-text">
@@ -83,7 +83,7 @@
           </div>
 
           <div ng-switch-when="radar"
-               ng-show="clientstate.features.scenario_rain_radar"
+               ng-show="clientState.features.scenario_rain_radar"
                class="center-input-group">
             <datetimepicker date-model="$parent.$parent.radar_dt"
                             class="datetimepicker-elem">
@@ -105,17 +105,17 @@
                    ng-mousemove="mouse_move('radar_multiplier', $event) && emit_to_socket()">
                 <div class="progress-bar"
                      role="progressbar"
-                     aria-valuemin="{[{ clientstate.edit_ranges.radar_multiplier.min }]}"
-                     aria-valuemax="{[{ clientstate.edit_ranges.radar_multiplier.max }]}"
+                     aria-valuemin="{[{ clientState.edit_ranges.radar_multiplier.min }]}"
+                     aria-valuemax="{[{ clientState.edit_ranges.radar_multiplier.max }]}"
                      style="width: {[{ value_percentage.radar_multiplier }]}%;">
                   <span style="color:white; white-space:nowrap;">
                   </span>
                 </div>
                 <div class="progress-label"
                   ng-hide="manualInputRadar.$error.required && manual_input_radar === false">
-                  {[{ clientstate.edit_ranges.radar_multiplier.name }]}
-                  {[{ clientstate.edit_ranges.radar_multiplier.value | number : clientstate.edit_ranges['radar_multiplier'].decimals }]}
-                  {[{ clientstate.edit_ranges.radar_multiplier.unit }]}
+                  {[{ clientState.edit_ranges.radar_multiplier.name }]}
+                  {[{ clientState.edit_ranges.radar_multiplier.value | number : clientState.edit_ranges['radar_multiplier'].decimals }]}
+                  {[{ clientState.edit_ranges.radar_multiplier.unit }]}
                 </div>
                 <div class="progress-label error"
                   ng-show="manualInputRadar.$error.required && manual_input_radar === false">
@@ -135,15 +135,15 @@
                       class="manual-input-form">
                   <label class="small-label"
                          for="radar">
-                    {[{ clientstate.edit_ranges.radar_multiplier.name }]} [{[{ clientstate.edit_ranges.radar_multiplier.unit }]}]
+                    {[{ clientState.edit_ranges.radar_multiplier.name }]} [{[{ clientState.edit_ranges.radar_multiplier.unit }]}]
                   </label>
                   <input
                     type="number"
                     id="radar"
-                    ng-model="clientstate.edit_ranges.radar_multiplier.value"
-                    value="{[{ clientstate.edit_ranges.radar_multiplier.value | number : clientstate.edit_ranges.radar_multiplier.decimals }]}"
-                    max="{[{ clientstate.edit_ranges.radar_multiplier.max }]}"
-                    min="{[{ clientstate.edit_ranges.radar_multiplier.min }]}"
+                    ng-model="clientState.edit_ranges.radar_multiplier.value"
+                    value="{[{ clientState.edit_ranges.radar_multiplier.value | number : clientState.edit_ranges.radar_multiplier.decimals }]}"
+                    max="{[{ clientState.edit_ranges.radar_multiplier.max }]}"
+                    min="{[{ clientState.edit_ranges.radar_multiplier.min }]}"
                     class="form-control form-alongside manual-input-box"
                     ng-required="true" />
                 </form>
@@ -157,7 +157,7 @@
           </div> <!--ng-switch rain-radar-->
 
           <div ng-switch-when="design"
-               ng-show="clientstate.features.scenario_rain_design">
+               ng-show="clientState.features.scenario_rain_design">
             <div class="btn-group btn-group-bar"
                  style="width: 100%;">
               <a ng-repeat="n in [3, 4, 5, 6, 7, 8, 9, 10]"
@@ -165,13 +165,13 @@
                     class="btn btn-default"
                     style="width: 12%;"
                     ng-class="{'btn-primary':
-                                   clientstate.edit_ranges['rain_design_definition'].value
+                                   clientState.edit_ranges['rain_design_definition'].value
                                    === n }">
                    rain {[{ n }]}
                  </a>
             </div>
             <div>
-             <div ng-switch="clientstate.edit_ranges['rain_design_definition'].value">
+             <div ng-switch="clientState.edit_ranges['rain_design_definition'].value">
                <div ng-switch-when="3">
                  Rain 3 is a designed event that statistically occurs twice a year. The duration of this event is 75 minutes. The event has a peak at the front of 25 mm/h. (T=0.5 year, V=14.4 mm, C2100 RIONED)
                </div>
@@ -202,7 +202,7 @@
           </div>
 
           <div ng-switch-when="constant"
-               ng-show="clientstate.features.scenario_rain_constant">
+               ng-show="clientState.features.scenario_rain_constant">
             <div class="btn-group bar-buttons edit-wrapper edit-wrapper-constant-rain center-input-group">
               <div class="switch-input-type"
                    ng-show="manual_input_constant === false"
@@ -219,8 +219,8 @@
                    ng-mousemove="mouse_move('rain_constant_intensity', $event);">
                 <div class="progress-bar"
                      role="progressbar"
-                     aria-valuemin="{[{ clientstate.edit_ranges.rain_constant_intensity.min }]}"
-                     aria-valuemax="{[{ clientstate.edit_ranges.rain_constant_intensity.max }]}"
+                     aria-valuemin="{[{ clientState.edit_ranges.rain_constant_intensity.min }]}"
+                     aria-valuemax="{[{ clientState.edit_ranges.rain_constant_intensity.max }]}"
                      style="width: {[{ value_percentage.rain_constant_intensity }]}%;">
                   <span style="color:white; white-space:nowrap;">
                   </span>
@@ -228,9 +228,9 @@
                 <div class="progress-label"
                      ng-hide="manualInputConstant.$error.required
                               && manual_input_constant === false">
-                  {[{ clientstate.edit_ranges.rain_constant_intensity.name }]}
-                  {[{ clientstate.edit_ranges.rain_constant_intensity.value | number : clientstate.edit_ranges['rain_constant_intensity'].decimals }]}
-                  {[{ clientstate.edit_ranges.rain_constant_intensity.unit }]}
+                  {[{ clientState.edit_ranges.rain_constant_intensity.name }]}
+                  {[{ clientState.edit_ranges.rain_constant_intensity.value | number : clientState.edit_ranges['rain_constant_intensity'].decimals }]}
+                  {[{ clientState.edit_ranges.rain_constant_intensity.unit }]}
                 </div>
                 <div class="progress-label error"
                      ng-show="manualInputConstant.$error.required && manual_input_constant === false">
@@ -252,15 +252,15 @@
                       class="manual-input-form">
                   <label class="small-label"
                          for="constant">
-                    {[{ clientstate.edit_ranges.rain_constant_intensity.name }]} [{[{ clientstate.edit_ranges.rain_constant_intensity.unit }]}]
+                    {[{ clientState.edit_ranges.rain_constant_intensity.name }]} [{[{ clientState.edit_ranges.rain_constant_intensity.unit }]}]
                   </label>
                   <input type="number"
                          id="constant"
                          step="0.1"
-                         ng-model="clientstate.edit_ranges.rain_constant_intensity.value"
-                         value="{[{ clientstate.edit_ranges.rain_constant_intensity.value | number : clientstate.edit_ranges.rain_constant_intensity.decimals }]}"
-                         max="{[{ clientstate.edit_ranges.rain_constant_intensity.max }]}"
-                         min="{[{ clientstate.edit_ranges.rain_constant_intensity.min }]}"
+                         ng-model="clientState.edit_ranges.rain_constant_intensity.value"
+                         value="{[{ clientState.edit_ranges.rain_constant_intensity.value | number : clientState.edit_ranges.rain_constant_intensity.decimals }]}"
+                         max="{[{ clientState.edit_ranges.rain_constant_intensity.max }]}"
+                         min="{[{ clientState.edit_ranges.rain_constant_intensity.min }]}"
                          class="form-control form-alongside manual-input-box"
                          ng-required="true" />
                 </form>
@@ -324,7 +324,7 @@
             <label>
               <input type="radio"
                      name="optradio"
-                     ng-model="clientstate.edit_ranges['discharge_type'].value"
+                     ng-model="clientState.edit_ranges['discharge_type'].value"
                      value="1">
               Overland
             </label>
@@ -334,7 +334,7 @@
             <label>
               <input type="radio"
                      name="optradio"
-                     ng-model="clientstate.edit_ranges['discharge_type'].value"
+                     ng-model="clientState.edit_ranges['discharge_type'].value"
                      value="2">
               Groundwater
             </label>
@@ -346,8 +346,8 @@
     </div>
 
     <!-- {# to be able to show either absolute or relative floodfill ng-class is used here instead of ng-switch #} -->
-    <div ng-class="{hide: !(clientstate.program_mode === 'flood_fill_absolute' ||
-                          clientstate.program_mode === 'flood_fill_relative')}">
+    <div ng-class="{hide: !(clientState.program_mode === 'flood_fill_absolute' ||
+                          clientState.program_mode === 'flood_fill_relative')}">
       <div class="modal-header">
         <button type="button"
                 class="close"
@@ -371,16 +371,16 @@
           </div>
           <div id="slider-floodfill-settings"
                class="progress settings-progress"
-               ng-show="clientstate.edit_ranges['flood_fill_mode'].value === '1'
+               ng-show="clientState.edit_ranges['flood_fill_mode'].value === '1'
                         && manual_input === false"
                ng-mousedown="mouse_down('flood_fill_absolute', $event);"
                ng-mouseup="mouse_up('flood_fill_absolute', $event);"
                ng-mousemove="mouse_move('flood_fill_absolute', $event);">
-            <div ng-class="{'progress-bar': clientstate.edit_ranges[clientstate.program_mode].value >= 0,
-                            'progress-bar progress-bar-neg': clientstate.edit_ranges[clientstate.program_mode].value < 0}"
+            <div ng-class="{'progress-bar': clientState.edit_ranges[clientState.program_mode].value >= 0,
+                            'progress-bar progress-bar-neg': clientState.edit_ranges[clientState.program_mode].value < 0}"
                  role="progressbar"
-                 aria-valuemin="{[{ clientstate.edit_ranges.flood_fill_absolute.min }]}"
-                 aria-valuemax="{[{ clientstate.edit_ranges.flood_fill_absolute.max }]}"
+                 aria-valuemin="{[{ clientState.edit_ranges.flood_fill_absolute.min }]}"
+                 aria-valuemax="{[{ clientState.edit_ranges.flood_fill_absolute.max }]}"
                  style="width: {[{ value_percentage.flood_fill_absolute }]}%;">
               <span style="color:white; white-space:nowrap;">
               </span>
@@ -388,9 +388,9 @@
             <div class="progress-label"
                  ng-hide="manualInputAbsolute.$error.required &&
                           manual_input === false">
-              {[{ clientstate.edit_ranges.flood_fill_absolute.name }]}
-              {[{ clientstate.edit_ranges.flood_fill_absolute.value | number : clientstate.edit_ranges.flood_fill_absolute.decimals }]}
-              {[{ clientstate.edit_ranges.flood_fill_absolute.unit }]}
+              {[{ clientState.edit_ranges.flood_fill_absolute.name }]}
+              {[{ clientState.edit_ranges.flood_fill_absolute.value | number : clientState.edit_ranges.flood_fill_absolute.decimals }]}
+              {[{ clientState.edit_ranges.flood_fill_absolute.unit }]}
             </div>
             <div class="progress-label error"
                  ng-show="manualInputAbsolute.$error.required &&
@@ -408,20 +408,20 @@
             </a>
           </div>
           <div class="centerize manual-form-wrapper settings-progress"
-               ng-show="clientstate.edit_ranges.flood_fill_mode.value === '1'
+               ng-show="clientState.edit_ranges.flood_fill_mode.value === '1'
                         && manual_input === true">
             <form name="manualInputAbsolute"
                   class="manual-input-form">
               <label class="small-label"
                      for="absolute">
-                {[{ clientstate.edit_ranges.flood_fill_absolute.name }]} [{[{ clientstate.edit_ranges.flood_fill_absolute.unit }]}]
+                {[{ clientState.edit_ranges.flood_fill_absolute.name }]} [{[{ clientState.edit_ranges.flood_fill_absolute.unit }]}]
               </label>
               <input type="number"
                      id="absolute"
-                     ng-model="clientstate.edit_ranges.flood_fill_absolute.value"
-                     value="{[{ clientstate.edit_ranges.flood_fill_absolute.value | number:2 }]}"
-                     max="{[{ clientstate.edit_ranges.flood_fill_absolute.max }]}"
-                     min="{[{ clientstate.edit_ranges.flood_fill_absolute.min }]}"
+                     ng-model="clientState.edit_ranges.flood_fill_absolute.value"
+                     value="{[{ clientState.edit_ranges.flood_fill_absolute.value | number:2 }]}"
+                     max="{[{ clientState.edit_ranges.flood_fill_absolute.max }]}"
+                     min="{[{ clientState.edit_ranges.flood_fill_absolute.min }]}"
                      class="form-control form-alongside manual-input-box"
                      ng-required="true" />
             </form>
@@ -429,15 +429,15 @@
 
           <div id="slider-floodfill-settings-relative "
                class="progress settings-progress"
-               ng-show="clientstate.edit_ranges.flood_fill_mode.value === '0'
+               ng-show="clientState.edit_ranges.flood_fill_mode.value === '0'
                         && manual_input === false"
                ng-mousedown="mouse_down('flood_fill_relative', $event);"
                ng-mouseup="mouse_up('flood_fill_relative', $event);"
                ng-mousemove="mouse_move('flood_fill_relative', $event);">
             <div class="progress-bar"
                  role="progressbar"
-                 aria-valuemin="{[{ clientstate.edit_ranges.flood_fill_relative.min }]}"
-                 aria-valuemax="{[{ clientstate.edit_ranges.flood_fill_relative.max }]}"
+                 aria-valuemin="{[{ clientState.edit_ranges.flood_fill_relative.min }]}"
+                 aria-valuemax="{[{ clientState.edit_ranges.flood_fill_relative.max }]}"
                  style="width: {[{ value_percentage.flood_fill_relative }]}%;">
               <span style="color:white; white-space:nowrap;">
               </span>
@@ -445,9 +445,9 @@
             <div class="progress-label"
                  ng-hide="manualInput.$error.required
                           && manual_input === false">
-              {[{ clientstate.edit_ranges.flood_fill_relative.name }]}
-              {[{ clientstate.edit_ranges.flood_fill_relative.value | number : clientstate.edit_ranges.flood_fill_relative.decimals }]}
-              {[{ clientstate.edit_ranges.flood_fill_relative.unit }]}
+              {[{ clientState.edit_ranges.flood_fill_relative.name }]}
+              {[{ clientState.edit_ranges.flood_fill_relative.value | number : clientState.edit_ranges.flood_fill_relative.decimals }]}
+              {[{ clientState.edit_ranges.flood_fill_relative.unit }]}
             </div>
             <div class="progress-label error"
               ng-show="manualInput.$error.required
@@ -456,20 +456,20 @@
             </div>
           </div>
           <div class="centerize manual-form-wrapper settings-progress"
-               ng-show="clientstate.edit_ranges.flood_fill_mode.value === '0'
+               ng-show="clientState.edit_ranges.flood_fill_mode.value === '0'
                         && manual_input === true">
             <form name="manualInput"
                   class="manual-input-form">
               <label class="small-label"
                      for="relative">
-                {[{ clientstate.edit_ranges.flood_fill_relative.name }]} [{[{ clientstate.edit_ranges.flood_fill_relative.unit }]}]
+                {[{ clientState.edit_ranges.flood_fill_relative.name }]} [{[{ clientState.edit_ranges.flood_fill_relative.unit }]}]
               </label>
               <input type="number"
-                     ng-model="clientstate.edit_ranges.flood_fill_relative.value"
+                     ng-model="clientState.edit_ranges.flood_fill_relative.value"
                      id="relative"
-                     value="{[{ clientstate.edit_ranges.flood_fill_relative.value | number : 2 }]}"
-                     max="{[{ clientstate.edit_ranges.flood_fill_relative.max }]}"
-                     min="{[{ clientstate.edit_ranges.flood_fill_relative.min }]}"
+                     value="{[{ clientState.edit_ranges.flood_fill_relative.value | number : 2 }]}"
+                     max="{[{ clientState.edit_ranges.flood_fill_relative.max }]}"
+                     min="{[{ clientState.edit_ranges.flood_fill_relative.min }]}"
                      class="form-control form-alongside manual-input-box"
                      ng-required="true" />
             </form>
@@ -483,7 +483,7 @@
               <label>
                 <input type="radio"
                        name="optradio"
-                       ng-model="clientstate.edit_ranges.flood_fill_mode.value"
+                       ng-model="clientState.edit_ranges.flood_fill_mode.value"
                        value="0">
                 relative
               </label>
@@ -492,7 +492,7 @@
               <label>
                 <input type="radio"
                        name="optradio"
-                       ng-model="clientstate.edit_ranges.flood_fill_mode.value"
+                       ng-model="clientState.edit_ranges.flood_fill_mode.value"
                        value="1">
                 absolute
               </label>

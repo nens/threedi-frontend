@@ -9,7 +9,7 @@ angular.module('threedi-client').controller('DefaultSettings', [
   'BeaufortConverterService',
   function (
     $scope,
-    clientstate,
+    clientState,
     state,
     $rootScope,
     socket,
@@ -18,8 +18,8 @@ angular.module('threedi-client').controller('DefaultSettings', [
         // socket is used to send and receive the value of:
         // min_time_sim_step, wind_direction, wind_speed
 
-    $scope.scenario_event_defaults = clientstate.scenario_event_defaults;
-    $scope.map_defaults = clientstate.map_defaults;
+    $scope.scenario_event_defaults = clientState.scenario_event_defaults;
+    $scope.map_defaults = clientState.map_defaults;
         // Values in input fields
     $scope.crop_type = $scope.scenario_event_defaults.crop_type;
     $scope.soil_type = $scope.scenario_event_defaults.soil_type;
@@ -58,7 +58,7 @@ angular.module('threedi-client').controller('DefaultSettings', [
     };
 
         // Edit ranges
-    $scope.edit_ranges = clientstate.edit_ranges;
+    $scope.edit_ranges = clientState.edit_ranges;
     var ignored = ['discharge_type', 'flood_fill_mode'];
     $scope.var_container = $scope.fill_container(ignored);
 
@@ -95,21 +95,21 @@ angular.module('threedi-client').controller('DefaultSettings', [
             // varName is name of the variable in this controller
             // e.g.: 'flood_fill_relative_min'
             // fieldName is the actual object field getting changed
-            // e.g.: 'min' (from clientstate.edit_ranges['flood_fill_relative'].min)
+            // e.g.: 'min' (from clientState.edit_ranges['flood_fill_relative'].min)
             // objectName is the object of that field
             // e.g.: 'flood_fill_relative'
-            // This function is constrained to clientstate.edit_ranges
+            // This function is constrained to clientState.edit_ranges
 
             // TODO: validation doesn't work (new angular version??)
       if ($scope.defaultSettings[varName].$valid) {
-        clientstate.edit_ranges[objectName][fieldName] = (
+        clientState.edit_ranges[objectName][fieldName] = (
                     $scope.var_container[objectName][fieldName]);
       }
     };
 
     $scope.save_min_time_sim_step = function () {
       if ($scope.defaultSettings.min_time_sim_step.$valid) {
-        clientstate.scenario_event_defaults.min_time_sim_step = parseFloat(
+        clientState.scenario_event_defaults.min_time_sim_step = parseFloat(
                     $scope.min_time_sim_step);
         socket.emit('set_var',
                     'min_time_sim_step',
@@ -119,9 +119,9 @@ angular.module('threedi-client').controller('DefaultSettings', [
     };
 
     $scope.save_wind = function () {
-      clientstate.scenario_event_defaults.wind_direction = parseFloat(
+      clientState.scenario_event_defaults.wind_direction = parseFloat(
                 $scope.wind_direction);
-      clientstate.scenario_event_defaults.wind_speed_beaufort = parseFloat(
+      clientState.scenario_event_defaults.wind_speed_beaufort = parseFloat(
                 $scope.wind_speed_beaufort);
       socket.emit('change_object',
         {
@@ -133,7 +133,7 @@ angular.module('threedi-client').controller('DefaultSettings', [
 
     $scope.save_time_step_duration = function () {
       if ($scope.defaultSettings.time_step_duration.$valid) {
-        clientstate.scenario_event_defaults.time_step_duration = parseInt(
+        clientState.scenario_event_defaults.time_step_duration = parseInt(
                     $scope.time_step_duration);
         socket.emit('set_var',
                     'time_step_duration', parseInt($scope.time_step_duration),
@@ -143,35 +143,35 @@ angular.module('threedi-client').controller('DefaultSettings', [
 
     $scope.save_crop_type = function () {
       if ($scope.defaultSettings.crop_type.$valid) {
-        clientstate.scenario_event_defaults.crop_type = parseInt(
+        clientState.scenario_event_defaults.crop_type = parseInt(
                     $scope.crop_type);
       }
     };
 
     $scope.save_soil_type = function () {
       if ($scope.defaultSettings.soil_type.$valid) {
-        clientstate.scenario_event_defaults.soil_type = parseInt(
+        clientState.scenario_event_defaults.soil_type = parseInt(
                     $scope.soil_type);
       }
     };
 
     $scope.save_infiltration_value = function () {
       if ($scope.defaultSettings.infiltration_value.$valid) {
-        clientstate.scenario_event_defaults.infiltration_value = parseFloat(
+        clientState.scenario_event_defaults.infiltration_value = parseFloat(
                     $scope.infiltration_value);
       }
     };
 
     $scope.save_interception_value = function () {
       if ($scope.defaultSettings.interception_value.$valid) {
-        clientstate.scenario_event_defaults.interception_value = parseFloat(
+        clientState.scenario_event_defaults.interception_value = parseFloat(
                     $scope.interception_value);
       }
     };
 
     $scope.save_bathy_mode = function () {
       if ($scope.defaultSettings.bathy_mode.$valid) {
-        clientstate.scenario_event_defaults.bathy_mode = parseInt(
+        clientState.scenario_event_defaults.bathy_mode = parseInt(
                     $scope.bathy_mode);
       }
     };
@@ -179,21 +179,21 @@ angular.module('threedi-client').controller('DefaultSettings', [
     $scope.save_land_use_value = function () {
       console.log('Save land use value');
       if ($scope.defaultSettings.land_use_value.$valid) {
-        clientstate.scenario_event_defaults.edit_land_use_color = parseInt(
+        clientState.scenario_event_defaults.edit_land_use_color = parseInt(
                     $scope.land_use_value);
       }
     };
 
     $scope.save_flood_fill_level = function () {
       if ($scope.defaultSettings.flood_fill_level.$valid) {
-        clientstate.scenario_event_defaults.flood_fill_level = parseFloat(
+        clientState.scenario_event_defaults.flood_fill_level = parseFloat(
                     $scope.flood_fill_level);
       }
     };
 
     $scope.save_flood_fill_mode = function () {
       if ($scope.defaultSettings.flood_fill_mode.$valid) {
-        clientstate.scenario_event_defaults.flood_fill_mode = parseInt(
+        clientState.scenario_event_defaults.flood_fill_mode = parseInt(
                     $scope.flood_fill_mode);
       }
     };
@@ -203,7 +203,7 @@ angular.module('threedi-client').controller('DefaultSettings', [
       if (!$scope.defaultSettings.wms_options_hmax.$valid) {
         return;
       }
-      clientstate.scenario_event_defaults.wms_options.hmax = parseFloat(
+      clientState.scenario_event_defaults.wms_options.hmax = parseFloat(
                 $scope.wms_options_hmax);
 
       $rootScope.$broadcast('animation-update');
@@ -213,7 +213,7 @@ angular.module('threedi-client').controller('DefaultSettings', [
       if (!$scope.defaultSettings.wms_options_interpolation.$valid) {
         return;
       }
-      clientstate.scenario_event_defaults.wms_options.interpolate =
+      clientState.scenario_event_defaults.wms_options.interpolate =
                 $scope.wms_options_interpolation;
 
       $rootScope.$broadcast('animation-update');
@@ -223,19 +223,19 @@ angular.module('threedi-client').controller('DefaultSettings', [
       if (!$scope.defaultSettings.wms_layer_depth.$valid) {
         return;
       }
-      clientstate.scenario_event_defaults.wms_layer_depth = $scope.wms_layer_depth;
+      clientState.scenario_event_defaults.wms_layer_depth = $scope.wms_layer_depth;
       $rootScope.$broadcast('animation-update', 'reset');
     };
 
     $scope.save_info_mode = function () {
       if ($scope.defaultSettings.info_mode.$valid) {
-        clientstate.scenario_event_defaults.info_mode = $scope.info_mode;
+        clientState.scenario_event_defaults.info_mode = $scope.info_mode;
       }
     };
 
     $scope.save_onedee_info_mode = function () {
       if ($scope.defaultSettings.onedee_info_mode.$valid) {
-        clientstate.scenario_event_defaults.onedee_info_mode = $scope.onedee_info_mode;
+        clientState.scenario_event_defaults.onedee_info_mode = $scope.onedee_info_mode;
       }
     };
 
