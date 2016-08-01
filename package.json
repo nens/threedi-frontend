@@ -1,6 +1,6 @@
 {
   "name": "threedi-frontend",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "homepage": "https://github.com/nens/threedi-frontend",
   "repository": {
     "type": "git",
@@ -11,9 +11,8 @@
     "start": "node webpack-dev-server",
     "build": "webpack -p -progress --colors",
     "test": "mocha tests/*.js",
-    "bump": "release-it",
-    "tarball": "node release.js",
-    "release": "npm run bump && npm run tarball"
+    "release": "release-it",
+    "release-asset": "node release-asset.js"
   },
   "authors": [
     "jackha",
