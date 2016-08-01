@@ -13,7 +13,7 @@
     "test": "mocha tests/*.js",
     "bump": "release-it",
     "tarball": "node release.js",
-    "release": "npm bump && npm tarball"
+    "release": "npm run bump && npm run tarball"
   },
   "authors": [
     "jackha",
