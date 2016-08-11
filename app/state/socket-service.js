@@ -5,7 +5,7 @@
 
 
 const io = require('socket.io-client');
-const socketUrl = 'http://localhost:9000/';
+const socketUrl = window.socket_url;
 
 angular.module('global-state')
   .service('socket', function ($rootScope) {
@@ -24,7 +24,7 @@ angular.module('global-state')
       }
       socket = io.connect(
             socketUrl, {
-              resource: socket_resource,
+              resource: window.socket_resource,
               transports: ['websocket', 'xhr-polling']
             }
         );

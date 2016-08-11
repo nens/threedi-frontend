@@ -5,7 +5,6 @@
 
 const map = require('./leaflet').map;
 require('./lib/leaflet-plugins/TileLayer.WMS.incrementalSingleTile');
-require('./lib/leaflet-plugins/SingleTile');
 
 angular.module('threedi-client')
   .factory('AnimatedLayer', [function () {
@@ -52,17 +51,17 @@ angular.module('threedi-client')
       }
 
       // // Normal wms layer with tiles
-      var layer = new L.TileLayer.WMS(
-          this.url,
-          this.options);
+      // var layer = new L.TileLayer.WMS(
+      //     this.url,
+      //     this.options);
 
       // var layer = L.singleTile(
       //   this.url,
       //   this.options);
       //
       // testing with single tile layer
-      // var layer = new L.tileLayer.wmsIncrementalSingleTile(
-      //     this.url, this.options);
+      var layer = new L.tileLayer.wmsIncrementalSingleTile(
+          this.url, this.options);
 
       layer.on('loading', function (e) {
           // for debugging

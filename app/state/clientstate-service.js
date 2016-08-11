@@ -107,7 +107,7 @@ angular.module('global-state').service('clientState', ['modes', function (modes)
   };
 
   state.modal = {
-    active: false,
+    active: true,
     templateName: 'landing' // default
   };
 

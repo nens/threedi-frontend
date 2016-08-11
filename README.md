@@ -18,6 +18,22 @@ npm install
 npm start
 ```
 
+## Releasing and Deployment
+Releasing is pretty straightforward. Consisting of only a few steps. Defining the kind of release:
+patch (default), minor or major. Running the release script and afterwards running the script to 
+upload the release tarball.
+
+* Draft a release with `npm run release -- <release_type>`
+* Make sure webpack has a built version in the dist folder `npm run build`
+* Create & Upload zip of the dist folder `npm run release-asset`
+
+Deployment uses the zip that is uploaded to github under the version name. So update the
+`version_name` in the group_vars (or individual files) and run
+
+```
+ansible-playbook -i dev deploy.yml
+```
+
 ## Roadmap
 
 Working hard to fix the current bugs
@@ -67,4 +83,3 @@ The biggest mess is still in `app/controllers`. This folder contains all of the
 angular controllers, that really don't need be controllers but are. Sorry about
 that.
 We're working hard on refactoring that.
-

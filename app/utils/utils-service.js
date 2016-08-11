@@ -17,6 +17,8 @@ angular.module('utils').service('UtilService', [
       if (!clientState.modal.active ||
         clientState.modal.templateName !== 'landing') {
         clientState.modal.setTemplate('landing', true);
+      } else {
+        clientState.modal.setTemplate('landing', true);        
       }
     };
 

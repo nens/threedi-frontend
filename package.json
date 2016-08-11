@@ -85,8 +85,8 @@
     "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "font-awesome": "^4.6.1",
     "jquery": "^2.2.3",
-    "leaflet": "^0.7.7",
-    "leaflet-draw": "^0.3.0",
+    "leaflet": "^0.6.2",
+    "leaflet-draw": "git://github.com/Leaflet/Leaflet.draw.git#0.2.2",
     "moment": "^2.14.1",
     "nvd3": "^1.7.0",
     "socket.io-client": "^0.9.16"
