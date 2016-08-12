@@ -10,7 +10,7 @@ const $ = require('jquery');
 
 const map = require('../leaflet').map;
 const showalert = require('../showalert');
-const leaflet = require('leaflet');
+const leaflet = L; // should always be global require('leaflet');
 
 
 angular.module('global-state').service('clientState', ['modes', function (modes) {

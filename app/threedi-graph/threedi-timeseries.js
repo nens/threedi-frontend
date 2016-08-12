@@ -58,7 +58,7 @@ angular.module("threedi-graph")
 
 
       var addGraph = function(formatted, options) {
-        nv.addGraph(function() {
+        nv.addGraph(function () {
           var chart = nv.models.lineChart()
             .defined(function(d) { return (d[1] !== null && !isNaN(d[1])); })
             .x(function(d) { return Date.parse(d[0]); })
@@ -66,7 +66,7 @@ angular.module("threedi-graph")
             .clipEdge(true)
             // .tooltipContent(function(key, y, e, graph) {
             //   prefix = getPrefix();
-            //
+
             //   var header = updateUnit(scope.unit, yUnit, prefix);
             //   return '<h3 class="graph-header">' + header + ' </h3>' +
             //   '<p>' + e + ' at ' + y + ' </p>';
@@ -121,7 +121,8 @@ angular.module("threedi-graph")
         // create a svg element and add to
         // the directive element.
         if (!svg) {
-         svg = d3.select(element.context)
+          console.log(element[0])
+         svg = d3.select(element[0])
           .append('svg')
           .attr('id', 'nv-chart')
           .attr("height", height)
@@ -131,6 +132,7 @@ angular.module("threedi-graph")
         svg
           .datum(formatted)
           .call(chart);
+
 
         nv.utils.windowResize(chart.update);
         scope.current_chart = chart;
@@ -148,6 +150,7 @@ angular.module("threedi-graph")
             return;
           }
 
+          // what's going on here..
           if (scope.current_chart !== null) {
             scope.current_chart = null;
 

@@ -1,7 +1,8 @@
 // create a map in the "map" div, set the view to a given place and zoom
 // var map = L.map('map').setView([52.026726,4.397621], 13);
 // now shwo the extent for the loaded model
-const L = require('leaflet');
+// const L = 
+require('../node_modules/leaflet/dist/leaflet-src');
 
 var map = L.map('map', {
   maxZoom: 20,

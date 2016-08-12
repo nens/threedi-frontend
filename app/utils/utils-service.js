@@ -8,8 +8,9 @@
 angular.module('utils').service('UtilService', [
   '$rootScope',
   '$interpolate',
+  '$templateCache',
   'clientState',
-  function ($rootScope, $interpolate, clientState) {
+  function ($rootScope, $interpolate, $templateCache, clientState) {
     var utils = {};
 
     utils.openWelcomePopup = function () {
@@ -23,7 +24,7 @@ angular.module('utils').service('UtilService', [
     };
 
     utils.svgTemp = function (templateName, context) {
-      let template = require('../svg-icons/' + templateName);
+      let template = $templateCache.get('svg-icons/' + templateName);
       const interpolater = $interpolate(template);
       return interpolater(context);
     };

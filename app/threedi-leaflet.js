@@ -6,11 +6,11 @@ const MAX_ONEDEE_PENDING_REQUESTS = 0;
 require('jquery');
 
 
-const d3 = require('d3');
 const mapItems = require('./leaflet');
-const L = require('leaflet');
+// const L = require('leaflet'); should also be on window so..
 require('drmonty-leaflet-awesome-markers');
-L.TileLayer.GeoJSONd3 = require('./lib/leaflet-plugins/TileLayer.GeoJSONd3');
+require('./lib/leaflet-plugins/TileLayer.GeoJSON');
+require('./lib/leaflet-plugins/TileLayer.GeoJSONd3');
 
 const map = mapItems.map;
 const raincloudIcon = mapItems.raincloudIcon;
@@ -153,7 +153,6 @@ angular.module('threedi-client').service('leaflet', [
       return clientState.show_onedee[layer_name];
     };
 
-    require('./lib/leaflet-plugins/TileLayer.GeoJSON')
     /* All 1d objects in 1 layer: culvert, weir, pumpstation and orifice */
     clientState.spatial.layers.createObjectLayer = function () {
         // used to filter only point objects.
@@ -191,7 +190,7 @@ angular.module('threedi-client').service('leaflet', [
           },
           { // TODO: interpolate all of sander ids node_idx and hhtml classes
             pointToLayer: function (feature, latlng) {
-              var html_classes;
+              var htmlClasses;
               var icon;
 
                     // check if feature is being shown
@@ -203,154 +202,99 @@ angular.module('threedi-client').service('leaflet', [
                 return L.marker(latlng, {icon: icon});
               }
 
-              if (feature.properties.object_type === 'orifice') {
-                icon = new L.DivIcon({
-                  className: '',
-                            // svg path from images/culvert.svg (open with editor to see path)
-                  html: UtilService.svgTemp('orifice', {
-                    sanderId: feature.properties.sander_id,
-                    htmlClasses: 'leaflet-marker-icon orifice-icon leaflet-zoom-animated leaflet-clickable'
-                  })
-                });
-              } else if (feature.properties.object_type === 'culvert') {
-                icon = new L.DivIcon({
-                  className: '',
-                            // svg path from images/culvert.svg (open with editor to see path)
-                  html: UtilService.svgTemp('culvert', {
-                    sanderId: feature.properties.sander_id,
-                    htmlClasses: 'leaflet-marker-icon culvert-icon leaflet-zoom-animated leaflet-clickable'
-                  })
-                });
-              } else if (feature.properties.object_type === 'weir') {
-                html_classes = 'leaflet-marker-icon weir-icon leaflet-zoom-animated leaflet-clickable';
-                icon = new L.DivIcon({
-                  className: '',
-                            // svg path from images/weir.svg (open with editor to see path)
-                  html: require('./svg-icons/weir.html')
-                });
-              } else if (feature.properties.object_type === 'pumpstation') {
-                if (feature.properties.capacity <= 20) {
-                  html_classes = 'leaflet-marker-icon pumpstation-icon onedee-structure-icon leaflet-zoom-animated leaflet-clickable';
-                } else {
-                  html_classes = 'leaflet-marker-icon pumpstation-icon-big onedee-structure-icon leaflet-zoom-animated leaflet-clickable';
+              var objectType = feature.properties.object_type;
+
+              if (objectType.indexOf('v2') === -1 && objectType !== 'node') {
+                var objectType = feature.properties.object_type;
+                var iconClass = objectType + '-icon';
+                if (objectType === 'pumpstation' && feature.properties.capacity > 20) {
+                  iconClass += '-big';
                 }
                 icon = new L.DivIcon({
-                  className: '',
-                            // svg paths from images/pump.svg (open with editor to see paths)
-                  html: require('./svg-icons/pumpstation.html')
-                });
-              } else if (feature.properties.object_type === 'sewerage-weir') {
-                        // it looks just like the 'other' weir, but behaves like a line
-                html_classes = 'leaflet-marker-icon weir-icon leaflet-zoom-animated leaflet-clickable';
-                icon = new L.DivIcon({
-                  className: '',
-                            // svg path from images/weir.svg (open with editor to see path)
-                  html: require('./svg-icons/sewerage-weir.html')
-                });
-              } else if (feature.properties.object_type === 'sewerage-orifice') {
-                html_classes = 'leaflet-marker-icon orifice-icon leaflet-zoom-animated leaflet-clickable';
-                icon = new L.DivIcon({
-                    className: '',
-                            // svg path from images/culvert.svg (open with editor to see path)
-                    html: require('./svg-icons/sewerage-orifice.html')
-                  });
-              } else if (feature.properties.object_type === 'sewerage-pumpstation') {
-                  html_classes = 'leaflet-marker-icon pumpstation-icon onedee-structure-icon leaflet-zoom-animated leaflet-clickable';
-                  icon = new L.DivIcon({
-                    className: '',
-                            // svg paths from images/pump.svg (open with editor to see paths)
-                    html: require('./svg-icons/sewerage-pumpstation.html')
-                  });
-                } else if (feature.properties.object_type === 'node') {
+                  html: UtilService.svgTemp(objectType, {
+                      sanderId: feature.properties.sander_id,
+                      angle: feature.properties.angle,
+                      htmlClasses: 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable' + iconClass
+                    })
+                })
+                return icon;
+              } else if (objectType === 'node') {
                         // calculation node
-                  html_classes = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
-                  icon;
+                  htmlClasses = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
                   if (feature.properties.nod_type === '1d') {
                             // 1d node
-                      html_classes += ' node-icon';
+                      htmlClasses += ' node-icon';
                       if (feature.properties.nod_manhole_type !== undefined) {
                           switch (feature.properties.nod_manhole_type) {
                           case 0:
-                            html_classes += ' node-manhole';
+                            htmlClasses += ' node-manhole';
                             break;
                           case 1:
-                            html_classes += ' node-outlet';
+                            htmlClasses += ' node-outlet';
                             break;
                           case 2:
-                            html_classes += ' node-pumpstation';
+                            htmlClasses += ' node-pumpstation';
                             break;
                           }
                         }
                       if (feature.properties.nod_subtype !== undefined) {
                           if (feature.properties.nod_subtype === 'added') {
-                            html_classes += ' node-added';
+                            htmlClasses += ' node-added';
                           }
                         }
                       icon = new L.DivIcon({
                           className: '',
                                 // svg path from images/weir.svg (open with editor to see path)
-                          html: require('./svg-icons/node-circle.html')
+                          html: UtilService.svgTemp('node-circle', {
+                            nod_1dx: feature.properties.nod_1dx,
+                            htmlClasses: htmlClasses
+                          })
                         });
                     } else if (feature.properties.nod_type === '1db') {
                             // 1d boundary node
-                        html_classes += ' boundary-node-icon';
+                        htmlClasses += ' boundary-node-icon';
                         icon = new L.DivIcon({
                           className: '',
                                 // svg path from images/weir.svg (open with editor to see path)
-                          html: require('./svg-icons/boundary-node.html')
+                          html: UtilService.svgTemp('boundary-node', {
+                            nod_1dx: feature.properties.nod_1dx,
+                            htmlClasses: htmlClasses
+                          })
                         });
                       }
-                } else if (feature.properties.object_type === 'v2_connection_nodes') {
+                } else {
                         // calculation node
-                    html_classes = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
-                    html_classes += ' node-icon';
-                    icon = new L.DivIcon({
-                        className: '',
-                        html: require('./svg-icons/connection-node.html')
-                      });
-                  } else if (feature.properties.object_type === 'v2_manhole') {
-                        // calculation node
-                      html_classes = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
-                      html_classes += ' node-icon node-manhole';
-                      icon = new L.DivIcon({
-                        className: '',
-                        html: require('./svg-icons/v2-manhole.html')
-                      });
-                    } else if (feature.properties.object_type === 'v2_node') {
-                        // calculation node
-                      html_classes = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
-                      html_classes += ' node-icon node-added';
-                      icon = new L.DivIcon({
-                        className: '',
-                        html: require('./svg-icons/v2-node.html')
-                      });
-                    } else if (feature.properties.object_type === 'v2_pumpstation') {
-                      html_classes = 'leaflet-marker-icon pumpstation-icon onedee-structure-icon leaflet-zoom-animated leaflet-clickable';
-                      icon = new L.DivIcon({
-                        className: 'v2_pumpstation',
-                            // svg paths from images/pump.svg (open with editor to see paths)
-                        html: require('./svg-icons/v2-pumpstation.html')
-                      });
-                    } else if (feature.properties.object_type === 'v2_breach') {
-                        // breach.
-                        // TODO: new icon
-                      html_classes = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
-                      html_classes += ' node-icon node-breach';
-                      icon = new L.DivIcon({
-                        className: '',
-                        html: require('./svg-icons/v2-breach.html')
-                      });
-                    } else if (feature.properties.object_type === 'v2_weir') {
-                      html_classes = 'leaflet-marker-icon weir-icon leaflet-zoom-animated leaflet-clickable';
-                      icon = new L.DivIcon({
-                        className: '',
-                            // svg path from images/weir.svg (open with editor to see path)
-                        html: require('./svg-icons/v2-weir.html')
-                      });
-                    } else {
-                      console.log('feature object_type unknown: ', feature.properties.object_type);
-                      console.log(feature);
+                    htmlClasses = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
+                    htmlClasses += ' node-icon';
+                    htmlClasses += objectType.replace('v2_', 'node-');
+                    var className = '';
+
+                    if (objectType === 'v2_node') {
+                      htmlClasses += 'node-added';
                     }
+
+                    var iconOptions = {
+                        nod_1dx: feature.properties.nod_1dx,
+                        htmlClasses: htmlClasses,
+                        angle: feature.properties.angle
+                      };
+
+                    if (feature.properties.object_type === 'v2_pumpstation') {
+                      htmlClasses = 'leaflet-marker-icon pumpstation-icon onedee-structure-icon leaflet-zoom-animated leaflet-clickable';
+                      className = 'v2_pumpstation';
+                      iconOptions.pumpIdx = feature.properties.pump_idx;
+                    }
+
+                    if (objectType === 'v2_weir') {
+                      iconOptions.line_idx = feature.properties.line_idx;
+                    }
+
+                    htmlObject = objectType.replace(/_/g, '-');
+                    icon = new L.DivIcon({
+                        className: className,
+                        html: UtilService.svgTemp(htmlObject, iconOptions)
+                      });
+                  }
               return L.marker(latlng, {icon: icon});
             },
             onEachFeature: function (feature, layer) {
@@ -448,14 +392,16 @@ angular.module('threedi-client').service('leaflet', [
         // onedee_url must be created dynamically
 
       var classString = 'channel';
-      if (inverted)
+      // if (inverted)
         classString += ' channel-inverted';
+      // the url of manchester
       var the_url = onedee_model_url()
             + '.geojson?object_types=channel,pipe,pumpstation_line,node,'
             + 'weir,orifice,culvert,pumpstation,channel,v2_gui';
 
         // note: one would want a click handler on each feature, just like in
         // createObjectsLayer. But how??
+
       return {
         active: false,
         layer: new L.TileLayer.GeoJSONd3(the_url, {
@@ -519,13 +465,12 @@ angular.module('threedi-client').service('leaflet', [
     // One of the 'series' of onedee_status helpers.
     // Empty our onedee_status.requested_onedee_timestep and abort all requests
     var resetRequestedOnedee = function () {
-      onedee_status.requested_onedee_timestep.forEach(
-            function (cur_value, index, arr) {
-                // onedee_status.requested_onedee_timestep.delete(value);
-              onedee_status.requested_onedee_timestep[index].abort();
-              delete onedee_status.requested_onedee_timestep[index];
+        for (var key in onedee_status.requested_onedee_timestep) {
+            if (onedee_status.requested_onedee_timestep.hasOwnProperty(key)) {
+                onedee_status.requested_onedee_timestep[key].abort();
+                delete onedee_status.requested_onedee_timestep[key];
             }
-        );
+        }
 
     };
 
@@ -602,6 +547,7 @@ angular.module('threedi-client').service('leaflet', [
         // set up / reset onedee_status
       resetRequestedOnedee();
       if (state.state.has_onedee === '1' || state.state.has_levee === '1') {
+        console.log('happened')
         map.addLayer(clientState.spatial.layers.oneDeeLayerGroup.layer);
         onedee_status.onedee_in_map = true;
         onedee_status.layer_group = clientState.spatial.layers.oneDeeLayerGroup.layer;
@@ -757,14 +703,14 @@ angular.module('threedi-client').service('leaflet', [
                 clientState.scenario_event_defaults.wms_options,
                 cmd === 'reset');
       }
-        // fetch onedee data
-        // * In v1 models, there is an 'optimizing algorithm' in threedi-wms
-        //   that require reloading the getquantity after seeing new lines/nodes
-        // ** Normally in v2 models, only load new data when we're in a new
-        //   timestep
-        // update_onedee_layer also calls refresh_onedee_layer once after
-        // loading, but retryRefreshOnedeeLayer + retryMakeOnedeeClickable are
-        // more robust.
+      // fetch onedee data
+      // * In v1 models, there is an 'optimizing algorithm' in threedi-wms
+      //   that require reloading the getquantity after seeing new lines/nodes
+      // ** Normally in v2 models, only load new data when we're in a new
+      //   timestep
+      // update_onedee_layer also calls refresh_onedee_layer once after
+      // loading, but retryRefreshOnedeeLayer + retryMakeOnedeeClickable are
+      // more robust.
       if ((state.state.has_onedee === '1') && (
             (state.state.loaded_model_type === '3di') ||
             (onedee_status.current_status_timestep !== timestep_calc)
@@ -854,60 +800,42 @@ angular.module('threedi-client').service('leaflet', [
       }
     };
 
-    var update_v2_pumpstation = function (pumpstation) {
-        // All pumps are available as #sewerage-pumpstation-<code>
-
-        // this works, but it slows down the GUI considerably
-        // if (pumpstation === undefined) { return; }  // nothing to do
-        // if (parseInt(state.state.time_seconds) == 0) { return;}
-        // for (var idx in pumpstation) {
-        //     var pumpstation_id = '#sewerage-pumpstation-' + (parseInt(idx) + 1);
-
-        //     var speed_time = 0;
-        //     if (pumpstation[idx] > 0) {
-        //           speed_time = 2; // one speed for active pumpstations
-        //     }
-        //     // Using rotate-counter-clockwise class instead of rotate
-        //     // because of the svg's pump blade direction. Looks nicer
-        //     // counter clockwise.
-        //     d3.select(pumpstation_id)
-        //         .classed('rotate-counter-clockwise', true)
-        //         .style('-webkit-animation-duration', speed_time + 's')
-        //         .style('-moz-animation-duration', speed_time + 's')
-        //         .style('animation-duration', speed_time + 's');
-        // }
+    var update_v2_pumpstation = function(pumpstation) {
+        // all v2 pumps are available as #v2_pumpstation-<code>
+        if (pumpstation === undefined) { return; }  // nothing to do
+        if (parseInt(state.state.time_seconds) == 0) { return; }
+        var speed_time = 0;
+        var idx;
+        for (idx in pumpstation) {
+            var pumpstation_id = '#v2_pumpstation-' + idx;
+            if (pumpstation[idx] > 0) {
+                speed_time = 2;  // one speed for active pumpstations
+            }
+            // Using rotate-counter-clockwise class instead of rotate
+            // because of the svg's pump blade direction. Looks nicer
+            // counter clockwise.
+            speed_time_str = speed_time + 's';
+            d3.select(pumpstation_id)
+                .classed('rotate-counter-clockwise', true)
+                .style('-webkit-animation-duration', speed_time_str)
+                .style('-moz-animation-duration', speed_time_str)
+                .style('animation-duration', speed_time_str);
+        }
     };
+
 
     var set_onedee_unorm = function (data) {
         /*
         expects the existence of data.data['unorm']
         */
-        // draws given unorm data on the map
-      var duration_sewerage = function (d) {
-        if (data === null) {return '100000s';}
-        var speed_time = 100000;
-        var value = Math.abs(data.data['unorm'][d.properties.link_number]);
-            // adjusted for sewerage
-        if ((value > 0.01) && (value <= 0.02)) {
-          speed_time = 1000;
-        } else if ((value > 0.02) && (value <= 0.1)) {
-          speed_time = 600;
-        } else if ((value > 0.1) && (value <= 0.3)) {
-          speed_time = 400;
-        } else if ((value > 0.3) && (value <= 0.5)) {
-          speed_time = 300;
-        } else if ((value > 0.5) && (value <= 0.8)) {
-          speed_time = 250;
-        } else if ((value > 0.8) && (value <= 1.5)) {
-          speed_time = 200;
-        } else if ((value > 1.5)) {
-          speed_time = 120;
-        }
-        return speed_time + 's';
-      };
       var duration_v2 = function (d) {
-        if (data === null) {return '100000s';}
-        var speed_time = 100000;
+        if (data === null ||
+            d === null ||
+            d === undefined ||
+            d.properties === undefined) {
+                return "0s";
+        }
+        var speed_time = 0;
         var value = Math.abs(data.data['unorm'][d.properties.line_idx]);
             // adjusted for sewerage
         if ((value > 0.01) && (value <= 0.02)) {
@@ -928,8 +856,13 @@ angular.module('threedi-client').service('leaflet', [
         return speed_time + 's';
       };
       var duration_default = function (d) {
-        if (data === null) {return '100000s';}
-        var speed_time = 100000;
+        if (data === null ||
+            d === null ||
+            d === undefined ||
+            d.properties === undefined) {
+                return "0s";
+        }
+        var speed_time = 0;
         var value = Math.abs(data.data['unorm'][d.properties.link_number]);
         if ((value > 0.01) && (value <= 0.05)) {
           speed_time = 800;
@@ -946,60 +879,24 @@ angular.module('threedi-client').service('leaflet', [
         }
         return speed_time + 's';
       };
-        // Twodee needs refactoring, a lot of copy paste
-      var duration_twodee = function (d) {
-        if (data === null) {return '100000s';}
-        var speed_time = 100000;
-        var value = Math.abs(data.data['unorm'][d.properties.line_number]);
-        if ((value > 0.01) && (value <= 0.05)) {
-          speed_time = 800;
-        } else if ((value > 0.05) && (value <= 0.1)) {
-          speed_time = 700;
-        } else if ((value > 0.1) && (value <= 0.3)) {
-          speed_time = 600;
-        } else if ((value > 0.3) && (value <= 1)) {
-          speed_time = 300;
-        } else if ((value > 1.0) && (value <= 3.0)) {
-          speed_time = 200;
-        } else if ((value > 3)) {
-          speed_time = 150;
-        }
-        return speed_time + 's';
-      };
-      var duration_sewerage_pump = function (d) {
-        if (data === null) {return '100000s';}
-            // this can occur between loading models.
-            // if (data.data['sewerage_pumps'] === undefined) {return '100000s';}
-        var speed_time = 100000;
-        var value = Math.abs(data.data['sewerage_pumps'][d.properties.idx0]);
-            // adjusted for sewerage
-        if ((value > 0.01) && (value <= 0.02)) {
-          speed_time = 1000;
-        } else if ((value > 0.02) && (value <= 0.1)) {
-          speed_time = 600;
-        } else if ((value > 0.1) && (value <= 0.3)) {
-          speed_time = 400;
-        } else if ((value > 0.3) && (value <= 0.5)) {
-          speed_time = 300;
-        } else if ((value > 0.5) && (value <= 0.8)) {
-          speed_time = 250;
-        } else if ((value > 0.8) && (value <= 1.5)) {
-          speed_time = 200;
-        } else if ((value > 1.5)) {
-          speed_time = 120;
-        }
-        return speed_time + 's';
-      };
       var duration_v2_pumpstation = function (d) {
-        if (d === null) {return '100000s';}
-        if (d === undefined) {return '100000s';}
-        if (d.properties === undefined) {return '100000s';}
-            // this can occur between loading models.
-            // if (data.data['sewerage_pumps'] === undefined) {return '100000s';}
-        var speed_time = 100000;
-            // for now, sewerage_pumps is the name that is given by flow_wms.
-        var value = Math.abs(data.data['sewerage_pumps'][d.properties.pump_idx]);
-            // adjusted for sewerage
+        var speed_time = 0;  // default, standing still
+        var standing_still = "0s";
+        if (data === null ||
+            d === null ||
+            d === undefined ||
+            d.properties === undefined) {
+                return standing_still;
+        }
+        // for now, sewerage_pumps is the name that is given by flow_wms.
+        try {
+            var value = Math.abs(data.data['sewerage_pumps'][d.properties.pump_idx]);
+        } catch (e) {
+            // when panning the pump might be out of the bounding box and
+            // therefore sewerage_pumps is not present in data.data; in that
+            // case let the pump stand still
+            return standing_still;
+        }
         if ((value > 0.01) && (value <= 0.02)) {
           speed_time = 1000;
         } else if ((value > 0.02) && (value <= 0.1)) {
@@ -1018,7 +915,12 @@ angular.module('threedi-client').service('leaflet', [
         return speed_time + 's';
       };
       var direction = function (d) {
-        if (data === null) {return 'moveitforward';}
+        if (data === null ||
+            d === null ||
+            d === undefined ||
+            d.properties === undefined) {
+                return "moveitforward";
+        }
         var value = data.data['unorm'][d.properties.link_number];
         if (value > 0) {
           return 'moveitbackwards';
@@ -1026,27 +928,13 @@ angular.module('threedi-client').service('leaflet', [
           return 'moveitforward';
         }
       };
-      var direction_twodee = function (d) {
-        if (data === null) {return 'moveitforward';}
-        var value = data.data['unorm'][d.properties.line_number];
-        if (value > 0) {
-          return 'moveitbackwards';
-        } else {
-          return 'moveitforward';
-        }
-      };
-      var direction_sewerage_pump = function (d) {
-        if (data === null) {return 'moveitforward';}
-        var value = data.data['sewerage_pumps'][d.properties.link_number];
-        if (value > 0) {
-          return 'moveitbackwards';
-        } else {
-          return 'moveitforward';
-        }
-      };
       var direction_v2 = function (d) {
-        if (d === null) {return 'moveitforward';}
-        if (d === undefined) {return 'moveitforward';}
+        if (data === null ||
+            d === null ||
+            d === undefined ||
+            d.properties === undefined) {
+                return "moveitforward";
+        }
         var value = data.data['unorm'][d.properties.line_idx];
         if (value > 0) {
           return 'moveitbackwards';
@@ -1055,9 +943,20 @@ angular.module('threedi-client').service('leaflet', [
         }
       };
       var direction_v2_pumpstation = function (d) {
-        if (d === null) {return 'moveitforward';}
-        if (d === undefined) {return 'moveitforward';}
-        var value = data.data['sewerage_pumps'][d.properties.pump_idx];
+        if (data === null ||
+            d === null ||
+            d === undefined ||
+            d.properties === undefined) {
+                return "moveitforward";
+        }
+        try {
+            var value = data.data['sewerage_pumps'][d.properties.pump_idx];
+        } catch (e) {
+            // when panning the pump might be out of the bounding box and
+            // therefore sewerage_pumps is not present in data.data; in that
+            // case return the default
+            return "moveitforward";
+        }
         if (value > 0) {
           return 'moveitbackwards';
         } else {
@@ -1079,17 +978,10 @@ angular.module('threedi-client').service('leaflet', [
       if (data === null) {return;}
       if (data.data['unorm'] === undefined) {return;}
 
-      var channel_transport = d3.selectAll('.channel-transport');
-      var channel_mixed = d3.selectAll('.channel-mixed');
-      var channel_dwa = d3.selectAll('.channel-dwa');
-      var channel_rwa = d3.selectAll('.channel-rwa');
-      var channel_weir = d3.selectAll('.channel-weir');
-      var channel_orifice = d3.selectAll('.channel-orifice');
+      // v1
       var channel_default = d3.selectAll('.channel-default');
-      var channel_pumpstation = d3.selectAll('.channel-pumpstation');
-      var twodee_line = d3.selectAll('.twodee-line');
 
-        // testing v2...
+      // v2
       var v2_pipe = d3.selectAll('.v2_pipe');
       var v2_orifice = d3.selectAll('.v2_orifice');
       var v2_weir = d3.selectAll('.v2_weir');
@@ -1151,69 +1043,6 @@ angular.module('threedi-client').service('leaflet', [
                 .style('-moz-animation-name', direction_v2_pumpstation)
                 .style('animation-name', direction_v2_pumpstation);
       }
-      if (channel_transport[0].length > 0) {
-        channel_transport
-                .style('-webkit-animation-duration', duration_sewerage)
-                .style('-moz-animation-duration', duration_sewerage)
-                .style('animation-duration', duration_sewerage)
-                .style('-webkit-animation-name', direction)
-                .style('-moz-animation-name', direction)
-                .style('animation-name', direction);
-      }
-      if (channel_mixed[0].length > 0) {
-        channel_mixed
-                .style('-webkit-animation-duration', duration_sewerage)
-                .style('-moz-animation-duration', duration_sewerage)
-                .style('animation-duration', duration_sewerage)
-                .style('-webkit-animation-name', direction)
-                .style('-moz-animation-name', direction)
-                .style('animation-name', direction);
-      }
-      if (channel_dwa[0].length > 0) {
-        channel_dwa
-                .style('-webkit-animation-duration', duration_sewerage)
-                .style('-moz-animation-duration', duration_sewerage)
-                .style('animation-duration', duration_sewerage)
-                .style('-webkit-animation-name', direction)
-                .style('-moz-animation-name', direction)
-                .style('animation-name', direction);
-      }
-      if (channel_rwa[0].length > 0) {
-        channel_rwa
-                .style('-webkit-animation-duration', duration_sewerage)
-                .style('-moz-animation-duration', duration_sewerage)
-                .style('animation-duration', duration_sewerage)
-                .style('-webkit-animation-name', direction)
-                .style('-moz-animation-name', direction)
-                .style('animation-name', direction);
-      }
-      if (channel_weir[0].length > 0) {
-        channel_weir
-                .style('-webkit-animation-duration', duration_sewerage)
-                .style('-moz-animation-duration', duration_sewerage)
-                .style('animation-duration', duration_sewerage)
-                .style('-webkit-animation-name', direction)
-                .style('-moz-animation-name', direction)
-                .style('animation-name', direction);
-      }
-      if (channel_orifice[0].length > 0) {
-        channel_orifice
-                .style('-webkit-animation-duration', duration_sewerage)
-                .style('-moz-animation-duration', duration_sewerage)
-                .style('animation-duration', duration_sewerage)
-                .style('-webkit-animation-name', direction)
-                .style('-moz-animation-name', direction)
-                .style('animation-name', direction);
-      }
-      if (channel_pumpstation[0].length > 0) {
-        channel_pumpstation
-                .style('-webkit-animation-duration', duration_sewerage_pump)
-                .style('-moz-animation-duration', duration_sewerage_pump)
-                .style('animation-duration', duration_sewerage_pump)
-                .style('-webkit-animation-name', direction_sewerage_pump)
-                .style('-moz-animation-name', direction_sewerage_pump)
-                .style('animation-name', direction_sewerage_pump);
-      }
       if (channel_default[0].length > 0) {
         channel_default
                 .style('-webkit-animation-duration', duration_default)
@@ -1222,15 +1051,6 @@ angular.module('threedi-client').service('leaflet', [
                 .style('-webkit-animation-name', direction)
                 .style('-moz-animation-name', direction)
                 .style('animation-name', direction);
-      }
-      if (twodee_line[0].length > 0) {
-        twodee_line
-                .style('-webkit-animation-duration', duration_twodee)
-                .style('-moz-animation-duration', duration_twodee)
-                .style('animation-duration', duration_twodee)
-                .style('-webkit-animation-name', direction_twodee)
-                .style('-moz-animation-name', direction_twodee)
-                .style('animation-name', direction_twodee);
       }
     };
 
@@ -1266,164 +1086,8 @@ angular.module('threedi-client').service('leaflet', [
               }
               return result;
             });
-        // adjusted for sewerage
-      d3.selectAll('.channel-mixed')
-            .style('stroke-width', function (d) {
-                // Delatares 1D segment identifiers can have other names than
-                // Guus segment identifiers, shall we make it consistent?
-                // /////////////////////////////////////////////////////////////
-                // TODO: d.properties.link_number
-                //       vs.
-                //       d.properties.line_idx??
-              if (UtilService.contains([null, undefined], d)
-                    || !data
-                    || !data.data
-                    || !data.data.q
-                    || !d.properties.link_number)
-                {
-                return 2;
-              }
-              var value = Math.abs(data.data['q'][d.properties.link_number]);
-              var result = 3;
-              if ((value > 0.005) && (value <= 0.01)) {
-                result = 4.5;
-              } else if ((value > 0.01) && (value <= 0.02)) {
-                result = 5;
-              } else if ((value > 0.02) && (value <= 0.05)) {
-                result = 6;
-              } else if ((value > 0.05) && (value <= 0.07)) {
-                result = 7.5;
-              } else if (value > 0.1) {
-                result = 9;
-              }
-              return result;
-            });
-      d3.selectAll('.channel-rwa')
-            .style('stroke-width', function (d) {
-                // Delatares 1D segment identifiers can have other names than
-                // Guus segment identifiers, shall we make it consistent?
-                // /////////////////////////////////////////////////////////////
-                // TODO: d.properties.link_number
-                //       vs.
-                //       d.properties.line_idx??
-              if (UtilService.contains([null, undefined], d)
-                    || !data
-                    || !data.data
-                    || !data.data.q
-                    || !d.properties.link_number)
-                {
-                return 2;
-              }
-              var value = Math.abs(data.data['q'][d.properties.link_number]);
-              var result = 3;
-              if ((value > 0.005) && (value <= 0.01)) {
-                result = 4.5;
-              } else if ((value > 0.01) && (value <= 0.02)) {
-                result = 5;
-              } else if ((value > 0.02) && (value <= 0.05)) {
-                result = 6;
-              } else if ((value > 0.05) && (value <= 0.07)) {
-                result = 7.5;
-              } else if (value > 0.1) {
-                result = 9;
-              }
-              return result;
-            });
-      d3.selectAll('.channel-dwa')
-            .style('stroke-width', function (d) {
-                // Delatares 1D segment identifiers can have other names than
-                // Guus segment identifiers, shall we make it consistent?
-                // /////////////////////////////////////////////////////////////
-                // TODO: d.properties.link_number
-                //       vs.
-                //       d.properties.line_idx??
-              if (UtilService.contains([null, undefined], d)
-                    || !data
-                    || !data.data
-                    || !data.data.q
-                    || !d.properties.link_number)
-                {
-                return 2;
-              }
-              var value = Math.abs(data.data['q'][d.properties.link_number]);
-              var result = 3;
-              if ((value > 0.0000) && (value <= 0.001)) {
-                result = 5;
-              } else if ((value > 0.001) && (value <= 0.002)) {
-                result = 5.5;
-              } else if ((value > 0.002) && (value <= 0.005)) {
-                result = 6;
-              } else if ((value > 0.005) && (value <= 0.007)) {
-                result = 6.5;
-              } else if (value > 0.01) {
-                result = 7;
-              }
-              return result;
-            });
-      d3.selectAll('.channel-transport')
-            .style('stroke-width', function (d) {
-                // Delatares 1D segment identifiers can have other names than
-                // Guus segment identifiers, shall we make it consistent?
-                // /////////////////////////////////////////////////////////////
-                // TODO: d.properties.link_number
-                //       vs.
-                //       d.properties.line_idx??
-              if (UtilService.contains([null, undefined], d)
-                    || !data
-                    || !data.data
-                    || !data.data.q
-                    || !d.properties.link_number)
-                {
-                return 2;
-              }
-              var value = Math.abs(data.data['q'][d.properties.link_number]);
-              var result = 3;
-              if ((value > 0.005) && (value <= 0.01)) {
-                result = 4.5;
-              } else if ((value > 0.01) && (value <= 0.02)) {
-                result = 5;
-              } else if ((value > 0.02) && (value <= 0.05)) {
-                result = 6;
-              } else if ((value > 0.05) && (value <= 0.07)) {
-                result = 7.5;
-              } else if (value > 0.1) {
-                result = 9;
-              }
-              return result;
-            });
-        // copied from .channel-rwa
-      d3.selectAll('.twodee-line')
-            .style('stroke-width', function (d) {
-                // Delatares 1D segment identifiers can have other names than
-                // Guus segment identifiers, shall we make it consistent?
-                // /////////////////////////////////////////////////////////////
-                // TODO: d.properties.line_number
-                //       vs.
-                //       d.properties.line_idx??
-              if (UtilService.contains([null, undefined], d)
-                    || !data
-                    || !data.data
-                    || !data.data.q
-                    || !d.properties.line_number)
-                {
-                return 2;
-              }
-              var value = Math.abs(data.data['q'][d.properties.line_number]);
-              var result = 3;
-              if ((value > 0.0000) && (value <= 0.001)) {
-                result = 5;
-              } else if ((value > 0.001) && (value <= 0.002)) {
-                result = 5.5;
-              } else if ((value > 0.002) && (value <= 0.005)) {
-                result = 6;
-              } else if ((value > 0.005) && (value <= 0.007)) {
-                result = 6.5;
-              } else if (value > 0.01) {
-                result = 7;
-              }
-              return result;
-            });
-        // v2 testing
+
+        // v2
       d3.selectAll('.v2_channel, .v2_pipe, .v2_culvert, .v2_orifice, .v2_weir')
             .style('stroke-width', function (d) {
 
@@ -1577,6 +1241,20 @@ angular.module('threedi-client').service('leaflet', [
       }
     };
 
+    var getQuantityURL = function(model_slug, timestep, extent) {
+      /*
+      :param extent - array of upper-left and lower-right coordinates (lon0, lat0, lon1, lat1)
+        */
+      var quantity_request_url = data_url + '?REQUEST=getquantity&LAYERS=' + model_slug;
+      quantity_request_url += '&quantity=unorm,q,weirs,orifices,pumps,culverts,sewerage_pumps,p1dq,flou,flod&decimals=2&time=' + timestep;
+      // add bounding box to request
+      quantity_request_url += '&BBOX='+extent[0]+','+extent[1]+','+extent[2]+','+extent[3];
+      // add zoomlevel to request
+      var zoomLevel = map.getZoom();
+      quantity_request_url += '&ZOOM=' + zoomLevel;
+      return quantity_request_url;
+    };
+
     // determine Array size, from:
     // http://stackoverflow.com/questions/5223/length-of-a-javascript-object-that-is-associative-array
     Object.size = function (obj) {
@@ -1643,6 +1321,26 @@ angular.module('threedi-client').service('leaflet', [
         }
         return;
       }
+
+      /*
+      create a requested_onedee_key which is unique for the extent and timestep,
+      because you would typically want one getquantity request per unique extent
+      and timestep combo
+      */
+      var bounds = map.getBounds();
+      var extent = [
+          bounds._southWest.lng, bounds._southWest.lat,
+          bounds._northEast.lng, bounds._northEast.lat
+      ];
+      var requested_onedee_key = ''+extent[0]+','+extent[1]+','+extent[2]+','+extent[3]+','+timestep;
+      if (requested_onedee_key in onedee_status.requested_onedee_timestep) {
+          if (debug_extra) {
+              console.log(
+                  "**** return, (forced) timestep already in queue: " +
+                  timestep);
+          }
+          return;
+      }
         // already too much requests, but we got a forced call that we must obey
       if ((requested_onedee_timestep_size > MAX_ONEDEE_PENDING_REQUESTS) && (
             force === true)) {
@@ -1653,8 +1351,8 @@ angular.module('threedi-client').service('leaflet', [
         resetRequestedOnedee();
       }
 
-      onedee_status.requested_onedee_timestep[timestep] = $.get(
-            data_url + '?REQUEST=getquantity&LAYERS=' + model_slug + '&quantity=unorm,q,weirs,orifices,pumps,culverts,sewerage_pumps,p1dq,flou,flod&decimals=2&time=' + timestep,
+      onedee_status.requested_onedee_timestep[requested_onedee_key] = $.get(
+            getQuantityURL(model_slug, timestep, extent),
             function (data) {
                 // the data status
               onedee_status.current_status = data;
@@ -1666,7 +1364,7 @@ angular.module('threedi-client').service('leaflet', [
               }
               onedee_status.current_status_timestep = timestep;
                 // remove the reqeusted_onedee_timestep registration
-              delete onedee_status.requested_onedee_timestep[timestep];
+              delete onedee_status.requested_onedee_timestep[requested_onedee_key];
                 // update layout accordingly
               refresh_onedee_layer();
             } // function
@@ -1683,7 +1381,7 @@ angular.module('threedi-client').service('leaflet', [
         }
         ).always(function () {
                 // remove the reqeusted_onedee_timestep registration
-          delete onedee_status.requested_onedee_timestep[timestep];
+          delete onedee_status.requested_onedee_timestep[requested_onedee_key];
                 // update layout accordingly
           refresh_onedee_layer();
         }
@@ -2023,6 +1721,8 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
       if (state.master) {
         emitExtent();
       }
+
+      $('svg').show();
         // Update onedee elements when map is moved
         // with multiple machine architecture state can be empty so make
         // sure it is not null
@@ -2032,6 +1732,11 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
       }
 
       me.updateDEMRange();
+    });
+
+    // Hide the svg elements to make panning and zooming more responsive
+    map.on('movestart', function(e) {
+        $('svg').hide();
     });
 
     // Draw all scenario event objects on map
@@ -2581,8 +2286,6 @@ http://localhost:5000/3di/data?request=getprofile&layers=DelflandiPad&srs=EPSG%3
         });
       }
 
-        // drawnItems.addLayer(layer); // according to example code
-                                       // need to use this to enable editing with menu
       map.addLayer(layer);    // items not editable anymore because not added to
                                 // drawnItems featuregroup
       scenario.temp_objects.push(layer);

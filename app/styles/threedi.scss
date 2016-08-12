@@ -1150,7 +1150,7 @@ path.channel {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     /*animation-name: moveit;*/
-    stroke-width: 3;
+    stroke-width: 10;
     /* stroke: #CBFCFF; */
     stroke-opacity: 0.9;
     fill: none;
@@ -1245,7 +1245,8 @@ path.twodee-line {
 /* Dark dots on a light background, for v2 objects, see above */
 
 path.channel-inverted.v2_channel {
-    stroke: grey !important;
+    stroke: white;
+    stroke-width: 2;
 }
 
 path.channel-inverted.channel-default {

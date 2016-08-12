@@ -6,7 +6,8 @@
 require('../state/state');
 
 angular.module('utils', [
-  'global-state'
+  'global-state',
+  'templates'
 ]);
 
 require('./utils-service');

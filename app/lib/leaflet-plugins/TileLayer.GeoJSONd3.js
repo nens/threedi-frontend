@@ -15,10 +15,12 @@
  *   Match D3 idioms for .classed(), .style(), etc
  *   Work on allowing feature popups, etc.
  */
-const L = require('leaflet');
+
+// const L = require('leaflet'); L should be global
 
 L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
     onAdd : function(map) {
+        this.map = map;
         L.TileLayer.prototype.onAdd.call(this,map);
         this._path = d3.geo.path().projection(function(d) {
             var point = map.latLngToLayerPoint(new L.LatLng(d[1],d[0]));
@@ -35,7 +37,7 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
         var self = this;
         this._adjustTilePoint(tilePoint);
 
-        var svg = d3.select(map._container).select("svg");
+        var svg = d3.select(document.body).select("svg");
 
         // Line-like structures (we do not want to process points here), e.g.: v2_breach is excluded).
         var LINE_STRUCTURES = [
@@ -43,19 +45,14 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
             'pumpstation',
             'weir',
             'orifice',
-            'sewerage-pipe',
-            'sewerage-weir',
-            'sewerage-orifice',
-            'sewerage-pumpstation',
             'channel',
-            'twodee-line',
             'v2_pipe',
             'v2_weir',
             'v2_orifice',
             'v2_culvert',
             'v2_channel',
             'v2_pumpstation',
-            'v2_levee',
+            'v2_levee'
         ];
 
         // Whitelist of clickable structures and objects. E.g., v2_levee from
@@ -65,18 +62,13 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
             'pumpstation',
             'weir',
             'orifice',
-            'sewerage-pipe',
-            'sewerage-weir',
-            'sewerage-orifice',
-            'sewerage-pumpstation',
             'channel',
-            'twodee-line',
             'v2_pipe',
             'v2_weir',
             'v2_orifice',
             'v2_culvert',
             'v2_channel',
-            'v2_pumpstation',
+            'v2_pumpstation'
         ];
 
         if (!tile.nodes && !tile.xhr) {
@@ -121,43 +113,8 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
                                 case 'orifice':
                                     result += ' v1-point';
                                     break;
-
-                                /* match object_types for ThreediModel.model_type=='3di-urban'*/
-                                case 'sewerage-pipe':
-                                    switch (d.properties.sewerage_type) {
-                                        case 1:  // RWA, blue
-                                            result += ' channel-rwa';
-                                            break;
-                                        case 2:  // DWA, red
-                                            result += ' channel-dwa';
-                                            break;
-                                        case 3:  // DWA, red
-                                            result += ' channel-transport';
-                                            break;
-                                        case 0:  // mixed
-                                            result += ' channel-mixed';
-                                            break;
-                                        default:  // default
-                                            console.log("unknown sewerage type");
-                                            console.log(d.properties);
-                                            result += ' channel-default';
-                                            break;
-                                    }
-                                    break;
-                                case 'sewerage-weir':
-                                    result += ' channel-weir';
-                                    break;
-                                case 'sewerage-orifice':
-                                    result += ' channel-orifice';
-                                    break;
-                                case 'sewerage-pumpstation':
-                                    result += ' channel-pumpstation';
-                                    break;
                                 case 'channel':
                                     result += ' channel-default';
-                                    break;
-                                case 'twodee-line':
-                                    result += ' twodee-line';
                                     break;
 
                                 /* match object_types for ThreediModel.model_type=='3di-v2' */
@@ -278,7 +235,7 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
                         })
                         .attr("width", "10")
                         .attr("height", "10")
-                        .attr("stroke-width", "0.5")
+                        .attr("stroke-width", "2")
                         .style("stroke", "black")
                         .style("fill", "white");
                 } else {
@@ -299,4 +256,4 @@ L.TileLayer.GeoJSONd3 =  L.TileLayer.extend({
     }
 });
 
-module.exports = L.TileLayer.GeoJSONd3;
+// module.exports = L.TileLayer.GeoJSONd3;

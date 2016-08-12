@@ -27,7 +27,6 @@ putTemplateInCache(require('./templates/windrose.html'), './templates/windrose.h
 putTemplateInCache(require('./templates/confirmation.html'), './templates/confirmation.html');
 putTemplateInCache(require('./templates/booting.html'), './templates/booting.html');
 putTemplateInCache(require('./templates/archive_scenario.html'), './templates/archive_scenario.html');
-// putTemplateInCache(require('./templates/jsdependencies.html'), './templates/jsdependencies.html');
 putTemplateInCache(require('./templates/awesome/sewerage-orifice.html'), './templates/awesome/sewerage-orifice.html');
 putTemplateInCache(require('./templates/awesome/sewerage-weir.html'), './templates/awesome/sewerage-weir.html');
 putTemplateInCache(require('./templates/awesome/pumpstation.html'), './templates/awesome/pumpstation.html');
@@ -42,3 +41,21 @@ putTemplateInCache(require('./templates/awesome/generic-info.html'), './template
 putTemplateInCache(require('./templates/awesome/sewerage-pumpstation.html'), './templates/awesome/sewerage-pumpstation.html');
 putTemplateInCache(require('./templates/awesome/infopoint.html'), './templates/awesome/infopoint.html');
 putTemplateInCache(require('./templates/awesome/weir.html'), './templates/awesome/weir.html');
+
+
+// svg icons
+putTemplateInCache(require('./svg-icons/boundary-node.html'), 'svg-icons/boundary-node');
+putTemplateInCache(require('./svg-icons/culvert.html'), 'svg-icons/culvert');
+putTemplateInCache(require('./svg-icons/node-circle.html'), 'svg-icons/node-circle');
+putTemplateInCache(require('./svg-icons/orifice.html'), 'svg-icons/orifice');
+putTemplateInCache(require('./svg-icons/pumpstation.html'), 'svg-icons/pumpstation');
+putTemplateInCache(require('./svg-icons/sewerage-orifice.html'), 'svg-icons/sewerage-orifice');
+putTemplateInCache(require('./svg-icons/sewerage-pumpstation.html'), 'svg-icons/sewerage-pumpstation');
+putTemplateInCache(require('./svg-icons/sewerage-weir.html'), 'svg-icons/sewerage-weir');
+putTemplateInCache(require('./svg-icons/v2-breach.html'), 'svg-icons/v2-breach');
+putTemplateInCache(require('./svg-icons/v2-connection-nodes.html'), 'svg-icons/v2-connection-nodes');
+putTemplateInCache(require('./svg-icons/v2-manhole.html'), 'svg-icons/v2-breach');
+putTemplateInCache(require('./svg-icons/v2-node.html'), 'svg-icons/v2-node');
+putTemplateInCache(require('./svg-icons/v2-pumpstation.html'), 'svg-icons/v2-pumpstation');
+putTemplateInCache(require('./svg-icons/v2-weir.html'), 'svg-icons/v2-weir');
+putTemplateInCache(require('./svg-icons/weir.html'), 'svg-icons/weir');

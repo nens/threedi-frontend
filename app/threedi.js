@@ -8,6 +8,7 @@
 
 require('jquery');
 require('angular');
+require('d3');
 
 require('./styles/base.scss');
 
