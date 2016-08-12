@@ -15,13 +15,26 @@ var files = fs.readdirSync('./dist').map(function (file) {
 
 var zip = new EasyZip();
 zip.batchAdd(files, function () {
-  console.log('Compressing contents of ./dist/ to ' + fileName)
+  console.log('Compressing contents of ./dist/ to ' + fileName);
   zip.writeToFileSycn(fileName);
 });
 
 function uploadAssets (err, body) {
-  if (err) { throw err }
-  console.log('Created release, getting ready to upload assets')
+  if (err) {
+    console.log(err.body);
+    if (parseInt(err.statusCode) === 422) {
+      console.log(`
+        Error: ` + err.body + `\n
+        It looks like there is already a draft or release on github.
+        Go to https://github.com/nens/threedi-frontend/releases/tag/` + version + `\n
+        and delete the release. Yes, this is fine. The tag will still be there.
+        \n\n
+        Then run this again.
+        `);
+    }
+    throw err;
+  }
+  console.log('Created release, getting ready to upload assets');
   var ghrelease = client.release(pkg.repository.name, body.id);
   var archive = fs.readFileSync(fileName);
 
@@ -45,7 +58,7 @@ function uploadAssets (err, body) {
       if (rerr) { throw rerr; }
       console.log('Succesfully cleaned up tmp folder');
     });
-  });    
+  });
 };
 
 var client = github.client(require('./deploy/auth.json').token);
