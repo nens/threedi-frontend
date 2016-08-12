@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% trans "3Di - Usage" %} </title>
+    <title>3Di - Usage </title>
 
     {% compress css %}
     <link rel='stylesheet' href='{{ STATIC_URL }}vendor/bootstrap/dist/css/bootstrap.css' />
@@ -35,12 +35,12 @@
            <img class="logo-img" src="{{ STATIC_URL }}images/3di-logo.png" alt="3Di">
          </a>
           <a class="navbar-brand" href="#">
-           <span>{% trans "Usage overview" %}</span>
+           <span>Usage overview</span>
          </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">{% trans "Back to calculation" %}</a></li>
+            <li><a href="/">Back to calculation</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="{% trans 'Filter simulations...' %}" ng-model="search">
@@ -53,19 +53,19 @@
 
       <div class="row">
         <div class="col-sm-12">
-          <h4>{% trans "Active Simulations" %}</h4>
+          <h4>Active Simulations</h4>
           <table class="table table striped">
             <thead>
 
               <tr>
-                <th>{% trans "Killswitch"%} </th>
-                <th>{% trans "User"%} </th>
-                <th>{% trans "Model"%} </th>
+                <th>Killswitch"%} </th>
+                <th>User"%} </th>
+                <th>Model"%} </th>
                 {% if superuser %}
-                <th>{% trans "Organisation"%} </th>
+                <th>Organisation"%} </th>
                 {% endif %}
-                <th ng-if="activeSimulations!=={}">{% trans "Address" %} </th>
-                <th>{% trans "Logs"%} </th>
+                <th ng-if="activeSimulations!=={}">Address </th>
+                <th>Logs"%} </th>
              </tr>
             </thead>
             <tbody>
@@ -103,15 +103,15 @@
             <thead>
               <tr>
                 {% if superuser %}
-                <th>{% trans "Organisation"%} </th>
+                <th>Organisation"%} </th>
                 {% endif %}
-                <th>{% trans "Hours (remaining / bought)"%} </th>
-                <th>{% trans "Nr of models"%} </th>
-                <th>{% trans "Models size"%} </th>
-                <th>{% trans "Nr of stored scenarios"%} </th>
-                <th>{% trans "Stored scenarios size"%} </th>
-                <th>{% trans "Total stored data"%} </th>
-                <th>{% trans "Message"%} </th>
+                <th>Hours (remaining / bought)"%} </th>
+                <th>Nr of models"%} </th>
+                <th>Models size"%} </th>
+                <th>Nr of stored scenarios"%} </th>
+                <th>Stored scenarios size"%} </th>
+                <th>Total stored data"%} </th>
+                <th>Message"%} </th>
               </tr>
             </thead>
             <tbody>
@@ -162,8 +162,8 @@
           <table class="table table striped">
             <thead>
               <tr>
-                <th>{% trans "User "%} </th>
-                <th>{% trans "Hours used"%} </th>
+                <th>User "%} </th>
+                <th>Hours used"%} </th>
               </tr>
             </thead>
             <tbody>
@@ -195,13 +195,13 @@
         </div>
 
         <div class="col-sm-8 col-md-8">
-          <h4>{% trans "Simulation Detail" %}</h4>
+          <h4>Simulation Detail</h4>
           <table class="table table striped">
             <thead>
               <tr>
-                <th>{% trans "User "%} </th>
-                <th>{% trans "Start Calculation"%} </th>
-                <th>{% trans "End Calculation"%} </th>
+                <th>User "%} </th>
+                <th>Start Calculation"%} </th>
+                <th>End Calculation"%} </th>
               </tr>
             </thead>
             <tbody>

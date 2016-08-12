@@ -8,7 +8,7 @@ const devserver = new WDS(webpack(config), {
   hot: true,
   inline: true,
   progress: true,
-  stats: { colors: true }, 
+  stats: { colors: true },
   proxy: [
     {
       path: '/active_simulations/',
@@ -41,7 +41,12 @@ const devserver = new WDS(webpack(config), {
     {
       path: '/admin/*',
       target: 'http://localhost:9000' // <- backend
-    }
+    },
+    {
+      path: '/images/*',
+      target: '/app/' // <- backend
+    },
+
   ]
 });
 
