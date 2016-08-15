@@ -7,6 +7,8 @@ require('jquery');
 
 
 const mapItems = require('./leaflet');
+const showalert = require('./showalert');
+
 // const L = require('leaflet'); should also be on window so..
 require('drmonty-leaflet-awesome-markers');
 require('./lib/leaflet-plugins/TileLayer.GeoJSON');

@@ -1,3 +1,4 @@
+
 const $ = require('jquery');
 
 angular.module("threedi-graph")
@@ -75,17 +76,17 @@ angular.module("threedi-graph")
           .x(function(d) { return 111 * d[0]; })
           .y(function(d) { return d[1]; })
           .clipEdge(true)
-          .tooltipContent(function(key, y, e, graph) {
-            var header = (scope.title !== undefined) ? scope.title : key;
-            if ((scope.unit !== undefined) &&
-                (scope.unit !== '') &&
-                (scope.unit !== null) ) {
-              header = header + ' - ' + scope.unit;
-            }
-            var unit_x = 'km';
-            return '<h3 class="graph-header">' + header + ' </h3>' +
-            '<p>' + e + ' at ' + y + unit_x + ' </p>';
-          });
+          // .tooltipContent(function(key, y, e, graph) {
+          //   var header = (scope.title !== undefined) ? scope.title : key;
+          //   if ((scope.unit !== undefined) &&
+          //       (scope.unit !== '') &&
+          //       (scope.unit !== null) ) {
+          //     header = header + ' - ' + scope.unit;
+          //   }
+          //   var unit_x = 'km';
+          //   return '<h3 class="graph-header">' + header + ' </h3>' +
+          //   '<p>' + e + ' at ' + y + unit_x + ' </p>';
+          // });
 
         chart.xAxis
           .axisLabel('Distance (km)')
@@ -142,7 +143,7 @@ angular.module("threedi-graph")
         // create a svg element and add to
         // the directive element.
         if (!svg) {
-          svg = d3.select(element.context)
+          svg = d3.select(element[0])
             .append('svg')
             .attr('id', 'crossection')
             .attr("height", height)
