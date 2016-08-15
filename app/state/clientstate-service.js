@@ -16,6 +16,8 @@ const leaflet = L; // should always be global require('leaflet');
 angular.module('global-state').service('clientState', ['modes', function (modes) {
   var state = {};
 
+  state.version = window.version;
+
   /**
    * Watchable string version of the state
    * @param {string} stateStr - which part of the state you want

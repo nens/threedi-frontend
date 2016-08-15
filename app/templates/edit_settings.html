@@ -88,73 +88,9 @@
             <datetimepicker date-model="$parent.$parent.radar_dt"
                             class="datetimepicker-elem">
             </datetimepicker>
-            <div class="btn-group bar-buttons edit-wrapper edit-wrapper-rain">
-              <div class="switch-input-type"
-                   ng-show="manual_input_radar === false"
-                   ng-click="manual_input_radar = true">
-                <a href="#"
-                   title="manual input">
-                  <i class="fa fa-pencil manual-edit">
-                  </i>
-                </a>
-              </div>
-              <div class="progress settings-progress"
-                   ng-show="manual_input_radar === false"
-                   ng-mousedown="mouse_down('radar_multiplier', $event);"
-                   ng-mouseup="mouse_up('radar_multiplier', $event) && emit_to_socket()"
-                   ng-mousemove="mouse_move('radar_multiplier', $event) && emit_to_socket()">
-                <div class="progress-bar"
-                     role="progressbar"
-                     aria-valuemin="{[{ clientState.edit_ranges.radar_multiplier.min }]}"
-                     aria-valuemax="{[{ clientState.edit_ranges.radar_multiplier.max }]}"
-                     style="width: {[{ value_percentage.radar_multiplier }]}%;">
-                  <span style="color:white; white-space:nowrap;">
-                  </span>
-                </div>
-                <div class="progress-label"
-                  ng-hide="manualInputRadar.$error.required && manual_input_radar === false">
-                  {[{ clientState.edit_ranges.radar_multiplier.name }]}
-                  {[{ clientState.edit_ranges.radar_multiplier.value | number : clientState.edit_ranges['radar_multiplier'].decimals }]}
-                  {[{ clientState.edit_ranges.radar_multiplier.unit }]}
-                </div>
-                <div class="progress-label error"
-                  ng-show="manualInputRadar.$error.required && manual_input_radar === false">
-                  Default will be used!
-                </div>
-              </div>
-              <div class="switch-input-type"
-                ng-show="manual_input_radar === true"
-                ng-click="manual_input_radar = false">
-                <a href="#" title="back to slider">
-                  <i class="fa fa-share manual-edit"></i>
-                </a>
-              </div>
-              <div class="centerize manual-form-wrapper settings-progress"
-                ng-show="manual_input_radar === true">
-                <form name="manualInputRadar"
-                      class="manual-input-form">
-                  <label class="small-label"
-                         for="radar">
-                    {[{ clientState.edit_ranges.radar_multiplier.name }]} [{[{ clientState.edit_ranges.radar_multiplier.unit }]}]
-                  </label>
-                  <input
-                    type="number"
-                    id="radar"
-                    ng-model="clientState.edit_ranges.radar_multiplier.value"
-                    value="{[{ clientState.edit_ranges.radar_multiplier.value | number : clientState.edit_ranges.radar_multiplier.decimals }]}"
-                    max="{[{ clientState.edit_ranges.radar_multiplier.max }]}"
-                    min="{[{ clientState.edit_ranges.radar_multiplier.min }]}"
-                    class="form-control form-alongside manual-input-box"
-                    ng-required="true" />
-                </form>
-              </div>
-              <div class="validation error"
-                   ng-show="manualInputRadar.$error.required &&
-                            manual_input_radar === true">
-                Default will be used!
-              </div>
-            </div> <!--btn...edit-wrapper-->
-          </div> <!--ng-switch rain-radar-->
+
+            <slider var-name="radar_multiplier"></slider>
+          </div>
 
           <div ng-switch-when="design"
                ng-show="clientState.features.scenario_rain_design">
@@ -204,73 +140,8 @@
           <div ng-switch-when="constant"
                ng-show="clientState.features.scenario_rain_constant">
             <div class="btn-group bar-buttons edit-wrapper edit-wrapper-constant-rain center-input-group">
-              <div class="switch-input-type"
-                   ng-show="manual_input_constant === false"
-                   ng-click="manual_input_constant = true">
-                <a href="#"
-                   title="manual input">
-                  <i class="fa fa-pencil manual-edit"></i>
-                </a>
-              </div>
-              <div class="progress settings-progress edit-wrapper edit-wrapper-rain"
-                   ng-show="manual_input_constant === false"
-                   ng-mousedown="mouse_down('rain_constant_intensity', $event);"
-                   ng-mouseup="mouse_up('rain_constant_intensity', $event);"
-                   ng-mousemove="mouse_move('rain_constant_intensity', $event);">
-                <div class="progress-bar"
-                     role="progressbar"
-                     aria-valuemin="{[{ clientState.edit_ranges.rain_constant_intensity.min }]}"
-                     aria-valuemax="{[{ clientState.edit_ranges.rain_constant_intensity.max }]}"
-                     style="width: {[{ value_percentage.rain_constant_intensity }]}%;">
-                  <span style="color:white; white-space:nowrap;">
-                  </span>
-                </div>
-                <div class="progress-label"
-                     ng-hide="manualInputConstant.$error.required
-                              && manual_input_constant === false">
-                  {[{ clientState.edit_ranges.rain_constant_intensity.name }]}
-                  {[{ clientState.edit_ranges.rain_constant_intensity.value | number : clientState.edit_ranges['rain_constant_intensity'].decimals }]}
-                  {[{ clientState.edit_ranges.rain_constant_intensity.unit }]}
-                </div>
-                <div class="progress-label error"
-                     ng-show="manualInputConstant.$error.required && manual_input_constant === false">
-                  Default will be used!
-                </div>
-              </div>
-              <div class="switch-input-type"
-                   ng-show="manual_input_constant === true"
-                   ng-click="manual_input_constant = false">
-                <a href="#"
-                   title="back to slider">
-                  <i class="fa fa-share manual-edit">
-                  </i>
-                </a>
-              </div>
-              <div class="centerize manual-form-wrapper settings-progress"
-                   ng-show="manual_input_constant === true">
-                <form name="manualInputConstant"
-                      class="manual-input-form">
-                  <label class="small-label"
-                         for="constant">
-                    {[{ clientState.edit_ranges.rain_constant_intensity.name }]} [{[{ clientState.edit_ranges.rain_constant_intensity.unit }]}]
-                  </label>
-                  <input type="number"
-                         id="constant"
-                         step="0.1"
-                         ng-model="clientState.edit_ranges.rain_constant_intensity.value"
-                         value="{[{ clientState.edit_ranges.rain_constant_intensity.value | number : clientState.edit_ranges.rain_constant_intensity.decimals }]}"
-                         max="{[{ clientState.edit_ranges.rain_constant_intensity.max }]}"
-                         min="{[{ clientState.edit_ranges.rain_constant_intensity.min }]}"
-                         class="form-control form-alongside manual-input-box"
-                         ng-required="true" />
-                </form>
-              </div>
-              <div class="validation error"
-                ng-show="manualInputConstant.$error.required
-                         && manual_input_constant === true">
-                Default will be used!
-              </div>
-            </div>  <!-- btn...edit-wrapper -->
+              <slider var-name="rain_constant_intensity"></slider>
+            </div>
           </div> <!-- ng-switch rain-constant -->
         </div> <!-- ng-switch rain -->
       </div>

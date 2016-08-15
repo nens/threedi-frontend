@@ -38,17 +38,16 @@ a {
     padding-left: 9px;
 }
 
-#logo img {
-    margin: 6px 0 0 5px;
-    width: 48px;
-    height: 40px;
-}
-
 .logo-img {
+    display: block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     margin: 8px 10px 8px 20px;
     padding: 0;
     height: 42px;
     width: 49px;
+    background: url(../images/3di-logo.png) no-repeat;
+    background-size: cover;
 }
 
 .logo-img-wrapper {
