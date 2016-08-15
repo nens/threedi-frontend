@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "angular-mocks": "^1.5.5",
+    "archiver": "^1.0.1",
     "autoprefixer": "^6.3.6",
     "css-loader": "^0.23.1",
     "directory-tree": "^1.0.0",

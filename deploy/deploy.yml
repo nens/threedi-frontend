@@ -7,9 +7,26 @@
   - name: download release
     sudo: yes
     sudo_user: "{{ build_user }}"
-    get_url: url=https://github.com/nens/threedi-frontend/releases/download/{{ version }}/{{ version }}.zip dest=/srv/frontend/{{ version.zip }}
+    get_url: url=https://github.com/nens/threedi-frontend/releases/download/{{ version }}/{{ version }}.zip dest=/tmp/{{ version }}.zip
+
+  - name: rm old frontend
+    sudo: yes
+    sudo_user: "{{ build_user }}"
+    file: path=/var/www/frontend/ state=absent
+
+  - name: mkdir
+    sudo: yes
+    sudo_user: "{{ build_user }}"
+    file: path=/var/www/frontend/ state=directory owner={{ build_user }}
 
   - name: unzip release
     sudo: yes
     sudo_user: "{{ build_user }}"
-    unarchive: src=/srv/frontend/{{ version.zip }} dest=/srv/frontend/www
+    # unarchive: src=/tmp/{{ version}}.zip dest=/var/www/frontend
+    command: unzip /tmp/{{ version }}.zip -d /var/www/frontend
+
+
+  - name: rm tmp zip
+    sudo: yes
+    sudo_user: "{{ build_user }}"
+    file: path=/tmp/{{ version}}.zip state=absent

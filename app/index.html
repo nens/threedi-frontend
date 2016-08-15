@@ -10,7 +10,6 @@
     <link rel="icon"
           type="image/png"
           href="images/favicon.ico">
-    <script src="/hand-crank.js"></script>
 
     <title>3Di Live</title>
 
@@ -205,7 +204,8 @@
           <div class="btn-group pull-right"
                ng-controller="Director"
                ng-class="{hide: !have_master || isMaster}"
-               title="{[{ master_name }]}">
+               title="{[{ master_name }]}">    <script src="/hand-crank.js"></script>
+
               <i class="fa fa-star"></i>
           </div>
 
@@ -1122,6 +1122,7 @@
   <modal template-name="booting"></modal>
 
   <div id="alert_placeholder"></div>
+  <script src="/hand-crank.js"></script>
 
   <!-- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization&sensor=false"></script> -->
 
