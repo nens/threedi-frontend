@@ -12,9 +12,10 @@ production.
 * Run webpack
 
 ```bash
-git clone git@github.com:nens/threedi-ng
-cd threedi-ng
+git clone git@github.com:nens/threedi-frontend
+cd threedi-frontend
 npm install
+bower install
 npm start
 ```
 
