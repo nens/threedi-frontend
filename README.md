@@ -21,29 +21,40 @@ $ npm start
 
 ## Releasing and Deployment
 Releasing is pretty straightforward. Consisting of only a few steps. Defining the kind of release:
-patch (default), minor or major. Running the release script and afterwards running the script to 
+patch (default), minor or major. Running the release script and afterwards running the script to
 upload the release tarball.
 
-* Draft a release with `npm run release -- <release_type>`
+* Draft a release with `npm run release -- <release_type>`, where `release_type` can be any of the following
+    * `major` (e.g. 1.0.0 becomes 2.0.0)
+    * `minor` (e.g. 1.0.0 becomes 1.1.0)
+    * `patch` (e.g. 1.0.0 becomes 1.0.1 this is the default)
 * Make sure webpack has a built version in the dist folder `npm run build`
 * Create & Upload zip of the dist folder `npm run release-asset`
 
 Deployment uses the zip that is uploaded to github under the version name. So update the
-`version_name` in the group_vars (or individual files) and run
+`version_name` in the group_vars (or individual files).
+
+The `staging.example` and `production.example` can be copied. Just change the server names
+under the right heading.
 
 ```
-ansible-playbook -i dev deploy.yml
+ansible-playbook -i deploy/staging deploy/deploy.yml -K -u <user.name>
 ```
 
 ## Roadmap
 
-Working hard to fix the current bugs
+Over the last few months a lot has been refactored to get everything working.
+There are still few leftovers from the move and refactoring that need to
+be adressed.
 
-- [ ] serving of static files in dev mode
-- [ ] deployment
-- [ ] authentication (thinking of jwt tokens)
-- [ ] get the map back
-- [ ] sliders
+- [ ] vector tiles lack some styling
+- [ ] advanced menu might need some retouching
+- [x] vector maps rendered
+- [x] serving of static files in dev mode
+- [x] deployment
+- [x] authentication (thinking of jwt tokens)
+- [x] get the map back
+- [x] sliders
 - [x] modals refactor
 - [x] restructure app
 - [x] linting
@@ -61,16 +72,21 @@ things to be like components. A component has its own HTML/CSS/JS and lives
 in its own folder like so:
 ```
 components
-components\mywidget
-components\mywidget\mywidget.html
-components\mywidget\mywidget.scss
-components\mywidget\mywidget.js
+components/mywidget
+components/mywidget/mywidget.html
+components/mywidget/mywidget.scss
+components/mywidget/mywidget.js
 ```
-For now this needs to be included manually in the `threedi.js` file.
+For now this needs to be included manually in the `threedi.js` file, by
+adding something similar to the following line
+
+```
+require('./components/mywidget/mywidget');
+```
 
 ### scss
 The styleguides at the moment are plain old CSS stored as SCSS, but we use Sass
-to compile it already, so it can easily be refactored.
+to compile it already, so it has the potentional to be simplified.
 The styles can be found in `app/styles`
 
 ### templates
