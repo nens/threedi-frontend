@@ -39,7 +39,11 @@ const devserver = new WDS(webpack(config), {
       target: 'http://localhost:9000' // <- backend
     },
     {
-      path: '/admin/*',
+      path: '/static_media/*',
+      target: 'http://localhost:9000' // <- backend
+    },
+    {
+      path: '/admin*',
       target: 'http://localhost:9000' // <- backend
     },
     {
