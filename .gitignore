@@ -5,4 +5,6 @@ vendor/
 dist/
 deploy/auth.json
 deploy/hosts
+deploy/staging
+deploy/production
 deploy.retry
